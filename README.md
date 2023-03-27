@@ -46,11 +46,13 @@
     - Webservice
       회원 관련 기능(등록, 종류, 정보, 관리)
       Quiz category, 배경 등 추가 정보.
+      'Obj배치정보' 관리: 출발지, 물건 등
     - Metaverse
       회원 인증
       회원 정보(character, EOA, 수상 여부 등)
       Quiz 배경 전환
       대화
+      'Obj배치정보' 적용
     - NFT
       ...
     - 기타
