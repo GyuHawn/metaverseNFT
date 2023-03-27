@@ -47,7 +47,7 @@
       회원 관련 기능(등록, 종류, 정보, 관리)
       Quiz category, 배경 등 추가 정보.
       'Obj배치정보' 관리: 출발지, 물건 등
-      NFT Trophy image 선택
+      NFT Trophy image 선택(약5개중 하나 선택)
     - Metaverse
       회원 인증
       회원 정보(character, EOA, 수상 여부 등)
