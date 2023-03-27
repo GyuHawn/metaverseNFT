@@ -21,7 +21,7 @@
 
  
  
-  #### [NftProject용 Quiz대회]
+  #### [산출물-NftProject용 Quiz대회]
     - 공통
       온라인 메타버스 Quiz대결 (상금 NFT)
       완료일정: 3.21일
@@ -37,7 +37,24 @@
       Quiz대회 정보(시작시간, NFT 등) / Quiz진행
     - NFT
       수업 중 진행...
-  
+      
+  #### [산출물-UnityProject용 Quiz대회]
+    - 공통
+      온라인 메타버스 Quiz대결 (상금 NFT)
+      완료일정: 4.07일
+      PPT: 4.10일
+    - Webservice
+      회원 관련 기능(등록, 종류, 정보, 관리)
+      Quiz category, 배경 등 추가 정보.
+    - Metaverse
+      회원 인증
+      회원 정보(character, EOA, 수상 여부 등)
+      Quiz 배경 전환
+      대화
+    - NFT
+      ...
+    - 기타
+      여러 quiz들
  
 ### 개발관련
 - git에 올리기전 확인 받을 것(임시 공유는 압축파일로 필요한 사람에게 공유).
