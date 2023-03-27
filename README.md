@@ -47,13 +47,16 @@
       회원 관련 기능(등록, 종류, 정보, 관리)
       Quiz category, 배경 등 추가 정보.
       'Obj배치정보' 관리: 출발지, 물건 등
+      NFT Trophy image 선택
     - Metaverse
       회원 인증
       회원 정보(character, EOA, 수상 여부 등)
       Quiz 배경 전환
       대화
       'Obj배치정보' 적용
+      NFT Trophy image, model 표시.
     - NFT
+      NFT Trophy image id정보(IPFS적용 없이 파일 id만 저장).
       ...
     - 기타
       여러 quiz들
