@@ -201,10 +201,10 @@ public class TerrainGenerator : MonoBehaviour
         cWallx1 = Instantiate(mCenterWall, new Vector3(cWallPosX[1], y + 4, curChunkPosZ + TerrainChunk.chunkWidth / 2), Quaternion.identity);
         cWallx1.transform.localScale = new Vector3(0.01f, 7, TerrainChunk.chunkWidth);
 
-        cWallz0.GetComponent<MeshRenderer>().enabled = false; cWallz0.GetComponent<BoxCollider>().enabled = false;
-        cWallz1.GetComponent<MeshRenderer>().enabled = false; cWallz1.GetComponent<BoxCollider>().enabled = false;
-        cWallx0.GetComponent<MeshRenderer>().enabled = false; cWallx0.GetComponent<BoxCollider>().enabled = false;
-        cWallx1.GetComponent<MeshRenderer>().enabled = false; cWallx1.GetComponent<BoxCollider>().enabled = false;
+        cWallz0.GetComponent<MeshRenderer>().enabled = false; cWallz0.GetComponent<BoxCollider>().enabled = true;
+        cWallz1.GetComponent<MeshRenderer>().enabled = false; cWallz1.GetComponent<BoxCollider>().enabled = true;
+        cWallx0.GetComponent<MeshRenderer>().enabled = false; cWallx0.GetComponent<BoxCollider>().enabled = true;
+        cWallx1.GetComponent<MeshRenderer>().enabled = false; cWallx1.GetComponent<BoxCollider>().enabled = true;
 
         StartCoroutine(DelayBuildChunks());
 

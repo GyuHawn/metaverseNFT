@@ -16,9 +16,9 @@ public class QuizManager : MonoBehaviour
         Result,
         End,
     }
-    
+
     CompetitionState mState;
-    
+
     public TextMeshProUGUI quizText;
     public Canvas canvas;
 
@@ -32,43 +32,53 @@ public class QuizManager : MonoBehaviour
     public GameObject win;
 
     public List<int> userQuiz = new List<int>();
-    public int curQuiz; // 현재 질문 추적(초기화)
+
+    public class QuizData
+    {
+        public string mContent, mAnswer;
+    }
+
     public bool ox; // 문제 정답이 맞았는지 여부
 
     public float mRemainCompetitionTime = 600.0f; // 퀴즈 시작까지 시간
-    public float mAnswerTimeOut = 5.0f; // 문제 시간
-    public float NextAnswerDelayTimeOut = 5.0f; // 다음 문제 시간
+    public float mAnswerTimeOut = 3.0f; // 문제 시간
+    public float mNextAnswerDelayTimeOut = 3.0f; // 다음 문제 시간
     public bool gameStarted = false; // 게임 시작 여부
-   
-    public int quizCount = 3; // 나올 문제 수
     public int mCurrentQuizIndex = 0; // 지금 퀴즈 인덱스
     public bool cleanFloor = true;
-    public static List<Quiz.Obj1> dbList = new List<Quiz.Obj1>();
-    
 
-    public string getAnswer()
+    public List<QuizData> mQuizList = new List<QuizData>();
+
+    public void quizAdd(QuizData quiz)
     {
-        return dbList[curQuiz].mAnswer;
+        mQuizList.Add(quiz);
     }
+
+    public string getQuizAnswer()
+    {
+        return mQuizList[mCurrentQuizIndex].mAnswer;
+    }
+
     public float getAnswerTimeOut()
     {
         return mAnswerTimeOut;
     }
 
-    public bool checkAnswer(string answer)
+    public bool checkQuizAnswer(string answer)
     {
-        return getAnswer() == answer;
+        return getQuizAnswer() == answer;
     }
 
-    public string getContent()
+    public string getQuizContent()
     {
-        return dbList[curQuiz].mContent;
+        return mQuizList[mCurrentQuizIndex].mContent;
     }
 
     public bool isCompetitionPlay() //대회여부(유/무)
     {
         return gameStarted;
     }
+
     public void setCompetitionPlay() //대회여부(유/무)
     {
         gameStarted = true;
@@ -77,7 +87,7 @@ public class QuizManager : MonoBehaviour
 
     public int getQuizMax()
     {
-        return quizCount;
+        return mQuizList.Count;
     }
 
     public int getUsedQuizCount()
@@ -99,18 +109,16 @@ public class QuizManager : MonoBehaviour
     {
         return mRemainCompetitionTime;
     }
-
-    public bool nextAnswer() 
+    //다음문제로
+    public bool nextAnswer()
     {
-        
-        /*if (userQuiz.Contains(quizIndex)){
-            quizIndex = Random.Range(0, dbList.Count);
-        }*/
-        
         userQuiz.Add(mCurrentQuizIndex);
-        curQuiz = mCurrentQuizIndex;
-        mAnswerTimeOut = 5.0f;
 
+        if (mQuizList.Count != 0)
+        {
+            mCurrentQuizIndex++;
+            mAnswerTimeOut = 3.0f;
+        }
         return true;
     }
 
@@ -120,13 +128,13 @@ public class QuizManager : MonoBehaviour
         mRemainCompetitionTime -= Time.deltaTime;
     }
 
-    //게임시작
+    //게임 시작(여기서는 f키 누르면 시작)
     public bool isCompetitionState_Starting()
     {
         //게임 시작조건 :
         //남은 퀴즈 개수 > 0 
         if (getRemainQuizCount() > 0)
-        {   
+        {
             //게임유무가 true이고 퀴즈시작시간 > 0
             if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
             {
@@ -177,13 +185,13 @@ public class QuizManager : MonoBehaviour
 
             }
             //다음 문제시간(지금설정 5초) > 0
-            else if (NextAnswerDelayTimeOut > 0)
+            else if (mNextAnswerDelayTimeOut > 0)
             {
                 return true;
             }
         }
-
-
+        //게임 남은퀴즈 개수가 0 이하 이거나 게임 유무가false이고 퀴즈시작시간이 0이하 이거나 문제푸는시간이 0보다 작거나
+        //다음 문제로넘어가는 시간이(지금설정한 시간) 0초 이하가 되면 false
         return false;
     }
 
@@ -205,16 +213,19 @@ public class QuizManager : MonoBehaviour
 
             }
             //다음 문제시간(지금설정 5초) > 0
-            else if (NextAnswerDelayTimeOut > 0)
-            { 
+            else if (mNextAnswerDelayTimeOut > 0)
+            {
 
             }
-            //남은 퀴즈 개수가 0보다 이하일때 다음 게임으로 
             else
             {
+                //게임유무가 false이고 퀴즈시작시간이 0이하 이거나 문제푸는시간이 0보다 작거나
+                //다음 문제로넘어가는 시간이(지금설정한 시간) 0초 이하이면 true
                 return true;
             }
         }
+        //게임남은 퀴즈가 0 이하 이거나 게임유무가 false이고 퀴즈시작시간이 0이하 이거나 문제푸는시간이 0보다 작거나
+        //다음 문제로넘어가는 시간이(지금설정한 시간) 0초 이하이거나 남은퀴즈가 0개이하가 되면 false
         return false;
     }
 }
