@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class QuizManager : MonoBehaviour
+public class QuizManager //: MonoBehaviour
 {
     enum CompetitionState
     {
@@ -18,14 +18,6 @@ public class QuizManager : MonoBehaviour
     }
 
     CompetitionState mState;
-
-    public TextMeshProUGUI quizText;
-    public Canvas canvas;
-
-    public GameObject quizStart;
-    public GameObject terrain; // Generator;
-    public GameObject winner;
-    public GameObject player;
 
     public GameObject mOobj;
     public GameObject mXobj;
@@ -122,7 +114,7 @@ public class QuizManager : MonoBehaviour
         return true;
     }
 
-    public void Update()
+    public void framemove()
     {
         //시간은 항상 흐른다.
         mRemainCompetitionTime -= Time.deltaTime;

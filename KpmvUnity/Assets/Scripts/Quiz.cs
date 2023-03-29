@@ -5,139 +5,82 @@ using UnityEngine;
 
 public class Quiz : MonoBehaviour
 {
-    public QuizManager mQuizManager;
-    static public void qv(string s1) { Debug.Log(s1); }
+    public TextMeshProUGUI mQuizText;
+    public Canvas mQuizCanvas;
+    public MainClient mMainClient;
+    public GameObject mTerrain;
+    public GameObject mQuizStart;
+    public GameObject mWinner;
+    public GameObject mPlayer;
 
-    public class Client : JcCtUnity1.JcCtUnity1
-    {
-        //public int mX = 0;
-        public QuizManager mQuizManager;
-
-        public Client(QuizManager qm) : base(System.Text.Encoding.Unicode)
-        {
-            mQuizManager = qm;
-        }
-        //public void qv(string s1) { innLogOutput(s1); }
-
-        // JcCtUnity1.JcCtUnity1
-        protected override void innLogOutput(string s1) { Debug.Log(s1); }
-        protected override void onConnect(JcCtUnity1.NwRst1 rst1, System.Exception ex = null)
-        {
-            qv("Dbg on connect: " + rst1);
-            int pkt = 1111;
-            using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(pkt))
-            {
-                pkw.wInt32u(2222);
-                //this.send(pkw);
-            }
-            qv("Dbg send packet Type:" + pkt);
-        }
-        protected override void onDisconnect()
-        { qv("Dbg on disconnect"); }
-        //protected override bool onRecvTake(Jc1Dn2_0.PkReader1 pkrd)
-        //{ qv("Dbg on recv: " + pkrd.getPkt()/* + pkrd.ReadString()*/ ); return true; }
-        protected override bool onRecvTake(Jc1Dn2_0.PkReader1 pkrd)
-        {
-            switch (pkrd.getPkt())
-            {
-                case 100:
-                    {
-                        var count = pkrd.rInt32s();
-
-                        var s1 = "";
-                        var s2 = "";
-
-                        for (int i = 0; i < count; i++)
-                        {
-                            QuizManager.QuizData quizdata = new QuizManager.QuizData();
-                            s1 = pkrd.rStr1def();
-                            s2 = pkrd.rStr1def();
-
-                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2);
-                            quizdata.mContent = s1;
-                            quizdata.mAnswer = s2;
-                            mQuizManager.mQuizList.Add(quizdata);
-                            qv("dbList : " + mQuizManager.mQuizList.Count);
-                        }
-                    }
-                    break;
-            }
-            return true;
-        }
-    }
-
-    public Client mCt;
-
+    // public static List<MainClient> dbList;
     void Awake()
     {
-        mQuizManager.terrain = GameObject.Find("Terrain");
-        mQuizManager.quizStart = GameObject.Find("QuizStart");
-        mQuizManager.winner = GameObject.Find("Trophy");
-        mQuizManager.player = GameObject.Find("Player");
+        mMainClient = GameObject.FindObjectOfType<MainClient>();
+        mTerrain = GameObject.Find("Terrain");
+        mQuizStart = GameObject.Find("QuizStart");
+        mWinner = GameObject.Find("Trophy");
+        mPlayer = GameObject.Find("Player");
     }
 
-    void Start()
-    {
-        mCt = new Client(mQuizManager);
-        mCt.connect("127.0.0.3", 7777);
-        Debug.Log("Start 1111");
-    }
 
     void Update()
     {
-        mCt.framemove();
 
         //게임 시작(게임 유)
-        if (mQuizManager.isCompetitionState_Starting())
+        if (mMainClient.mQuizManager.isCompetitionState_Starting())
         {
-            mQuizManager.quizText.text = "10초 후 퀴즈가 시작됩니다" + System.Environment.NewLine +
-              "문제 종료시 중앙에 있어도 탈락 처리 됩니다" + System.Environment.NewLine + Mathf.Round(mQuizManager.mRemainCompetitionTime);
+            Debug.Log("!!!!!!!!!!!!!!!!!!!!!!"+(mQuizText==null));
+            mQuizText.text = "10초 후 퀴즈가 시작됩니다" + System.Environment.NewLine +
+              "문제 종료시 중앙에 있어도 탈락 처리 됩니다" + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.mRemainCompetitionTime);
         }
         //게임 Play
-        if (mQuizManager.isCompetitionState_QuizPlay())
+        if (mMainClient.mQuizManager.isCompetitionState_QuizPlay())
         {
-            mQuizManager.cleanFloor = true;
+            mMainClient.mQuizManager.cleanFloor = true;
             // 문제출력
-            mQuizManager.quizText.text = mQuizManager.getQuizContent() + System.Environment.NewLine + Mathf.Round(mQuizManager.getAnswerTimeOut());
+            mQuizText.text = mMainClient.mQuizManager.getQuizContent() + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.getAnswerTimeOut());
             //시간
-            mQuizManager.mAnswerTimeOut -= Time.deltaTime;
+            mMainClient.mQuizManager.mAnswerTimeOut -= Time.deltaTime;
         }
         //답 비교 / 결과 출력
-        if (mQuizManager.isCompetitionState_QuizAnswer())
+        if (mMainClient.mQuizManager.isCompetitionState_QuizAnswer())
         {
             //정답 비교
-            string result = (mQuizManager.getQuizAnswer() == "O" ? "O" : "X");
+            string result = (mMainClient.mQuizManager.getQuizAnswer() == "O" ? "O" : "X");
             //시간
-            mQuizManager.mNextAnswerDelayTimeOut -= Time.deltaTime;
+            mMainClient.mQuizManager.mNextAnswerDelayTimeOut -= Time.deltaTime;
             //결과 출력
-            mQuizManager.quizText.text = "결과는 : " + result + "입니다" + System.Environment.NewLine + Mathf.Round(mQuizManager.mNextAnswerDelayTimeOut);
+            mQuizText.text = "결과는 : " + result + "입니다" + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.mNextAnswerDelayTimeOut);
             CheckFloor();
         }
         //다음 퀴즈 넘어감
-        if (mQuizManager.isCompetitionState_QuizNext())
+        if (mMainClient.mQuizManager.isCompetitionState_QuizNext())
         {
-            if (mQuizManager.nextAnswer()) //퀴즈가 남아있을때 다음퀴즈로
+            if (mMainClient.mQuizManager.nextAnswer()) //퀴즈가 남아있을때
             {
-                mQuizManager.mNextAnswerDelayTimeOut = 5.0f;
+                mMainClient.mQuizManager.mNextAnswerDelayTimeOut = 5.0f;
             }
 
-            if (mQuizManager.getRemainQuizCount() == 0) //퀴즈가 남아있지 않을때 종료
+            if (mMainClient.mQuizManager.getRemainQuizCount() == 0) //퀴즈가 남아있지 않을때 종료
             {
-                mQuizManager.quizText.text = "퀴즈가 종료되었습니다";
-                if (mQuizManager.canvas.gameObject.activeSelf)
+                mQuizText.text = "퀴즈가 종료되었습니다";
+
+                if (mQuizCanvas.gameObject.activeSelf)
                 {
                     StartCoroutine(EndQuizAfterDelay(5f));
                 }
                 IEnumerator EndQuizAfterDelay(float delay)
                 {
                     yield return new WaitForSeconds(delay);
-                    mQuizManager.quizStart.GetComponent<QuizStart>().EndQuiz();
+                    mQuizStart.GetComponent<QuizStart>().EndQuiz();
                 }
+
                 ClearFloor();
 
-                mQuizManager.player.GetComponent<PlayerMotion>().save = false;
-                mQuizManager.winner.GetComponent<Winner>().isFollowing = false;
-                mQuizManager.winner.GetComponent<Winner>().winner.transform.position = new Vector3(8, 36f, 9);
+                mPlayer.GetComponent<PlayerMotion>().save = false;
+                mWinner.GetComponent<Winner>().isFollowing = false;
+                mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(8, 36f, 9);
                 Invoke("ResetQuiz", 5);
             }
         }
@@ -146,66 +89,66 @@ public class Quiz : MonoBehaviour
     public void CheckFloor()
     {
         //cleanFloor가 true이고 게임이 시작되면
-        if (mQuizManager.cleanFloor && !mQuizManager.isCompetitionPlay())
+        if (mMainClient.mQuizManager.cleanFloor && !mMainClient.mQuizManager.isCompetitionPlay())
         {
             //문제 정답이 O일 때 X 발판을 Die로 변경하고, X일 때 O 발판을 Die로 변경
-            if (mQuizManager.checkQuizAnswer("O"))
+            if (mMainClient.mQuizManager.checkQuizAnswer("O"))
             {
-                mQuizManager.terrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Quiz";
-                mQuizManager.terrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Die";
-                mQuizManager.terrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Die";
-                mQuizManager.mOobj.gameObject.tag = "Quiz";
-                mQuizManager.mXobj.gameObject.tag = "Die";
+                mTerrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Quiz";
+                mTerrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Die";
+                mTerrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Die";
+                mMainClient.mQuizManager.mOobj.gameObject.tag = "Quiz";
+                mMainClient.mQuizManager.mXobj.gameObject.tag = "Die";
             }
-            else if (mQuizManager.checkQuizAnswer("X"))
+            else if (mMainClient.mQuizManager.checkQuizAnswer("X"))
             {
-                mQuizManager.terrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Die";
-                mQuizManager.terrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Die";
-                mQuizManager.terrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Quiz";
-                mQuizManager.mOobj.gameObject.tag = "Die";
-                mQuizManager.mXobj.gameObject.tag = "Quiz";
+                mTerrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Die";
+                mTerrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Die";
+                mTerrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Quiz";
+                mMainClient.mQuizManager.mOobj.gameObject.tag = "Die";
+                mMainClient.mQuizManager.mXobj.gameObject.tag = "Quiz";
             }
             Invoke("ClearFloor", 1f);
-            mQuizManager.cleanFloor = false;
+            mMainClient.mQuizManager.cleanFloor = false;
         }
     }
 
     public void ClearFloor()
     {
-        mQuizManager.terrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Quiz";
-        mQuizManager.terrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Quiz";
-        mQuizManager.terrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Quiz";
-        mQuizManager.mOobj.gameObject.tag = "Quiz";
-        mQuizManager.mXobj.gameObject.tag = "Quiz";
+        mTerrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Quiz";
+        mTerrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Quiz";
+        mTerrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Quiz";
+        mMainClient.mQuizManager.mOobj.gameObject.tag = "Quiz";
+        mMainClient.mQuizManager.mXobj.gameObject.tag = "Quiz";
     }
     //게임이 시작되면 더이상 참가자가 O/X판으로 들어오지 못하게 벽을 만드는것
     //탈락자도 다시 못들어옴
     public void CloseWall()
     {
-        mQuizManager.terrain.GetComponent<TerrainGenerator>().cWallz0.GetComponent<BoxCollider>().enabled = true;
-        mQuizManager.terrain.GetComponent<TerrainGenerator>().cWallz1.GetComponent<BoxCollider>().enabled = true;
-        mQuizManager.terrain.GetComponent<TerrainGenerator>().cWallx0.GetComponent<BoxCollider>().enabled = true;
-        mQuizManager.terrain.GetComponent<TerrainGenerator>().cWallx1.GetComponent<BoxCollider>().enabled = true;
+       mTerrain.GetComponent<TerrainGenerator>().cWallz0.GetComponent<BoxCollider>().enabled = true;
+        mTerrain.GetComponent<TerrainGenerator>().cWallz1.GetComponent<BoxCollider>().enabled = true;
+        mTerrain.GetComponent<TerrainGenerator>().cWallx0.GetComponent<BoxCollider>().enabled = true;
+        mTerrain.GetComponent<TerrainGenerator>().cWallx1.GetComponent<BoxCollider>().enabled = true;
 
     }
     //CloserWall되어있는것을 다시 Open시키는것(ResetQuiz실행시 활성화됨)
     public void OpenWall()
     {
-        mQuizManager.terrain.GetComponent<TerrainGenerator>().cWallz0.GetComponent<BoxCollider>().enabled = false;
-        mQuizManager.terrain.GetComponent<TerrainGenerator>().cWallz1.GetComponent<BoxCollider>().enabled = false;
-        mQuizManager.terrain.GetComponent<TerrainGenerator>().cWallx0.GetComponent<BoxCollider>().enabled = false;
-        mQuizManager.terrain.GetComponent<TerrainGenerator>().cWallx1.GetComponent<BoxCollider>().enabled = false;
+       mTerrain.GetComponent<TerrainGenerator>().cWallz0.GetComponent<BoxCollider>().enabled = false;
+        mTerrain.GetComponent<TerrainGenerator>().cWallz1.GetComponent<BoxCollider>().enabled = false;
+        mTerrain.GetComponent<TerrainGenerator>().cWallx0.GetComponent<BoxCollider>().enabled = false;
+        mTerrain.GetComponent<TerrainGenerator>().cWallx1.GetComponent<BoxCollider>().enabled = false;
     }
     //초기화
     private void ResetQuiz()
     {
-        mQuizManager.userQuiz.Clear(); // 사용된 문제 인덱스 리스트 초기화
-        mQuizManager.mCurrentQuizIndex = 0; // 다음 문제 선택을 위한 인덱스 초기화
-        mQuizManager.ox = false; // 정답 여부 초기화
-        mQuizManager.mRemainCompetitionTime = 3.0f; // 퀴즈 시작까지 시간 초기화
-        mQuizManager.mAnswerTimeOut = 5.0f; // 문제 시간 초기화
-        mQuizManager.mNextAnswerDelayTimeOut = 5.0f; // 다음 문제 시간 초기화
-        mQuizManager.gameStarted = false; // 게임 시작 여부 초기화
+        mMainClient.mQuizManager.userQuiz.Clear(); // 사용된 문제 인덱스 리스트 초기화
+        mMainClient.mQuizManager.mCurrentQuizIndex = 0; // 다음 문제 선택을 위한 인덱스 초기화
+        mMainClient.mQuizManager.ox = false; // 정답 여부 초기화
+        mMainClient.mQuizManager.mRemainCompetitionTime = 3.0f; // 퀴즈 시작까지 시간 초기화
+        mMainClient.mQuizManager.mAnswerTimeOut = 5.0f; // 문제 시간 초기화
+        mMainClient.mQuizManager.mNextAnswerDelayTimeOut = 5.0f; // 다음 문제 시간 초기화
+        mMainClient.mQuizManager.gameStarted = false; // 게임 시작 여부 초기화
 
         OpenWall();
     }

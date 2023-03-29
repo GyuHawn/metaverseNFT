@@ -6,16 +6,21 @@ using UnityEngine;
 public class QuizStart : MonoBehaviour
 {
     public Canvas canvas;
-    public Quiz mQuiz;
+    public MainClient mMainClient;
 
     private bool isColliding = false;
+
+    void Awake()
+    {
+        mMainClient = GameObject.FindObjectOfType<MainClient>();
+    }
 
     private void Update()
     {
         if (isColliding && Input.GetKeyDown(KeyCode.F))
         {
             canvas.gameObject.SetActive(true);
-            mQuiz.mQuizManager.mRemainCompetitionTime = 5.0f;
+            mMainClient.mQuizManager.mRemainCompetitionTime = 5.0f;
         }
 
         DateTime currentTime = DateTime.Now;

@@ -7,8 +7,6 @@ public class PlayerUI : MonoBehaviour
 {
     public TextMeshProUGUI nftText;
 
-    public static List<PlayerDate.ObjP> pdbList;
-
     public int randomIndex;
 
     bool textOn = false;
@@ -17,10 +15,13 @@ public class PlayerUI : MonoBehaviour
     {
         if (!textOn)
         {
-            pdbList = PlayerDate.pdbList;
-            randomIndex = Random.Range(0, pdbList.Count);
-            nftText.text = "이름 : " + pdbList[randomIndex].mName + " / NFT : " + pdbList[randomIndex].mNftAddr;
-            textOn = true;
+            if (MainClient.pdbList != null)
+            {
+
+                randomIndex = Random.Range(0, MainClient.pdbList.Count);
+                nftText.text = "이름 : " + MainClient.pdbList[randomIndex].mName + " / NFT : " + MainClient.pdbList[randomIndex].mNftAddr;
+                textOn = true;
+            }
         }
 
     }

@@ -13,26 +13,21 @@ public class PlayerMotion : MonoBehaviour
     private Rigidbody rigid;
     private Animator anim;
 
-    public static List<PlayerDate.ObjP> pdbList;
+    public static List<MainClient.ObjP> pdbList;
 
-    private PlayerDate mCf;
+    public MainClient mClient;
 
     public Winner win;
-
-    public string a;
-    public string b;
 
     public bool save = false;
     private void Start()
     {
-        mCf = GetComponent<PlayerDate>();
-
-        //zeroVec = transform.position;
         zeroVec = new Vector3(0, 0, 1);
     }
 
     private void Awake()
     {
+        mClient = GameObject.FindObjectOfType<MainClient>();
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         terrain = GameObject.Find("Terrain");
@@ -122,7 +117,7 @@ public class PlayerMotion : MonoBehaviour
     }
     void OnCollisionStay(Collision collision)
     {
-        pdbList = PlayerDate.pdbList;
+        pdbList = MainClient.pdbList;
 
         if (collision.gameObject.CompareTag("Die"))
         {
@@ -136,20 +131,15 @@ public class PlayerMotion : MonoBehaviour
         {
             if (save == false)
             {
-
                 win.isFollowing = true;
-                a = pdbList[0].mName;
-                b = pdbList[0].mNftAddr;
                 Save();
             }
         }
-    }
+    } 
 
     public void Save()
     {
-        pdbList[0].mName = a;
-        pdbList[0].mNftAddr = b;
-        pdbList[0].posiSend(mCf.mCt, true);
+        pdbList[0].posiSend(mClient.mCt, true);
         save = true;
     }
 }

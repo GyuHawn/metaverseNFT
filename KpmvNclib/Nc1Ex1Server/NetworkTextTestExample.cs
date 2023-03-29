@@ -36,6 +36,8 @@ namespace Nc1Ex1Server
                 {
                     pkw.wStrToNclib1FromClr((string)d1.GetValue("content"));
                     pkw.wStrToNclib1FromClr((string)d1.GetValue("answer"));
+
+                    Nc1Ex1ServerMainAm2.qv("quizdata" + (string)d1.GetValue("content") + (string)d1.GetValue("answer"));
                 }
                 sv.send(cti, pkw);
             }
