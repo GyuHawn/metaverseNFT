@@ -13,6 +13,7 @@ public class QuizStart : MonoBehaviour
     void Awake()
     {
         mMainClient = GameObject.FindObjectOfType<MainClient>();
+
     }
 
     private void Update()
@@ -28,11 +29,6 @@ public class QuizStart : MonoBehaviour
         {
             canvas.gameObject.SetActive(true);
         }
-    }
-
-    public void EndQuiz()
-    {
-        canvas.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)

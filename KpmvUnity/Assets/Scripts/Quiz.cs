@@ -13,6 +13,9 @@ public class Quiz : MonoBehaviour
     public GameObject mWinner;
     public GameObject mPlayer;
 
+    public GameObject mOobj;
+    public GameObject mXobj;
+
     // public static List<MainClient> dbList;
     void Awake()
     {
@@ -30,7 +33,6 @@ public class Quiz : MonoBehaviour
         //게임 시작(게임 유)
         if (mMainClient.mQuizManager.isCompetitionState_Starting())
         {
-            Debug.Log("!!!!!!!!!!!!!!!!!!!!!!"+(mQuizText==null));
             mQuizText.text = "10초 후 퀴즈가 시작됩니다" + System.Environment.NewLine +
               "문제 종료시 중앙에 있어도 탈락 처리 됩니다" + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.mRemainCompetitionTime);
         }
@@ -73,7 +75,8 @@ public class Quiz : MonoBehaviour
                 IEnumerator EndQuizAfterDelay(float delay)
                 {
                     yield return new WaitForSeconds(delay);
-                    mQuizStart.GetComponent<QuizStart>().EndQuiz();
+                    mQuizCanvas.gameObject.SetActive(false);
+                    //mQuizStart.GetComponent<QuizStart>().canvas.gameObject.EndQuiz();
                 }
 
                 ClearFloor();
@@ -97,16 +100,16 @@ public class Quiz : MonoBehaviour
                 mTerrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Quiz";
                 mTerrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Die";
                 mTerrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Die";
-                mMainClient.mQuizManager.mOobj.gameObject.tag = "Quiz";
-                mMainClient.mQuizManager.mXobj.gameObject.tag = "Die";
+                mOobj.gameObject.tag = "Quiz";
+                mXobj.gameObject.tag = "Die";
             }
             else if (mMainClient.mQuizManager.checkQuizAnswer("X"))
             {
                 mTerrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Die";
                 mTerrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Die";
                 mTerrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Quiz";
-                mMainClient.mQuizManager.mOobj.gameObject.tag = "Die";
-                mMainClient.mQuizManager.mXobj.gameObject.tag = "Quiz";
+                mOobj.gameObject.tag = "Die";
+                mXobj.gameObject.tag = "Quiz";
             }
             Invoke("ClearFloor", 1f);
             mMainClient.mQuizManager.cleanFloor = false;
@@ -118,8 +121,8 @@ public class Quiz : MonoBehaviour
         mTerrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Quiz";
         mTerrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Quiz";
         mTerrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Quiz";
-        mMainClient.mQuizManager.mOobj.gameObject.tag = "Quiz";
-        mMainClient.mQuizManager.mXobj.gameObject.tag = "Quiz";
+        mOobj.gameObject.tag = "Quiz";
+        mXobj.gameObject.tag = "Quiz";
     }
     //게임이 시작되면 더이상 참가자가 O/X판으로 들어오지 못하게 벽을 만드는것
     //탈락자도 다시 못들어옴

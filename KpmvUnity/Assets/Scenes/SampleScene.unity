@@ -978,6 +978,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 895910831b3c8054eb9049ca6b34928f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &540360222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540360212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 426f55fce947e8c4f9deed5429afb047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mQuizText: {fileID: 267531654}
+  mQuizCanvas: {fileID: 645795065}
+  mMainClient: {fileID: 540360219}
+  mTerrain: {fileID: 1985588125}
+  mQuizStart: {fileID: 410615652}
+  mWinner: {fileID: 1112619166}
+  mPlayer: {fileID: 167718258}
+  mOobj: {fileID: 0}
+  mXobj: {fileID: 0}
+  win: {fileID: 0}
 --- !u!1 &645795061
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,7 +1012,6 @@ GameObject:
   - component: {fileID: 645795065}
   - component: {fileID: 645795064}
   - component: {fileID: 645795063}
-  - component: {fileID: 645795067}
   m_Layer: 5
   m_Name: QuizCanvas
   m_TagString: Untagged
@@ -1080,36 +1101,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &645795067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 645795061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bf99d3509fd3ad48bd3998f641a438c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mState: 0
-  quizText: {fileID: 267531654}
-  canvas: {fileID: 645795065}
-  quizStart: {fileID: 410615652}
-  terrain: {fileID: 0}
-  winner: {fileID: 0}
-  player: {fileID: 0}
-  mOobj: {fileID: 779725801}
-  mXobj: {fileID: 1624518189}
-  win: {fileID: 919132149155446097, guid: f79be48242d7a8d478cdb0117d382e3e, type: 3}
-  userQuiz: 
-  ox: 0
-  mRemainCompetitionTime: 600
-  mAnswerTimeOut: 5
-  mNextAnswerDelayTimeOut: 5
-  gameStarted: 0
-  mCurrentQuizIndex: 0
-  cleanFloor: 1
 --- !u!1001 &705330503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1167,11 +1158,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
---- !u!1 &779725801 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2128810134475820311, guid: 7d93b38c68841fc4a9d0ee21807b5d5c, type: 3}
-  m_PrefabInstance: {fileID: 1209603675}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &779725804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1639553416573130669, guid: 7d93b38c68841fc4a9d0ee21807b5d5c, type: 3}
@@ -2260,7 +2246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f79be48242d7a8d478cdb0117d382e3e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 36
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f79be48242d7a8d478cdb0117d382e3e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2405,11 +2391,6 @@ Transform:
   m_Father: {fileID: 1060076271}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1624518189 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4952750000715047032, guid: 76fec2e3a6b4d1c4e8b94f23c11c600a, type: 3}
-  m_PrefabInstance: {fileID: 1659880435}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1624518190 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5760213110591847106, guid: 76fec2e3a6b4d1c4e8b94f23c11c600a, type: 3}

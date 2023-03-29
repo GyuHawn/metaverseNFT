@@ -124,7 +124,6 @@ public class MainClient : MonoBehaviour
                         var tmp = t1.GetComponent<TextMeshProUGUI>();
 
                         mLines.Add(message);
-                        Debug.Log("!!!!!!!!!!!!!!!!!" + mLines.Count);
 
                         if (mLines.Count > maxLines)
                         {
@@ -141,14 +140,12 @@ public class MainClient : MonoBehaviour
     public Client mCt;
 
     static public List<ObjP> pdbList;
-   // static public List<Obj1> dbList;
     static public List<string> mLines = new List<string>();
 
     void Start()
     {
         mQuizManager = new QuizManager();
 
-        Debug.Log("start qm: " + (mQuizManager == null));
         mCt = new Client(mQuizManager);
         mCt.connect("127.0.0.3", 7777);
         Debug.Log("Client Start 1111");

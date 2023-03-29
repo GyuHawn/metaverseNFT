@@ -19,10 +19,6 @@ public class QuizManager //: MonoBehaviour
 
     CompetitionState mState;
 
-    public GameObject mOobj;
-    public GameObject mXobj;
-    public GameObject win;
-
     public List<int> userQuiz = new List<int>();
 
     public class QuizData
