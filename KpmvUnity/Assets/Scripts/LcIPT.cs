@@ -4,22 +4,136 @@ using UnityEngine;
 
 public class LcIPT : MonoBehaviour
 {
-    const bool mbOnline = false;
+    public static LcIPT Instance;
+    private bool mbOnline = false;
     public float mJumpHeight = 2f;
 
-    void Start()
+    private MultiClient mCf;
+    public GameObject splayer;
+    public GameObject playerPF;
+    public GameObject go;
+    public GameObject Camera;
+
+    public const int maxP = 2;
+    Vector3[] positions = { new Vector3(2, 40, 15), new Vector3(-2, 40, 15) };
+    Color[] colors = { Color.blue, Color.red };
+
+    public GameObject[] mPlayers;
+
+    private int pIndex = -1;
+
+    public bool isOnline() { return mbOnline; }
+    public void SetIndex(int _index)
     {
+
+        pIndex = _index;
+        if (pIndex >= 0)
+        {
+            InstantiatePlayer(pIndex);
+            go = mPlayers[pIndex];
+            Camera.GetComponent<camera>().SetTarget(go);
+
+        }
+        else
+        {
+            Debug.Log("인원수 초과2"); mCf.mCt.disconnect();
+        }
 
     }
 
-    public void moveSend(JcCtUnity1.JcCtUnity1 ct, GameObject obj, float plusx, float plusy, float plusz)
+    public int GetIndex() { return pIndex; }
+
+    public void Awake()
     {
-        using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(101))
+        if (Instance != null && Instance != this)
         {
-            pkw.wStr1(obj.name);
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+    void Start()
+    {
+        mCf = GetComponent<MultiClient>();
+        mPlayers = new GameObject[maxP];
+        go = splayer;
+        go.SetActive(true);
+        Camera.GetComponent<camera>().SetTarget(go);
+    }
+
+    public void Connect()
+    {
+        if (!mCf.mCt.isConnected())
+        {
+            for (int i = 0; i < maxP; i++)
+            {
+                if (mPlayers[i])
+                {
+                    Destroy(mPlayers[i]);
+                    Debug.Log("Destroy pidx: " + i);
+                }
+            }
+            if (mCf.mCt.connect("127.0.0.3", 7771))
+            {
+                go = null;
+                splayer.SetActive(false);
+                mbOnline = true;
+                Debug.Log("MultiClient Start 1111");
+            }
+        }
+    }
+
+    public void DisConnect()
+    {
+
+        for (int i = 0; i < maxP; i++)
+        {
+            if (mPlayers[i])
+            {
+                Destroy(mPlayers[i]);
+                Debug.Log("Destroy pidx: " + i);
+            }
+        }
+        pIndex = -1;
+        mCf.mCt.disconnect();
+        mbOnline = false;
+        go = splayer;
+        go.SetActive(true);
+        Camera.GetComponent<camera>().SetTarget(go);
+    }
+
+    public void InstantiatePlayer(int i)
+    {
+        GameObject player = Instantiate(playerPF, positions[i], Quaternion.identity);
+        Transform head = player.transform.Find("Bone/Bone.001/Bone.002/Cube");
+        head.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Diffuse"));
+        head.GetComponent<MeshRenderer>().material.SetColor("_Color", colors[i]);
+        mPlayers[i] = player;
+    }
+    public void moveSend(JcCtUnity1.JcCtUnity1 ct, GameObject obj, int code, float plusx, float plusy, float plusz)
+    {
+        using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(3))
+        {
+            pkw.wInt32s(LcIPT.Instance.pIndex);
+            pkw.wInt32s(code);
             pkw.wReal32(obj.transform.position.x + plusx);
-            pkw.wReal32(obj.transform.position.x + plusy);
-            pkw.wReal32(obj.transform.position.x + plusz);
+            pkw.wReal32(obj.transform.position.y + plusy);
+            pkw.wReal32(obj.transform.position.z + plusz);
+            ct.send(pkw);
+        }
+    }
+
+    public void currentSend(JcCtUnity1.JcCtUnity1 ct, int isNew = 0)
+    {
+        using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(3))
+        {
+            pkw.wInt32s(LcIPT.Instance.pIndex);
+            pkw.wInt32s(isNew);
+            pkw.wReal32(go.transform.position.x);
+            pkw.wReal32(go.transform.position.y);
+            pkw.wReal32(go.transform.position.z);
             ct.send(pkw);
         }
     }
@@ -29,10 +143,10 @@ public class LcIPT : MonoBehaviour
         Move();
     }
 
+
     void Move()
     {
         float spd = 10.0f * Time.deltaTime;
-        var go = GameObject.Find("Player");
 
         if (go)
         {
@@ -41,7 +155,7 @@ public class LcIPT : MonoBehaviour
             {
                 if (mbOnline)
                 {
-                    moveSend(null, go, 0, 0, +spd);
+                    moveSend(mCf.mCt, go, (int)KeyCode.W, 0, 0, +spd);
                 }
                 else
                 {
@@ -53,7 +167,7 @@ public class LcIPT : MonoBehaviour
             {
                 if (mbOnline)
                 {
-                    moveSend(null, go, 0, 0, -spd);
+                    moveSend(mCf.mCt, go, (int)KeyCode.S, 0, 0, -spd);
                 }
                 else
                 {
@@ -65,7 +179,7 @@ public class LcIPT : MonoBehaviour
             {
                 if (mbOnline)
                 {
-                    moveSend(null, go, -spd, 0, 0);
+                    moveSend(mCf.mCt, go, (int)KeyCode.A, -spd, 0, 0);
                 }
                 else
                 {
@@ -77,7 +191,7 @@ public class LcIPT : MonoBehaviour
             {
                 if (mbOnline)
                 {
-                    moveSend(null, go, +spd, 0, 0);
+                    moveSend(mCf.mCt, go, (int)KeyCode.D, +spd, 0, 0);
                 }
                 else
                 {
@@ -91,7 +205,7 @@ public class LcIPT : MonoBehaviour
                 {
                     if (mbOnline)
                     {
-                        moveSend(null, go, 0, mJumpHeight, 0);
+                        moveSend(mCf.mCt, go, (int)KeyCode.Space, 0, mJumpHeight, 0);
                     }
                     else
                     {

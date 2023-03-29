@@ -237,6 +237,7 @@
     <Compile Include="Nc1Ex1ServerMainAm2.cs" />
     <Compile Include="NetworkTextTestExample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SvMulti.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
