@@ -1,0 +1,80 @@
+[{
+  "_id": {
+    "$oid": "64223aeece85288e8eb5dd79"
+  },
+  "userid": "test1234",
+  "username": "홍길동",
+  "email": "test1@test.com",
+  "password": "1234",
+  "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
+  "CA": "",
+  "wins": 0
+},{
+  "_id": {
+    "$oid": "64223b44ce85288e8eb5dd7b"
+  },
+  "userid": "test1",
+  "username": "test",
+  "email": "test2@test.com",
+  "password": "1234",
+  "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
+  "CA": "",
+  "wins": 0
+},{
+  "_id": {
+    "$oid": "64228a192953f11b39330b75"
+  },
+  "userid": "test12341234",
+  "username": "tesss1121",
+  "email": "tttes@test.com",
+  "password": "1234",
+  "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
+  "CA": "",
+  "wins": 0
+},{
+  "_id": {
+    "$oid": "64228e672953f11b39330b76"
+  },
+  "userid": "admin",
+  "username": "admin",
+  "email": "admin@admin.com",
+  "password": "admin",
+  "EOA": "",
+  "CA": "",
+  "wins": {
+    "$numberDouble": "NaN"
+  }
+},{
+  "_id": {
+    "$oid": "6422a45c2953f11b39330b77"
+  },
+  "userid": "test3",
+  "username": "test3",
+  "email": "test3@test.com",
+  "password": "1234",
+  "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
+  "CA": "",
+  "wins": 0
+},{
+  "_id": {
+    "$oid": "6423c486af6330b41cd14d80"
+  },
+  "userid": "ge7979",
+  "username": "이동규",
+  "email": "teset@teset.com",
+  "password": "dlehdrb1!",
+  "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
+  "CA": "",
+  "wins": 0
+},{
+  "_id": {
+    "$oid": "6423d2ce54d9e7944beca6d3"
+  },
+  "userid": "qwerqwer12",
+  "username": "asdf",
+  "email": "asdf@asdf.com",
+  "password": "test1234!",
+  "EOA": "",
+  "CA": "",
+  "wins": 0
+}]
