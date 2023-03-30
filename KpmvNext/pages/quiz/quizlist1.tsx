@@ -8,7 +8,7 @@ import Quiz from './quiz';
 
 const axios1 = (url: string) => Axios.get(url).then((res) => res.data);
 
-const QuizList = () => {
+const Quizlist1 = () => {
     const {data, error, isLoading} = useSWR("http://localhost:3000/api/metaquiz", axios1);
     const [smShow, setSmShow] = useState(false);
     const [ipt1, setipt1] = useState("");
@@ -25,7 +25,7 @@ const QuizList = () => {
     return (
         <>
             <Quiz/>
-            <Table striped bordered hover>
+            <Table striped bordered hover className={"mt-3"}>
                 {data?.map((e: { content: string, answer: String }) => {
                     return <>
                         <tr>
@@ -62,7 +62,8 @@ const QuizList = () => {
                 <Modal.Body>
                     <Form.Group className='mb-3'>
                         <Form.Label>퀴즈</Form.Label>
-                        <Form.Control as="textarea" rows={3} value={ipt1} onChange={(e) => setipt1(e.target.value)} placeholder="퀴즈 추가"/>
+                        <Form.Control as="textarea" rows={3} value={ipt1} onChange={(e) => setipt1(e.target.value)}
+                                      placeholder="퀴즈 추가"/>
                     </Form.Group>
                     <Form.Group className='mb-3'>
                         <Form.Label>퀴즈내용</Form.Label>
@@ -80,7 +81,7 @@ const QuizList = () => {
                 </Modal.Footer>
             </Modal>
         </>
-    )
+    );
 }
 
-export default QuizList;
+export default Quizlist1;

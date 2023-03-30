@@ -53,7 +53,7 @@ async function DbUpdate2(game:String, winner:String, EOA:String, count:Number){
 }
 async function DbUpdate3(game:String, nftId:String){
   const clc1 = await DbConnect1();
-  const result = await clc1.updateOne({game:game},{$set:{nftId:nftId}});
+  const result = clc1.updateOne({game:game},{$set:{nftId:nftId}});
 }
 
 //삭제
@@ -73,8 +73,8 @@ async function DbReadAll(limit = 100){
 export default async (req: NextApiRequest, res: NextApiResponse)=>{
   const{add, read1, read2,read3, update1, update2, update3, del, nftId, winner, EOA} =req.query;
   
-  console.log("usr get add: "+add+" read: "+read1+" read2: "+read2+" update1: "+update2+" nftId: "+nftId+" winner: "+winner + "EOA: " + EOA);
-  
+  console.log("usr get add: "+add+" read: "+read1+" read2: "+read2+" update1: "+update3+" nftId: "+nftId+" winner: "+winner + "EOA: " + EOA);
+  console.log("어디서 나오는거임?1111111111111");
   res.statusCode = StatusCodes.OK;
 
   if(read1){
@@ -93,15 +93,16 @@ export default async (req: NextApiRequest, res: NextApiResponse)=>{
     return res.send(await DbReadAll());
   }else if(update2){
     await DbUpdate2(String(update2),String(req.query.winner), String(req.query.EOA), Number(req.query.count));
-    console.log("성공 실패");
     return res.send(await DbReadAll());
   }else if(update3){
-    await DbUpdate3(String(update3),String(req.query.nftId));
+    await DbUpdate3(String(update3), String(req.query.nftId));
+    console.log("어디서 나오는거임? nft발급완료?");
     return res.send(await DbReadAll());
   }else if(del){
     await DbDelete1(String(del));
   }else{
     let ar1 = await DbReadAll();
+    console.log("어디서 나오는거임?2222");
     return res.send(JSON.stringify(ar1));
   }
 }

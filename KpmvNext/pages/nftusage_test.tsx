@@ -115,6 +115,7 @@ export default function App1() {
 
                     myKeys.map((key) => (
 
+                        // eslint-disable-next-line react/jsx-key
                         <li>
                             index: {key} nftId: {nfts.get(key).slice(0, 12)} addr: {nfts.get(key).slice(12)}
                         </li>

@@ -17,26 +17,34 @@ const App1 = () => {
 
     return (
         <>
-            <Accordion className ="text-center">
+            <Accordion className="text-center">
                 {data.map((e: { game: string, nftId: string, winner: string, EOA: string, CA: string, startTime: string }) => {
-                        return <>
-                            <Accordion.Item eventKey={e.game}>
-                                <Accordion.Header>{e.game}</Accordion.Header>
-                                <Accordion.Body>
-                                    <h2> 대회 리스트</h2>
-                                    <br/>
-                                    <p><h1>{e.game}</h1></p>
-                                    <p><h1>우승자 : <a href={'/user/' + e.winner}>{e.winner}</a></h1></p>
-                                    <p><h1>EOA : {e.EOA}</h1></p>
-                                    <p><h1>CA : <a href={'/nftusage_test'}>{e.CA}</a></h1></p>
-                                    <p><h1>nft id : <a href={'/nft/' + e.nftId}>{e.nftId}</a></h1></p>
-                                    <p><h1>대회 시작 시간 : {e.startTime}</h1></p>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        </>
+
+                        if (e.winner != "" && e.nftId == "") {
+                            fetch('/api/nftapi4?EOA=' + e.EOA).then((rst) => rst.json()).then(rst => {
+                                Axios.get("http://localhost:3000/api/nftlist?update3=" + e.game + "&nftId=" + rst.nftid);
+                                window.location.reload();
+                            });
+                        }
+
+                    return <>
+                        <Accordion.Item eventKey={e.game}>
+                            <Accordion.Header>{e.game}</Accordion.Header>
+                            <Accordion.Body>
+                                <h2> 대회 리스트</h2>
+                                <br/>
+                                <p><h1>{e.game}</h1></p>
+                                <p><h1>우승자 : <a href={'/user/' + e.winner}>{e.winner}</a></h1></p>
+                                <p><h1>EOA : {e.EOA}</h1></p>
+                                <p><h1>CA : <a href={'/nftusage_test'}>{e.CA}</a></h1></p>
+                                <p><h1>nft id : <a href={'/nft/' + e.nftId}>{e.nftId}</a></h1></p>
+                                <p><h1>대회 시작 시간 : {e.startTime}</h1></p>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </>;
                 })}
             </Accordion>
         </>
-    )
+    );
 }
 export default App1;

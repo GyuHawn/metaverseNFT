@@ -2,12 +2,13 @@ import Web3 from 'web3'
 import {NextApiRequest, NextApiResponse} from 'next'
 import * as Fs from 'fs'
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.query.mint != undefined) {
         return mint(req, res);
     }
     if (req.query.EOA != undefined) {
-        return minttest(req, res);
+        return await minttest(req, res);
     }
     if (req.query.list != undefined) {
         return list(req, res);
@@ -84,7 +85,6 @@ async function list(req: NextApiRequest, res: NextApiResponse) {
 
     gW3wsock.currentProvider.on("connect", async function () {
 
-
         let connectrst = "connnect success";
 
         //const accounts = await gW3wsock.eth.getAccounts();
@@ -121,7 +121,6 @@ async function supply(req: NextApiRequest, res: NextApiResponse) {
         });
     });
 }
-
 
 async function balance(req: NextApiRequest, res: NextApiResponse) {
     const sid = Array.isArray(req.query.balance) ? req.query.balance[0] : req.query.balance;

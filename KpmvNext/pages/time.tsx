@@ -5,7 +5,7 @@ import Axios from "axios";
 import useSWR from "swr";
 
 const axios1 = (url: string) => Axios.get(url).then((res) => res.data);
-
+let gap:any;
 function Time() {
     const {data, error} = useSWR("http://localhost:3000/api/nftlist", axios1);
     const [time, setTime] = useState(new Date());
@@ -22,7 +22,7 @@ function Time() {
             return e.startTime.slice(0, 4) + '/' + e.startTime.slice(5, 6) + '/' + e.startTime.slice(7, 9) + '/' + e.startTime.slice(10, 15);
         }
     });
-    let gap = Date.parse(starttime) - time.getTime();
+    gap = Date.parse(starttime) - time.getTime();
 
     // @ts-ignore
     return (
@@ -64,6 +64,10 @@ function printDate(time: number) {
     const minutes = String(Math.floor((time / (1000 * 60)) % 60)).padStart(2, "0"); // 분
     const second = String(Math.floor((time / 1000) % 60)).padStart(2, "0"); // 초
     return `${days}일 ${hour}: ${minutes}: ${second}`;
+}
+
+export function gapTime(){
+    return gap;
 }
 
 export default Time;
