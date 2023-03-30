@@ -37,6 +37,7 @@ namespace Nc1Ex1Server
             }
             return list;
         }
+
         public static List<BsonDocument> DbEx_FindPlayer()
         {
             List<BsonDocument> list = new List<BsonDocument>();
@@ -50,7 +51,6 @@ namespace Nc1Ex1Server
             return list;
         }
 
-
         public static void DbEx_InsertBson1()
         {
             var db1 = DbCon1();
@@ -62,6 +62,7 @@ namespace Nc1Ex1Server
             bd1.Set("Age", rand.Next());
             clc1.InsertOne(bd1);
         }
+
         public static void DbEx_UpdateTest(string gameName, string winner, string nftAddr)
         {
             var db1 = DbCon1();
@@ -73,5 +74,17 @@ namespace Nc1Ex1Server
             clc1.UpdateOne(ft1, us1);
         }
 
+        public static List<BsonDocument> QuizName()
+        {
+            List<BsonDocument> list = new List<BsonDocument>();
+            var db1 = DbCon1();
+            var clc1 = db1.GetCollection<BsonDocument>(Clcn2);
+            var docs1 = clc1.Find(new BsonDocument()).ToList();
+            foreach (var d1 in docs1)
+            {
+                list.Add(d1);
+            }
+            return list;
+        }
     }
 }

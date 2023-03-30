@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 public class MainClient : MonoBehaviour
 {
-
     public QuizManager mQuizManager;
     public class ObjP
     {
@@ -36,6 +35,10 @@ public class MainClient : MonoBehaviour
         }
     }
 
+    public class Quizinfo
+    {
+        public string mGame, mTime, mWinner;
+    }
 
     public class Client : JcCtUnity1.JcCtUnity1
     {
@@ -114,6 +117,28 @@ public class MainClient : MonoBehaviour
                         }
                     }
                     break;
+                case 102:
+                    {
+                        quizinfo = new List<Quizinfo>();
+                        var count = pkrd.rInt32s();
+                        var s1 = "";
+                        var s2 = "";
+                        var s3 = "";
+                        for (int i = 0; i < count; i++)
+                        {
+                            Quizinfo mQuizinfo = new Quizinfo();
+                            s1 = pkrd.rStr1def();
+                            s2 = pkrd.rStr1def();
+                            s3 = pkrd.rStr1def();
+                            qv("ServerEnter 시간 수신 s1: " + s1 + " s2 : " + s2 + " s3: " + s3);
+                            mQuizinfo.mGame = s1;
+                            mQuizinfo.mTime = s2;
+                            mQuizinfo.mWinner = s3;
+                            qv("Quiz Start Time : " + s2);
+                            quizinfo.Add(mQuizinfo);
+                        }
+                    }
+                    break;
                 case 112:
                     {
                         int maxLines = 5;
@@ -138,7 +163,7 @@ public class MainClient : MonoBehaviour
     }
 
     public Client mCt;
-
+    static public List<Quizinfo> quizinfo;
     static public List<ObjP> pdbList;
     static public List<string> mLines = new List<string>();
 
@@ -147,7 +172,7 @@ public class MainClient : MonoBehaviour
         mQuizManager = new QuizManager();
 
         mCt = new Client(mQuizManager);
-        mCt.connect("127.0.0.3", 7777);
+        mCt.connect("127.0.0.1", 7777);
         Debug.Log("Client Start 1111");
     }
 
