@@ -13,7 +13,7 @@ public class PlayerMotion : MonoBehaviour
     private Rigidbody rigid;
     private Animator anim;
 
-    public static List<MainClient.ObjP> pdbList;
+    public static List<MainClient.PlayerObj> pdbList;
 
     public MainClient mClient;
 
@@ -63,7 +63,6 @@ public class PlayerMotion : MonoBehaviour
     {
         Move();
         Turn();
-        Motion();
     }
 
     private void Move()
@@ -73,9 +72,6 @@ public class PlayerMotion : MonoBehaviour
         if (GetKey(KeyCode.W) || GetKey(KeyCode.S) || GetKey(KeyCode.A) || GetKey(KeyCode.D))
         {
             anim.SetBool("Run", true);
-            anim.SetBool("Hello", false);
-            anim.SetBool("Win", false);
-            anim.SetBool("Lose", false);
         }
         else
         {
@@ -113,26 +109,6 @@ public class PlayerMotion : MonoBehaviour
         transform.LookAt(transform.position + zeroVec);
     }
 
-    private void Motion()
-    {
-        if (!(GetKey(KeyCode.W) || GetKey(KeyCode.S) || GetKey(KeyCode.A) || GetKey(KeyCode.D)))
-        {
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                anim.SetBool("Hello", true);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                anim.SetBool("Win", true);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                anim.SetBool("Lose", true);
-            }
-        }
-    }
-
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Quiz") || collision.gameObject.CompareTag("Die")) //바닥 태그 추가 (태그 추가시 || 사용)
@@ -164,7 +140,7 @@ public class PlayerMotion : MonoBehaviour
 
     public void Save()
     {
-        pdbList[0].posiSend(mClient.mCt, true);
+        MainClient.currentUser.posiSend(mClient.mCt, true);
         save = true;
     }
 }

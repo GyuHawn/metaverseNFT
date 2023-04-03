@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -6,23 +6,37 @@ public class MainClient : MonoBehaviour
 {
 
     public QuizManager mQuizManager;
-    public class ObjP
-    {
-        public string mName;
-        public string mNftAddr;
+    public static PlayerObj currentUser;
 
+    public class PlayerObj
+    {
+        public string mUserName;
+        public string mEOA;
+        public string mUserid;
+        public string mPassword;
+        
         public void posiSend(Client ct, bool saveDB = false)
         {
             using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(111))
             {
-                pkw.wStr1(mName);
-                pkw.wStr1(mNftAddr);
+                pkw.wStr1(mUserName);
+                pkw.wStr1(mEOA);
+                ct.send(pkw);
+            }
+        }
+
+        public void loginSend(Client ct, string mUserid, string mPassword)
+        {
+            using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(113))
+            {
+                pkw.wStr1(mUserid);
+                pkw.wStr1(mPassword);
                 ct.send(pkw);
             }
         }
     }
 
-    public class ObjT
+    public class TexstObj
     {
         public string mText;
 
@@ -36,13 +50,18 @@ public class MainClient : MonoBehaviour
         }
     }
 
+    public class Quizinfo
+    {
+        public string mGame, mTime, mWinner;
+    }
+
 
     public class Client : JcCtUnity1.JcCtUnity1
     {
         static public void qv(string s1) { Debug.Log(s1); }
 
         public QuizManager mQuizManager;
-
+        
         public Client(QuizManager qm) : base(System.Text.Encoding.Unicode)
         {
             mQuizManager = qm;
@@ -81,7 +100,7 @@ public class MainClient : MonoBehaviour
                             s1 = pkrd.rStr1def();
                             s2 = pkrd.rStr1def();
 
-                            qv("ServerEnter ¼ö½Å s1: " + s1 + " s2 : " + s2);
+                            qv("ServerEnter ìˆ˜ì‹  s1: " + s1 + " s2 : " + s2);
                             quizdata.mContent = s1;
                             quizdata.mAnswer = s2;
                             qv("recv 100 qm: " + (mQuizManager == null));
@@ -94,23 +113,51 @@ public class MainClient : MonoBehaviour
                     break;
                 case 101:
                     {
-                        pdbList = new List<ObjP>();
+                        pdbList = new List<PlayerObj>();
                         var count = pkrd.rInt32s();
 
                         var s1 = "";
                         var s2 = "";
+                        var s3 = "";
+                        var s4 = "";
 
                         for (int i = 0; i < count; i++)
                         {
-                            ObjP mObjP = new ObjP();
+                            PlayerObj mObjP = new PlayerObj();
                             s1 = pkrd.rStr1def();
                             s2 = pkrd.rStr1def();
+                            s3 = pkrd.rStr1def();
+                            s4 = pkrd.rStr1def();
 
-                            qv("ServerEnter ¼ö½Å s1: " + s1 + " s2 : " + s2);
-                            mObjP.mName = s1;
-                            mObjP.mNftAddr = s2;
+                            qv("ServerEnter ìˆ˜ì‹  s1: " + s1 + " s2 : " + s2 + " s3 : " + s3);
+                            mObjP.mUserName = s1;
+                            mObjP.mEOA = s2;
+                            mObjP.mUserid = s3;
+                            mObjP.mPassword = s4;
                             pdbList.Add(mObjP);
                             qv("Player dbList : " + pdbList.Count);
+                        }
+                    }
+                    break;
+                case 102:
+                    {
+                        quizinfo = new List<Quizinfo>();
+                        var count = pkrd.rInt32s();
+                        var s1 = "";
+                        var s2 = "";
+                        var s3 = "";
+                        for (int i = 0; i < count; i++)
+                        {
+                            Quizinfo mQuizinfo = new Quizinfo();
+                            s1 = pkrd.rStr1def();
+                            s2 = pkrd.rStr1def();
+                            s3 = pkrd.rStr1def();
+                            qv("ServerEnter ìˆ˜ì‹  s1: " + s1 + " s2 : " + s2 + " s3: " + s3);
+                            mQuizinfo.mGame = s1;
+                            mQuizinfo.mTime = s2;
+                            mQuizinfo.mWinner = s3;
+                            qv("Quiz Start Time : " + s2);
+                            quizinfo.Add(mQuizinfo);
                         }
                     }
                     break;
@@ -139,7 +186,8 @@ public class MainClient : MonoBehaviour
 
     public Client mCt;
 
-    static public List<ObjP> pdbList;
+    static public List<Quizinfo> quizinfo;
+    static public List<PlayerObj> pdbList;
     static public List<string> mLines = new List<string>();
 
     void Start()

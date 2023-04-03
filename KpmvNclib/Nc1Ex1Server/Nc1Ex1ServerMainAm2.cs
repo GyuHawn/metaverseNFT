@@ -12,6 +12,7 @@ namespace Nc1Ex1Server
             public List<int> mCs = new List<int>();
             public NetworkTextTestExample mNtte = new NetworkTextTestExample();
             public NetworkTextTestExample mNttep = new NetworkTextTestExample();
+            public NetworkTextTestExample mNtteG = new NetworkTextTestExample();
             public NccpcDll.NccpcMemmgr2Mgr mMm;
 
             public Sv()
@@ -25,6 +26,7 @@ namespace Nc1Ex1Server
                 mNtte.Db();
                 mNttep.Dbp();
 
+                mNtteG.QuizName();
 
                 if (!mMm.create()) { return false; }
 
@@ -50,6 +52,7 @@ namespace Nc1Ex1Server
                 mCs.Add(cti);
                 mNtte.QuizDataSend(this, cti);
                 mNttep.PlayerDataSend(this, cti);
+                mNtteG.QuizNameSend(this, cti);
 
             }
 

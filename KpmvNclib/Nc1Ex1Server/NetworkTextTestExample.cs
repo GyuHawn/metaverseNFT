@@ -12,6 +12,36 @@ namespace Nc1Ex1Server
     {
         public List<BsonDocument> mQuizList = new List<BsonDocument>();
         public List<BsonDocument> mPlayerList = new List<BsonDocument>();
+        public List<BsonDocument> mQuizName = new List<BsonDocument>();
+
+        public List<BsonDocument> QuizName()
+        {
+            mQuizName = Mdb1.QuizName();
+            foreach (var q1 in mQuizName)
+            {
+                var s1 = q1.GetValue("game");
+                var s2 = q1.GetValue("startTime");
+                var s3 = q1.GetValue("winner");
+                Nc1Ex1ServerMainAm2.qv("Dbg mongodb gamename " + s1 + " startTime : " + s2 + " winner : " + s3);
+            }
+            return mQuizName;
+        }
+        public void QuizNameSend(Nc1Ex1ServerMainAm2.Sv sv, int cti)
+        {
+            using (var pkw = sv.mMm.allocNw1pk(0xff))
+            {
+                pkw.setType(102);
+                pkw.wInt32s(mQuizName.Count);
+                foreach (var q1 in mQuizName)
+                {
+                    pkw.wStrToNclib1FromClr((string)q1.GetValue("game"));
+                    pkw.wStrToNclib1FromClr((string)q1.GetValue("startTime"));
+                    pkw.wStrToNclib1FromClr((string)q1.GetValue("winner"));
+                }
+                sv.send(cti, pkw);
+            }
+        }
+
 
         public List<BsonDocument> Db()
         {
@@ -48,8 +78,10 @@ namespace Nc1Ex1Server
             mPlayerList = Mdb1.DbEx_FindPlayer();
             foreach (var d1 in mPlayerList)
             {
-                var s1 = d1.GetValue("name");
-                var s2 = d1.GetValue("nftAddr");
+                var s1 = d1.GetValue("username");
+                var s2 = d1.GetValue("EOA");
+                var s3 = d1.GetValue("userid");
+                var s4 = d1.GetValue("password");
                 Nc1Ex1ServerMainAm2.qv("Dbg mongodb name " + s1 + " nftAddr : " + s2);
             }
             return mPlayerList;
@@ -63,8 +95,10 @@ namespace Nc1Ex1Server
                 pkw.wInt32s(mPlayerList.Count);
                 foreach (var d1 in mPlayerList)
                 {
-                    pkw.wStrToNclib1FromClr((string)d1.GetValue("name"));
-                    pkw.wStrToNclib1FromClr((string)d1.GetValue("nftAddr"));
+                    pkw.wStrToNclib1FromClr((string)d1.GetValue("username"));
+                    pkw.wStrToNclib1FromClr((string)d1.GetValue("EOA"));
+                    pkw.wStrToNclib1FromClr((string)d1.GetValue("userid"));
+                    pkw.wStrToNclib1FromClr((string)d1.GetValue("password"));
                 }
                 sv.send(cti, pkw);
             }
@@ -72,4 +106,3 @@ namespace Nc1Ex1Server
 
     }
 }
-

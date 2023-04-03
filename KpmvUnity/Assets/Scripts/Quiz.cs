@@ -9,19 +9,16 @@ public class Quiz : MonoBehaviour
     public Canvas mQuizCanvas;
     public MainClient mMainClient;
     public GameObject mTerrain;
-    public GameObject mQuizStart;
     public GameObject mWinner;
     public GameObject mPlayer;
 
     public GameObject mOobj;
     public GameObject mXobj;
 
-    // public static List<MainClient> dbList;
     void Awake()
     {
         mMainClient = GameObject.FindObjectOfType<MainClient>();
         mTerrain = GameObject.Find("Terrain");
-        mQuizStart = GameObject.Find("QuizStart");
         mWinner = GameObject.Find("Trophy");
         mPlayer = GameObject.Find("Player");
     }
@@ -76,18 +73,19 @@ public class Quiz : MonoBehaviour
                 {
                     yield return new WaitForSeconds(delay);
                     mQuizCanvas.gameObject.SetActive(false);
-                    //mQuizStart.GetComponent<QuizStart>().canvas.gameObject.EndQuiz();
+
+
+                    ClearFloor();
+
+                    mPlayer.GetComponent<PlayerMotion>().save = false;
+                    mWinner.GetComponent<Winner>().isFollowing = false;
+                    mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(8, 36f, 9);
                 }
-
-                ClearFloor();
-
-                mPlayer.GetComponent<PlayerMotion>().save = false;
-                mWinner.GetComponent<Winner>().isFollowing = false;
-                mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(8, 36f, 9);
-                Invoke("ResetQuiz", 5);
             }
         }
     }
+
+
     //발판(O/X)과 정답 확인
     public void CheckFloor()
     {
@@ -123,36 +121,5 @@ public class Quiz : MonoBehaviour
         mTerrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Quiz";
         mOobj.gameObject.tag = "Quiz";
         mXobj.gameObject.tag = "Quiz";
-    }
-    //게임이 시작되면 더이상 참가자가 O/X판으로 들어오지 못하게 벽을 만드는것
-    //탈락자도 다시 못들어옴
-    public void CloseWall()
-    {
-       mTerrain.GetComponent<TerrainGenerator>().cWallz0.GetComponent<BoxCollider>().enabled = true;
-        mTerrain.GetComponent<TerrainGenerator>().cWallz1.GetComponent<BoxCollider>().enabled = true;
-        mTerrain.GetComponent<TerrainGenerator>().cWallx0.GetComponent<BoxCollider>().enabled = true;
-        mTerrain.GetComponent<TerrainGenerator>().cWallx1.GetComponent<BoxCollider>().enabled = true;
-
-    }
-    //CloserWall되어있는것을 다시 Open시키는것(ResetQuiz실행시 활성화됨)
-    public void OpenWall()
-    {
-       mTerrain.GetComponent<TerrainGenerator>().cWallz0.GetComponent<BoxCollider>().enabled = false;
-        mTerrain.GetComponent<TerrainGenerator>().cWallz1.GetComponent<BoxCollider>().enabled = false;
-        mTerrain.GetComponent<TerrainGenerator>().cWallx0.GetComponent<BoxCollider>().enabled = false;
-        mTerrain.GetComponent<TerrainGenerator>().cWallx1.GetComponent<BoxCollider>().enabled = false;
-    }
-    //초기화
-    private void ResetQuiz()
-    {
-        mMainClient.mQuizManager.userQuiz.Clear(); // 사용된 문제 인덱스 리스트 초기화
-        mMainClient.mQuizManager.mCurrentQuizIndex = 0; // 다음 문제 선택을 위한 인덱스 초기화
-        mMainClient.mQuizManager.ox = false; // 정답 여부 초기화
-        mMainClient.mQuizManager.mRemainCompetitionTime = 3.0f; // 퀴즈 시작까지 시간 초기화
-        mMainClient.mQuizManager.mAnswerTimeOut = 5.0f; // 문제 시간 초기화
-        mMainClient.mQuizManager.mNextAnswerDelayTimeOut = 5.0f; // 다음 문제 시간 초기화
-        mMainClient.mQuizManager.gameStarted = false; // 게임 시작 여부 초기화
-
-        OpenWall();
     }
 }

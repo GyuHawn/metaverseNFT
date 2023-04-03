@@ -8,7 +8,7 @@ public class ChattingInput : MonoBehaviour
 {
     private MainClient mClient;
 
-    private ObjT chatObj = new ObjT();
+    private TexstObj chatObj = new TexstObj();
 
 
     private void Awake()
@@ -20,7 +20,7 @@ public class ChattingInput : MonoBehaviour
     {
         UnityEngine.UI.InputField if1 = GetComponent<UnityEngine.UI.InputField>();
         {
-            string nameText = pdbList[0].mName + " : " + if1.text;
+            string nameText = MainClient.currentUser.mUserName + " : " + if1.text;
             chatObj.textSend(mClient.mCt, nameText);   
         }
         if1.text = "";
