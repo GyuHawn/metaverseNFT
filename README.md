@@ -79,6 +79,19 @@
 ## [작업 목록, 시간, 상황]
 전체 작업에서 허점을 줄이려면 서로 생각하는 작업 공유가 중요!.
 
+### 작업 검토, 할당 필요
+- NFT image file name (ipfs style)
+ 연관 blockchain, web, unity
+- Quiz data
+ 문제, 답, 종류, 배경, 난이도
+- 캐릭 위 이름표시(2d or 3d)
+- 새로운 quiz play 장소 준비
+- 지난 우승자 표시
+ unity 캐릭 위에, web 계정 정보에서, ..
+- Quiz결과에 따른 명확한 표시
+ Ex: 관객 반응, particle effect
+- 종료 우승자 연출 처리?
+
 ### 이동규
 - webserver와 db연결 작업 1일, 완료
 - web 꾸미기 작업 2일, 완료
