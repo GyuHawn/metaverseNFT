@@ -23,10 +23,8 @@ public class Quiz : MonoBehaviour
         mPlayer = GameObject.Find("Player");
     }
 
-
     void Update()
     {
-
         //게임 시작(게임 유)
         if (mMainClient.mQuizManager.isCompetitionState_Starting())
         {
@@ -73,7 +71,6 @@ public class Quiz : MonoBehaviour
                 {
                     yield return new WaitForSeconds(delay);
                     mQuizCanvas.gameObject.SetActive(false);
-
 
                     ClearFloor();
 

@@ -946,26 +946,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 895910831b3c8054eb9049ca6b34928f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &540360222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 540360212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 426f55fce947e8c4f9deed5429afb047, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mQuizText: {fileID: 267531654}
-  mQuizCanvas: {fileID: 645795065}
-  mMainClient: {fileID: 540360219}
-  mTerrain: {fileID: 1985588125}
-  mWinner: {fileID: 1112619166}
-  mPlayer: {fileID: 1851793368}
-  mOobj: {fileID: 95550343}
-  mXobj: {fileID: 2076019259}
 --- !u!1 &645795061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,6 +1151,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6137ee5c66b95eb4396613ad80272012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &705330505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540360212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6d77fa8df7e04a42a8882baa998ff21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mQuizText: {fileID: 267531654}
+  mQuizCanvas: {fileID: 645795065}
+  mMainClient: {fileID: 0}
+  mTerrain: {fileID: 1985588125}
+  mWinner: {fileID: 1112619166}
+  mPlayer: {fileID: 1851793368}
+  mOobj: {fileID: 95550343}
+  mXobj: {fileID: 2076019259}
 --- !u!1001 &778060746
 PrefabInstance:
   m_ObjectHideFlags: 0

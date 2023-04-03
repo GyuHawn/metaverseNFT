@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +17,7 @@ public class QuizStart : MonoBehaviour
     {
         mMainClient = GameObject.FindObjectOfType<MainClient>();
     }
-
+   
     private void Update()
     {
         if (!textOn)
@@ -35,7 +35,7 @@ public class QuizStart : MonoBehaviour
                     }
                 }
                 DateTime quizDate = DateTime.Parse(quizStart);
-                mQuizText.text = quizName + System.Environment.NewLine + " í€´ì¦ˆ ì‹œìž‘ì‹œê°„ : " + quizDate;
+                mQuizText.text = quizName + System.Environment.NewLine + " ÄûÁî ½ÃÀÛ½Ã°£ : " + quizDate;
                 string now = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss");
                 DateTime quiznow = DateTime.Parse(now);
                 TimeSpan differ = quizDate - quiznow;

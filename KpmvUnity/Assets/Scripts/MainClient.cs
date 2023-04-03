@@ -1,10 +1,9 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 public class MainClient : MonoBehaviour
 {
-
     public QuizManager mQuizManager;
     public static PlayerObj currentUser;
 
@@ -100,7 +99,7 @@ public class MainClient : MonoBehaviour
                             s1 = pkrd.rStr1def();
                             s2 = pkrd.rStr1def();
 
-                            qv("ServerEnter ìˆ˜ì‹  s1: " + s1 + " s2 : " + s2);
+                            qv("ServerEnter ¼ö½Å s1: " + s1 + " s2 : " + s2);
                             quizdata.mContent = s1;
                             quizdata.mAnswer = s2;
                             qv("recv 100 qm: " + (mQuizManager == null));
@@ -129,7 +128,7 @@ public class MainClient : MonoBehaviour
                             s3 = pkrd.rStr1def();
                             s4 = pkrd.rStr1def();
 
-                            qv("ServerEnter ìˆ˜ì‹  s1: " + s1 + " s2 : " + s2 + " s3 : " + s3);
+                            qv("ServerEnter ¼ö½Å s1: " + s1 + " s2 : " + s2 + " s3 : " + s3);
                             mObjP.mUserName = s1;
                             mObjP.mEOA = s2;
                             mObjP.mUserid = s3;
@@ -152,7 +151,7 @@ public class MainClient : MonoBehaviour
                             s1 = pkrd.rStr1def();
                             s2 = pkrd.rStr1def();
                             s3 = pkrd.rStr1def();
-                            qv("ServerEnter ìˆ˜ì‹  s1: " + s1 + " s2 : " + s2 + " s3: " + s3);
+                            qv("ServerEnter ¼ö½Å s1: " + s1 + " s2 : " + s2 + " s3: " + s3);
                             mQuizinfo.mGame = s1;
                             mQuizinfo.mTime = s2;
                             mQuizinfo.mWinner = s3;
@@ -195,7 +194,7 @@ public class MainClient : MonoBehaviour
         mQuizManager = new QuizManager();
 
         mCt = new Client(mQuizManager);
-        mCt.connect("127.0.0.3", 7777);
+        mCt.connect("127.0.0.1", 7777);
         Debug.Log("Client Start 1111");
     }
 

@@ -25,7 +25,6 @@ namespace Nc1Ex1Server
             {
                 mNtte.Db();
                 mNttep.Dbp();
-
                 mNtteG.QuizName();
 
                 if (!mMm.create()) { return false; }
@@ -53,7 +52,6 @@ namespace Nc1Ex1Server
                 mNtte.QuizDataSend(this, cti);
                 mNttep.PlayerDataSend(this, cti);
                 mNtteG.QuizNameSend(this, cti);
-
             }
 
             public override void onNccpcNwRecv(int cti, NccpcDll.NccpcNw1Pk2 ncpk)
@@ -94,16 +92,12 @@ namespace Nc1Ex1Server
 
             qv("Dbg server started");
 
-            var svm = new SvMulti();
-            qv("Dbg multi server starting");
-            if (!svm.create()) { return; }
-
+			
             bool bWhile = true;
 
             while (bWhile)
             {
                 sv.framemove();
-                svm.framemove();
 
                 System.Threading.Thread.Sleep(100);
             }
