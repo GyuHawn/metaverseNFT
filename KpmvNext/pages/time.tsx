@@ -1,11 +1,12 @@
 import {useState, useEffect} from 'react';
 import "react-datepicker/dist/react-datepicker.css";
-import {Stack, Col} from "react-bootstrap";
+import {Stack, Col, Button} from "react-bootstrap";
 import Axios from "axios";
 import useSWR from "swr";
 
 const axios1 = (url: string) => Axios.get(url).then((res) => res.data);
-let gap:any;
+let gap: any;
+
 function Time() {
     const {data, error} = useSWR("http://localhost:3000/api/nftlist", axios1);
     const [time, setTime] = useState(new Date());
@@ -19,7 +20,7 @@ function Time() {
     // 현재 진행예정과 진행중인 대회 출력
     let starttime: string = data?.map((e: { game: string, winner: string, startTime: string }) => {
         if (!e.winner) {
-            return e.startTime.slice(0, 4) + '/' + e.startTime.slice(5, 6) + '/' + e.startTime.slice(7, 9) + '/' + e.startTime.slice(10, 15);
+            return e.startTime.slice(0, 4) + '/' + e.startTime.slice(5, 6) + '/' + e.startTime.slice(7, 9) + '/' + e.startTime.slice(9, 15);
         }
     });
     gap = Date.parse(starttime) - time.getTime();
@@ -35,11 +36,19 @@ function Time() {
 
                 <Col className="bg-light border">
                     {/*게임 남은 시간, 시작, 끝*/}
-                    <h1 style={{whiteSpace: "pre-wrap"}}>{gap>=0 ? gap >= 0 ? `대회까지 남은시간 \n ${printDate(gap)}` : '게임시작' : '현재 진행중인 대회가 없습니다.' }</h1>
 
+                    {data?.map((e: { game: string, winner: string, startTime: string }) => {
+                        if (!e.winner) {
+                            if (gap >= 0) {
+                                return <><h1 style={{whiteSpace: "pre-wrap"}}> {`대회까지 남은시간 \n ${printDate(gap)}`}</h1></>
+                            }else{
+                                return <><h1 style={{whiteSpace: "pre-wrap"}}>게임시작</h1></>
+                            }
+                        }
+                    })}
+                    {gap >=0 ?"":<h1>진행중인 게임이 없습니다.</h1>}
                 </Col>
                 <Col className="bg-light border">
-
                     {data?.map((e: { game: string, winner: string, startTime: string }) => {
                         if (!e.winner) {
                             return <><h1>대회 시작 시간</h1><h1>{e.startTime}</h1></>
@@ -50,7 +59,14 @@ function Time() {
             <div className="d-flex justify-content-center mt-5">
                 {data?.map((e: { game: string, winner: string, startTime: string }) => {
                     if (!e.winner) {
-                        return <><h1>{gap >= 0 ? `${e.game} (시작전)` : '진행중'}</h1></>
+                        if (gap >= 0) {
+                            return <>
+                                <h1>{`${e.game} (시작전)`}</h1>
+                                <Button className={'ms-2'} href={'/gamejoin/'+e.game}><h2>참가</h2></Button>
+                            </>
+                        } else {
+                            return <><h1> 게임이 진행중입니다. </h1></>
+                        }
                     }
                 })}
             </div>
@@ -66,7 +82,8 @@ function printDate(time: number) {
     return `${days}일 ${hour}: ${minutes}: ${second}`;
 }
 
-export function gapTime(){
+
+export function gapTime() {
     return gap;
 }
 

@@ -3,7 +3,6 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMeta} from "@fortawesome/free-brands-svg-icons";
@@ -11,6 +10,9 @@ import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons"
 import Axios from "axios";
 import {useRouter} from "next/router";
 import useSWR from "swr";
+import is from "@sindresorhus/is";
+import dataView = is.dataView;
+import {Stack} from "react-bootstrap";
 
 const axios1 = (url: string) => Axios.get(url).then((res) => res.data)
 
@@ -18,7 +20,8 @@ function Header() {
 
     const rt1 = useRouter();
     const LogoutUrl = '/api/session?logout';
-    const {data, error, isLoading} = useSWR('http://localhost:3000/api/session?data', axios1);
+    const sessionData = '/api/session?data';
+    const {data, error, isLoading} = useSWR(sessionData, axios1);
     const [ipt1, setipt1] = useState("");
 
     if (error) {
@@ -40,24 +43,19 @@ function Header() {
                             navbarScroll
                         >
                             <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="http://localhost:3000/quiz">퀴즈 목록</Nav.Link>
-                            <NavDropdown title="Object" id="navbarScrollingDropdown">
-                                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action4">
-                                    Another action
-                                </NavDropdown.Item>
-                                <NavDropdown.Divider/>
-                                <NavDropdown.Item href="#action5">
-                                    Something else here
-                                </NavDropdown.Item>
-                            </NavDropdown>
-                            <Nav.Link href="http://localhost:3000/competitionList">
+                            <Nav.Link href ="/quiz">
+                                퀴즈 목록
+                            </Nav.Link>
+                            <Nav.Link href="/object">
+                                Object 목록
+                            </Nav.Link>
+                            <Nav.Link href="/competitionList">
                                 역대 수상 목록
                             </Nav.Link>
-                            <Nav.Link href="http://localhost:3000/nftusage_test">
+                            <Nav.Link href="/nftusage_test">
                                 SmartContract
                             </Nav.Link>
-                            <Nav.Link href="http://localhost:3000/user">
+                            <Nav.Link href="/user/userlist">
                                 회원 목록
                             </Nav.Link>
                             {/*<Nav.Link href="#" disabled>
@@ -74,23 +72,26 @@ function Header() {
                                 aria-label="Search"
                             />
                             <Button variant="outline-success"
-                                    href={"http://localhost:3000/user/" + ipt1}><FontAwesomeIcon
+                                    href={"/user/" + ipt1}><FontAwesomeIcon
                                 icon={faMagnifyingGlass}/></Button>
                         </Form>
                         <Nav>
                             {data?.logon ?
-                                <Button onClick={() => {
-                                    Axios.post(LogoutUrl, {Userid: data?.userdata?.name}).then(() => {
-                                        rt1.reload();
-                                    });
-                                }}>{data?.userdata?.name} Logout </Button> :
                                 <div>
-                                    <Nav.Link href="/login">
-                                        SignIn
-                                    </Nav.Link>
-                                    <Nav.Link href="/signup">
-                                        SignUp
-                                    </Nav.Link>
+                                    <Button className={"m-2"} href={'/user'}> {data?.userdata?.name} 개인정보 </Button>
+                                    <Button onClick={() => {
+                                        Axios.post(LogoutUrl, {Userid: data?.userdata?.name}).then(() => {
+                                            rt1.push('/');
+                                            rt1.reload();
+                                        });
+                                    }}> Logout </Button>
+                                </div> :
+                                <div>
+                                    <Stack direction="horizontal" gap={2}>
+                                        <Button href="/login" className={"ms-2"} variant="secondary">SignIn</Button>
+                                        <div className="vr" />
+                                        <Button href="/signup" variant="outline-danger">SingUp</Button>
+                                    </Stack>
                                 </div>
                             }
                         </Nav>
@@ -111,8 +112,11 @@ function Header() {
                             navbarScroll
                         >
                             <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="http://localhost:3000/competitionList">
+                            <Nav.Link href="/competitionList">
                                 역대 수상 목록
+                            </Nav.Link>
+                            <Nav.Link href="/nftusage_test">
+                                SmartContract
                             </Nav.Link>
                         </Nav>
                         <Form className="d-flex">
@@ -125,23 +129,26 @@ function Header() {
                                 aria-label="Search"
                             />
                             <Button variant="outline-success"
-                                    href={"http://localhost:3000/user/" + ipt1}><FontAwesomeIcon
+                                    href={"/user/" + ipt1}><FontAwesomeIcon
                                 icon={faMagnifyingGlass}/></Button>
                         </Form>
                         <Nav>
                             {data?.logon ?
-                                <Button onClick={() => {
-                                    Axios.post(LogoutUrl, {Userid: data?.userdata?.name}).then(() => {
-                                        rt1.reload();
-                                    });
-                                }}>{data?.userdata?.name} Logout </Button> :
                                 <div>
-                                    <Nav.Link href="/login">
-                                        SignIn
-                                    </Nav.Link>
-                                    <Nav.Link href="/signup">
-                                        SignUp
-                                    </Nav.Link>
+                                    <Button className={"m-2"} href={'/user'}>{data?.userdata?.name} 개인정보 </Button>
+                                    <Button variant={"danger"} onClick={() => {
+                                        Axios.post(LogoutUrl, {Userid: data?.userdata?.name}).then(() => {
+                                            rt1.push('/');
+                                            rt1.reload();
+                                        });
+                                    }}> Logout </Button>
+                                </div> :
+                                <div>
+                                    <Stack direction="horizontal" gap={2}>
+                                        <Button href="/login" className={"ms-2"} variant="secondary">SignIn</Button>
+                                        <div className="vr" />
+                                        <Button href="/signup" variant="outline-danger">SingUp</Button>
+                                    </Stack>
                                 </div>
                             }
                         </Nav>
