@@ -11,7 +11,7 @@ async function DbConnect1() {
 }
 
 // 회원가입
-async function Dbsignup(userid: string, password: string, username: string, email: string, EOA: string, CA: string, wins: number) {
+async function Dbsignup(userid: string, password: string, username: string, email: string, EOA: string, CA: string, wins: number, color: string) {
     const clc1 = await DbConnect1();
     const data1 = {
         userid,
@@ -21,6 +21,7 @@ async function Dbsignup(userid: string, password: string, username: string, emai
         EOA,
         CA,
         wins,
+        color,
     };
     const result = await clc1.insertOne(data1);
 }
@@ -36,6 +37,10 @@ async function DbRead1(userid: String, password: String) {
 async function DbUpdate1(userid: String, password: String, email: String) {
     const clc1 = await DbConnect1();
     const result = await clc1.updateOne({userid}, {$set: {password, email}});
+}
+async function DbUpdate2(userid: String, color: String) {
+    const clc1 = await DbConnect1();
+    const result = await clc1.updateOne({userid}, {$set: {color}});
 }
 
 //삭제
@@ -53,19 +58,22 @@ async function DbReadAll(limit = 100) {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    const {add, read, update, del} = req.query;
+    const {add, read, update1, update2, del} = req.query;
 
-    console.log("usr get add: " + add + " read: " + read);
+    console.log("usr get add: " + add + " read: " + update2+req.query.color);
 
     res.statusCode = StatusCodes.OK;
 
     if (read) {
         return res.send(await DbRead1(String(read), String(req.query.password)));
     } else if (add) {
-        await Dbsignup(String(add), String(req.query.password), String(req.query.username), String(req.query.email), String(req.query.EOA), String(req.query.CA), Number(req.query.wins));
+        await Dbsignup(String(add), String(req.query.password), String(req.query.username), String(req.query.email), String(req.query.EOA), String(req.query.CA), Number(req.query.wins), String(req.query.color));
         res.send(await DbReadAll());
-    } else if (update) {
-        await DbUpdate1(String(update), String(req.query.password), String(req.query.email));
+    } else if (update1) {
+        await DbUpdate1(String(update1), String(req.query.password), String(req.query.email));
+        res.send(await DbReadAll());
+    }else if (update2) {
+        await DbUpdate2(String(update2), String(req.query.color));
         res.send(await DbReadAll());
     } else if (del) {
         await DbDelete1(String(del));

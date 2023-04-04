@@ -3,7 +3,6 @@ import Axios from "axios";
 import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import {Button, Table, Modal, Form, Stack} from 'react-bootstrap';
-import Quiz from './quiz';
 
 
 const axios1 = (url: string) => Axios.get(url).then((res) => res.data);
@@ -24,30 +23,30 @@ const Quizlist1 = () => {
 
     return (
         <>
-            <Quiz/>
-            <Table striped bordered hover className={"mt-3"}>
-                {data?.map((e: { content: string, answer: String }) => {
-                    return <>
-                        <tr>
-                            <th>퀴즈 내용:</th>
-                            <th><a href={'/user/' + e.content}>{e.content}</a></th>
-                            <th> 정답!! :</th>
-                            <th>{e.answer}</th>
+            <div>
+                <Table striped bordered hover className={"mt-3"}>
+                    {data?.map((e: { content: string, answer: String }) => {
+                        return <>
                             <tr>
-                                <Stack direction="horizontal" gap={2}>
-                                    <Button onClick={() => setSmShow(true)}>수정</Button>
-                                    <Button onClick={() => {
-                                        Axios.get("http://localhost:3000/api/metaquiz?del=" + e.content);
-                                        alert("삭제!!");
-                                    }}>삭제</Button>
-                                </Stack>
+                                <th>퀴즈 내용:</th>
+                                <th><a href={'/user/' + e.content}>{e.content}</a></th>
+                                <th> 정답!! :</th>
+                                <th>{e.answer}</th>
+                                <tr>
+                                    <Stack direction="horizontal" gap={2}>
+                                        <Button onClick={() => setSmShow(true)}>수정</Button>
+                                        <Button onClick={() => {
+                                            Axios.get("http://localhost:3000/api/metaquiz?del=" + e.content);
+                                            alert("삭제!!");
+                                        }}>삭제</Button>
+                                    </Stack>
+                                </tr>
                             </tr>
-                        </tr>
-                    </>
-                })
-                }
-            </Table>
-
+                        </>
+                    })
+                    }
+                </Table>
+            </div>
             <Modal
                 size="sm"
                 show={smShow}
