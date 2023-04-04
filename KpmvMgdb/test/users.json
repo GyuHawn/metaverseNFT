@@ -8,7 +8,8 @@
   "password": "1234",
   "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
   "CA": "",
-  "wins": 0
+  "wins": 0,
+  "color": "blue"
 },{
   "_id": {
     "$oid": "64223b44ce85288e8eb5dd7b"
@@ -19,7 +20,8 @@
   "password": "1234",
   "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
   "CA": "",
-  "wins": 0
+  "wins": 0,
+  "color": "white"
 },{
   "_id": {
     "$oid": "64228a192953f11b39330b75"
@@ -30,7 +32,8 @@
   "password": "1234",
   "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
   "CA": "",
-  "wins": 0
+  "wins": 0,
+  "color": "red"
 },{
   "_id": {
     "$oid": "64228e672953f11b39330b76"
@@ -43,7 +46,8 @@
   "CA": "",
   "wins": {
     "$numberDouble": "NaN"
-  }
+  },
+  "color": "blue"
 },{
   "_id": {
     "$oid": "6422a45c2953f11b39330b77"
@@ -54,7 +58,8 @@
   "password": "1234",
   "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
   "CA": "",
-  "wins": 0
+  "wins": 0,
+  "color": "red"
 },{
   "_id": {
     "$oid": "6423c486af6330b41cd14d80"
@@ -65,7 +70,8 @@
   "password": "dlehdrb1!",
   "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
   "CA": "",
-  "wins": 0
+  "wins": 0,
+  "color": "white"
 },{
   "_id": {
     "$oid": "6423d2ce54d9e7944beca6d3"
@@ -76,5 +82,6 @@
   "password": "test1234!",
   "EOA": "",
   "CA": "",
-  "wins": 0
+  "wins": 0,
+  "color": "red"
 }]

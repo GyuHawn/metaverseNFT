@@ -13,6 +13,7 @@ public class MainClient : MonoBehaviour
         public string mEOA;
         public string mUserid;
         public string mPassword;
+        public string mColor;
         
         public void posiSend(Client ct, bool saveDB = false)
         {
@@ -125,6 +126,7 @@ public class MainClient : MonoBehaviour
                         var s2 = "";
                         var s3 = "";
                         var s4 = "";
+                        var s5 = "";
 
                         for (int i = 0; i < count; i++)
                         {
@@ -133,12 +135,14 @@ public class MainClient : MonoBehaviour
                             s2 = pkrd.rStr1def();
                             s3 = pkrd.rStr1def();
                             s4 = pkrd.rStr1def();
+                            s5 = pkrd.rStr1def();
 
-                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3 : " + s3);
+                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s5 : " + s5);
                             mObjP.mUserName = s1;
                             mObjP.mEOA = s2;
                             mObjP.mUserid = s3;
                             mObjP.mPassword = s4;
+                            mObjP.mColor = s5;
                             pdbList.Add(mObjP);
                             qv("Player dbList : " + pdbList.Count);
                         }

@@ -71,6 +71,7 @@ public class Login : MonoBehaviour
         }
     }
 
+
     public void Error()
     {
         error.SetActive(false);

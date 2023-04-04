@@ -99,6 +99,7 @@ namespace Nc1Ex1Server
                     pkw.wStrToNclib1FromClr((string)d1.GetValue("EOA"));
                     pkw.wStrToNclib1FromClr((string)d1.GetValue("userid"));
                     pkw.wStrToNclib1FromClr((string)d1.GetValue("password"));
+                    pkw.wStrToNclib1FromClr((string)d1.GetValue("color"));
                 }
                 sv.send(cti, pkw);
             }

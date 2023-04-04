@@ -11,14 +11,15 @@ public class LcIPT : MonoBehaviour
 
     private MultiClient mCf;
     public GameObject splayer;
-    public GameObject []playerPF;
+    public GameObject[] playerPF;
     public GameObject go;
     public GameObject Camera;
     public GameObject inputField;
 
+
     public const int maxP = 3;
     Vector3[] positions = { new Vector3(2, 40, 15), new Vector3(-2, 40, 15), new Vector3(2, 40, 15), new Vector3(-2, 40, 13) };
-  //  Color[] colors = { Color.blue, Color.red, C };
+    //  Color[] colors = { Color.blue, Color.red, C };
 
     public GameObject[] mPlayers;
 
@@ -111,7 +112,18 @@ public class LcIPT : MonoBehaviour
 
     public void InstantiatePlayer(int i)
     {
-        GameObject player = Instantiate(playerPF[i], positions[i], Quaternion.identity);
+        GameObject myPF;
+        int ipf = -1;
+
+        switch (MainClient.currentUser.mColor)
+        {
+            case "blue":  ipf = 0;    break;
+            case "white": ipf = 1;    break;
+            case "red":  ipf = 2;    break;
+        }
+        if (ipf < 0) { return; }
+        myPF =playerPF[ipf];
+        GameObject player = Instantiate(myPF, positions[i], Quaternion.identity);
      //   Transform head = player.transform.Find("Bone/Bone.001/Bone.002/Cube");
      //   head.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Diffuse"));
      //   head.GetComponent<MeshRenderer>().material.SetColor("_Color", colors[i]);
