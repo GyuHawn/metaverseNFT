@@ -52,6 +52,7 @@ public class PlayerMotion : MonoBehaviour
 
     public void Update()
     {
+        if (LcIPT.Instance.inputField.GetComponent<UnityEngine.UI.InputField>().isFocused) { return; }
         if (!LcIPT.Instance.isOnline())
         {
             ThisUpdate();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LcIPT : MonoBehaviour
 {
@@ -10,13 +11,14 @@ public class LcIPT : MonoBehaviour
 
     private MultiClient mCf;
     public GameObject splayer;
-    public GameObject playerPF;
+    public GameObject []playerPF;
     public GameObject go;
     public GameObject Camera;
+    public GameObject inputField;
 
-    public const int maxP = 2;
-    Vector3[] positions = { new Vector3(2, 40, 15), new Vector3(-2, 40, 15) };
-    Color[] colors = { Color.blue, Color.red };
+    public const int maxP = 3;
+    Vector3[] positions = { new Vector3(2, 40, 15), new Vector3(-2, 40, 15), new Vector3(2, 40, 15), new Vector3(-2, 40, 13) };
+  //  Color[] colors = { Color.blue, Color.red, C };
 
     public GameObject[] mPlayers;
 
@@ -58,6 +60,7 @@ public class LcIPT : MonoBehaviour
     {
         mCf = GetComponent<MultiClient>();
         mPlayers = new GameObject[maxP];
+
         go = splayer;
         go.SetActive(true);
         Camera.GetComponent<camera>().SetTarget(go);
@@ -81,6 +84,7 @@ public class LcIPT : MonoBehaviour
                 splayer.SetActive(false);
                 mbOnline = true;
                 Debug.Log("MultiClient Start 1111");
+                GameObject.Find("Text1").GetComponent<TextMeshProUGUI>().SetText(string.Join("\n", MultiClient.mLines));
             }
         }
     }
@@ -102,14 +106,15 @@ public class LcIPT : MonoBehaviour
         go = splayer;
         go.SetActive(true);
         Camera.GetComponent<camera>().SetTarget(go);
+        GameObject.Find("Text1").GetComponent<TextMeshProUGUI>().SetText(string.Join("\n", MainClient.mLines));
     }
 
     public void InstantiatePlayer(int i)
     {
-        GameObject player = Instantiate(playerPF, positions[i], Quaternion.identity);
-        Transform head = player.transform.Find("Bone/Bone.001/Bone.002/Cube");
-        head.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Diffuse"));
-        head.GetComponent<MeshRenderer>().material.SetColor("_Color", colors[i]);
+        GameObject player = Instantiate(playerPF[i], positions[i], Quaternion.identity);
+     //   Transform head = player.transform.Find("Bone/Bone.001/Bone.002/Cube");
+     //   head.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Diffuse"));
+     //   head.GetComponent<MeshRenderer>().material.SetColor("_Color", colors[i]);
         mPlayers[i] = player;
     }
     public void moveSend(JcCtUnity1.JcCtUnity1 ct, GameObject obj, int code, float plusx, float plusy, float plusz)
@@ -146,6 +151,7 @@ public class LcIPT : MonoBehaviour
 
     void Move()
     {
+        if (inputField.GetComponent<UnityEngine.UI.InputField>().isFocused) { return; }
         float spd = 10.0f * Time.deltaTime;
 
         if (go)

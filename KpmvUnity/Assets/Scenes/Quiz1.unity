@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028328, g: 0.22571322, b: 0.30692163, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1069,13 +1069,21 @@ PrefabInstance:
     - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
       propertyPath: playerPF
       value: 
-      objectReference: {fileID: 4485646522838081367, guid: 5bf579fe1efcdbf4e90243e92fc79e5c, type: 3}
+      objectReference: {fileID: 7077295617254742233, guid: 5bf579fe1efcdbf4e90243e92fc79e5c, type: 3}
     - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
       propertyPath: chatInput
       value: 
       objectReference: {fileID: 1027370180}
     - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
+      propertyPath: inputField
+      value: 
+      objectReference: {fileID: 1027370175}
+    - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
       propertyPath: mPlayers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
+      propertyPath: playerPF.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
@@ -1088,6 +1096,18 @@ PrefabInstance:
       objectReference: {fileID: 8708360507182625104, guid: 813488125ad781c4ca63a4ecfb88f52b, type: 3}
     - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
       propertyPath: mPlayers.Array.data[2]
+      value: 
+      objectReference: {fileID: 3736731918500884606, guid: be423684f9ae0e5408e5e66af9a1937f, type: 3}
+    - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
+      propertyPath: playerPF.Array.data[0]
+      value: 
+      objectReference: {fileID: 7077295617254742233, guid: 5bf579fe1efcdbf4e90243e92fc79e5c, type: 3}
+    - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
+      propertyPath: playerPF.Array.data[1]
+      value: 
+      objectReference: {fileID: 8708360507182625104, guid: 813488125ad781c4ca63a4ecfb88f52b, type: 3}
+    - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
+      propertyPath: playerPF.Array.data[2]
       value: 
       objectReference: {fileID: 3736731918500884606, guid: be423684f9ae0e5408e5e66af9a1937f, type: 3}
     - target: {fileID: 8426393524330095235, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
@@ -1171,6 +1191,18 @@ MonoBehaviour:
   mPlayer: {fileID: 1851793368}
   mOobj: {fileID: 95550343}
   mXobj: {fileID: 2076019259}
+--- !u!114 &705330506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540360212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dc8fe97015f142499448095a35d85b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &778060746
 PrefabInstance:
   m_ObjectHideFlags: 0

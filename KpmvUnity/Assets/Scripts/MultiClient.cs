@@ -1,9 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MultiClient : MonoBehaviour
 {
+    public class TexstObj
+    {
+        public string mText;
+
+        public void textSend(Client ct, string message)
+        {
+            using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(112))
+            {
+                pkw.wStr1(message);
+                ct.send(pkw);
+            }
+        }
+    }
 
     public class Client : JcCtUnity1.JcCtUnity1
     {
@@ -90,12 +104,31 @@ public class MultiClient : MonoBehaviour
 
                     }
                     break;
+                case 112:
+                    {
+                        const int maxLines = 5;
+                        var message = pkrd.rStr1def();
+                        Debug.Log(message);
+
+                        var t1 = GameObject.Find("Text1");
+                        var tmp = t1.GetComponent<TextMeshProUGUI>();
+
+                        mLines.Add(message);
+
+                        if (mLines.Count > maxLines)
+                        {
+                            mLines.RemoveAt(0);
+                        }
+                        tmp.SetText(string.Join("\n", mLines));
+                    }
+                    break;
             }
             return true;
         }
     }
 
     public Client mCt;
+    static public List<string> mLines = new List<string>();
     // Start is called before the first frame update
     void Start()
     {

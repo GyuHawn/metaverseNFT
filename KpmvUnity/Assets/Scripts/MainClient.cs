@@ -41,11 +41,17 @@ public class MainClient : MonoBehaviour
 
         public void textSend(Client ct, string message)
         {
-            using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(112))
+            const int maxLines = 5;
+            var t1 = GameObject.Find("Text1");
+            var tmp = t1.GetComponent<TextMeshProUGUI>();
+
+            mLines.Add(message);
+
+            if (mLines.Count > maxLines)
             {
-                pkw.wStr1(message);
-                ct.send(pkw);
+                mLines.RemoveAt(0);
             }
+            tmp.SetText(string.Join("\n", mLines));
         }
     }
 
@@ -158,24 +164,6 @@ public class MainClient : MonoBehaviour
                             qv("Quiz Start Time : " + s2);
                             quizinfo.Add(mQuizinfo);
                         }
-                    }
-                    break;
-                case 112:
-                    {
-                        int maxLines = 5;
-                        var message = pkrd.rStr1def();
-                        Debug.Log(message);
-
-                        var t1 = GameObject.Find("Text1");
-                        var tmp = t1.GetComponent<TextMeshProUGUI>();
-
-                        mLines.Add(message);
-
-                        if (mLines.Count > maxLines)
-                        {
-                            mLines.RemoveAt(0);
-                        }
-                        tmp.SetText(string.Join("\n", mLines));
                     }
                     break;
             }

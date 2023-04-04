@@ -92,12 +92,16 @@ namespace Nc1Ex1Server
 
             qv("Dbg server started");
 
-			
+            var svm = new SvMulti();
+            qv("Dbg multi server starting");
+            if (!svm.create()) { return; }
+
             bool bWhile = true;
 
             while (bWhile)
             {
                 sv.framemove();
+                svm.framemove();
 
                 System.Threading.Thread.Sleep(100);
             }
