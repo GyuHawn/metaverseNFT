@@ -54,13 +54,35 @@ public class Login : MonoBehaviour
     public void ValidateLogin()
     {
         bool loginSuccess = false;
+        string quizName = "";
+        string quizKind = "";
+        for (int i = 0; i < MainClient.quizinfo.Count; i++)
+        {
+            if (MainClient.quizinfo[i].mWinner == "")
+            {
+                quizName = MainClient.quizinfo[i].mGame;
+                quizKind = MainClient.quizinfo[i].mQuiz;
+            }
+        }
         foreach (var user in pdbList)
         {
             if (enteredId == user.mUserid && enteredPwd == user.mPassword)
             {
-                SceneManager.LoadScene("Scenes/Quiz1");
+                if(quizKind == "quiz")
+                {
+                    SceneManager.LoadScene("Scenes/Quiz1");
+                }
+                else if(quizKind == "quiz2")
+                {
+                    SceneManager.LoadScene("Scenes/Quiz2");
+                }
+                else
+                {
+                    SceneManager.LoadScene("Scenes/Quiz1");
+                }
                 loginObj.loginSend(mClient.mCt, enteredId, enteredPwd);
                 MainClient.currentUser = user;
+                MainClient.currentUser.mGame = quizName;
                 loginSuccess = true;
                 break;
             }

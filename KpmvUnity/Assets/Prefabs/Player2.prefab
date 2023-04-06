@@ -1224,8 +1224,10 @@ MonoBehaviour:
   zeroVec: {x: 0, y: 0, z: 0}
   terrain: {fileID: 0}
   mClient: {fileID: 0}
+  pName: {fileID: 0}
   win: {fileID: 0}
   save: 0
+  collisonTime: 0.5
 --- !u!54 &8366322994890673213
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1240,7 +1242,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!136 &8366322994890673212
 CapsuleCollider:

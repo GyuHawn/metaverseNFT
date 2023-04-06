@@ -1,7 +1,8 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LcIPT : MonoBehaviour
 {
@@ -18,8 +19,15 @@ public class LcIPT : MonoBehaviour
 
 
     public const int maxP = 3;
-    Vector3[] positions = { new Vector3(2, 40, 15), new Vector3(-2, 40, 15), new Vector3(2, 40, 15), new Vector3(-2, 40, 13) };
+
+    Vector3[] positions = {
+        new Vector3(2, 40, 15), new Vector3(-2, 40, 15), new Vector3(2, 40, 15), new Vector3(-2, 40, 13)
+    };
     //  Color[] colors = { Color.blue, Color.red, C };
+    Vector3[] positions2 =
+    {
+        new Vector3(-21, -1, 6), new Vector3(-27, -1, 6), new Vector3(-14, -1, 6), new Vector3(-31, -1, 6)
+    };
 
     public GameObject[] mPlayers;
 
@@ -39,7 +47,7 @@ public class LcIPT : MonoBehaviour
         }
         else
         {
-            Debug.Log("¿Œø¯ºˆ √ ∞˙2"); mCf.mCt.disconnect();
+            Debug.Log("Ïù∏ÏõêÏàò Ï¥àÍ≥º2"); mCf.mCt.disconnect();
         }
 
     }
@@ -112,22 +120,28 @@ public class LcIPT : MonoBehaviour
 
     public void InstantiatePlayer(int i)
     {
+        Scene scene = SceneManager.GetActiveScene();
         GameObject myPF;
         int ipf = -1;
 
         switch (MainClient.currentUser.mColor)
         {
-            case "blue":  ipf = 0;    break;
-            case "white": ipf = 1;    break;
-            case "red":  ipf = 2;    break;
+            case "blue": ipf = 0; break;
+            case "white": ipf = 1; break;
+            case "red": ipf = 2; break;
         }
         if (ipf < 0) { return; }
-        myPF =playerPF[ipf];
-        GameObject player = Instantiate(myPF, positions[i], Quaternion.identity);
-     //   Transform head = player.transform.Find("Bone/Bone.001/Bone.002/Cube");
-     //   head.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Diffuse"));
-     //   head.GetComponent<MeshRenderer>().material.SetColor("_Color", colors[i]);
-        mPlayers[i] = player;
+        myPF = playerPF[ipf];
+        GameObject player = new GameObject();
+        if(scene.name == "Quiz1")
+        {
+            player = Instantiate(myPF, positions[i], Quaternion.identity);
+        }else if(scene.name == "Quiz2")
+        {
+            player = Instantiate(myPF, positions2[i], Quaternion.identity);
+        }
+            mPlayers[i] = player;
+
     }
     public void moveSend(JcCtUnity1.JcCtUnity1 ct, GameObject obj, int code, float plusx, float plusy, float plusz)
     {

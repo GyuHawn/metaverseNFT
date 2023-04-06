@@ -1,0 +1,31 @@
+[{
+  "_id": {
+    "$oid": "642bb5286549c9e9b60eb7d6"
+  },
+  "content": "틀린것은?",
+  "correct": "4",
+  "answer1": "1=1",
+  "answer2": "2=2",
+  "answer3": "3=3",
+  "answer4": "4=5"
+},{
+  "_id": {
+    "$oid": "642bb6626549c9e9b60eb7d8"
+  },
+  "content": "한국수도?",
+  "correct": "1",
+  "answer1": "서울",
+  "answer2": "부산",
+  "answer3": "대구",
+  "answer4": "거제"
+},{
+  "_id": {
+    "$oid": "642d0f7ceefda9021301f535"
+  },
+  "content": "미국수도?",
+  "correct": "2",
+  "answer1": "뉴욕",
+  "answer2": "워싱턴",
+  "answer3": "LA",
+  "answer4": "샌프란"
+}]

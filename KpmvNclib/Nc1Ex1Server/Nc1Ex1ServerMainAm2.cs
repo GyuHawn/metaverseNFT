@@ -13,6 +13,7 @@ namespace Nc1Ex1Server
             public NetworkTextTestExample mNtte = new NetworkTextTestExample();
             public NetworkTextTestExample mNttep = new NetworkTextTestExample();
             public NetworkTextTestExample mNtteG = new NetworkTextTestExample();
+            public NetworkTextTestExample mNtteG2 = new NetworkTextTestExample();
             public NccpcDll.NccpcMemmgr2Mgr mMm;
 
             public Sv()
@@ -26,6 +27,7 @@ namespace Nc1Ex1Server
                 mNtte.Db();
                 mNttep.Dbp();
                 mNtteG.QuizName();
+                mNtteG2.Db2();
 
                 if (!mMm.create()) { return false; }
 
@@ -44,7 +46,6 @@ namespace Nc1Ex1Server
 
             public void qv(string s1) { System.Console.WriteLine(s1); }
             public override void onNccpcNwLog(string s1) { qv(s1); }
-            //public override void onNccpcNwErr(string s1) { qv("Err " + s1); }
             public override void onNccpcNwEnter(int cti, string peer)
             {
                 qv("Dbg NwEnter ct:" + cti + " Peer:" + peer);
@@ -52,6 +53,7 @@ namespace Nc1Ex1Server
                 mNtte.QuizDataSend(this, cti);
                 mNttep.PlayerDataSend(this, cti);
                 mNtteG.QuizNameSend(this, cti);
+                mNtteG2.QuizDataSend2(this, cti);
             }
 
             public override void onNccpcNwRecv(int cti, NccpcDll.NccpcNw1Pk2 ncpk)
@@ -61,9 +63,9 @@ namespace Nc1Ex1Server
                 {
                     string s1 = ncpk.rStrFromNclib1ToClr();
                     string s2 = ncpk.rStrFromNclib1ToClr();
-                    string s3 = "제6회 메타버스 퀴즈 대회";
-                    Mdb1.DbEx_UpdateTest(s3, s1, s2);
-                    qv("Dbg NwRecv Type:" + ncpk.getType() + "name : " + s1 + " addr : " + s2);
+                    string s3 = ncpk.rStrFromNclib1ToClr();
+                    Mdb1.DbEx_UpdateTest(s1, s2, s3);
+                    qv("Dbg NwRecv Type:" + ncpk.getType() + " game : " + s1 + "name : " + s2 + " addr : " + s3);
 
                     return;
                 }

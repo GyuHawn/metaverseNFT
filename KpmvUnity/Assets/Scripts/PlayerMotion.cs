@@ -16,11 +16,15 @@ public class PlayerMotion : MonoBehaviour
     public static List<MainClient.PlayerObj> pdbList;
 
     public MainClient mClient;
+    public PlayerName pName;
 
     public Winner win;
 
     public bool save = false;
 
+    public float collisonTime = 2f;
+    private bool canCollide = true;
+    
     private KeyCode currentKeycode;
 
     private bool GetKey(KeyCode code)
@@ -52,7 +56,6 @@ public class PlayerMotion : MonoBehaviour
 
     public void Update()
     {
-        if (LcIPT.Instance.inputField.GetComponent<UnityEngine.UI.InputField>().isFocused) { return; }
         if (!LcIPT.Instance.isOnline())
         {
             ThisUpdate();
@@ -120,7 +123,7 @@ public class PlayerMotion : MonoBehaviour
     void OnCollisionStay(Collision collision)
     {
         pdbList = MainClient.pdbList;
-
+        //oxÄûÁî
         if (collision.gameObject.CompareTag("Die"))
         {
             transform.position = new Vector3(8, 30, -12);
@@ -129,6 +132,7 @@ public class PlayerMotion : MonoBehaviour
         {
             transform.position = new Vector3(8, 30, -12);
         }
+        //°øÅë
         if (collision.gameObject.CompareTag("Win"))
         {
             if (save == false)
@@ -137,11 +141,54 @@ public class PlayerMotion : MonoBehaviour
                 Save();
             }
         }
+        //4Áö¼±´Ù ÄûÁî
+        if (canCollide)
+        {
+            if (collision.gameObject.CompareTag("Red"))
+            {
+                transform.gameObject.tag = "Red";
+                pName.playerNameText.color = Color.red;
+            }
+            else if (collision.gameObject.CompareTag("Blue"))
+            {
+                transform.gameObject.tag = "Blue";
+                pName.playerNameText.color = Color.blue;
+            }
+            else if (collision.gameObject.CompareTag("Green"))
+            {
+                transform.gameObject.tag = "Green";
+                pName.playerNameText.color = Color.green;
+            }
+            else if (collision.gameObject.CompareTag("Yellow"))
+            {
+                transform.gameObject.tag = "Yellow";
+                pName.playerNameText.color = Color.yellow;
+            }
+            if (collision.gameObject.CompareTag("Fail"))
+            {
+                transform.gameObject.tag = "Fail";
+                pName.playerNameText.color = Color.black;
+            }
+            canCollide = false;
+            StartCoroutine(ChangeCollide());
+        }
     } 
+
+    private IEnumerator ChangeCollide()
+    {
+        yield return new WaitForSeconds(collisonTime);
+        canCollide = true;
+    }
 
     public void Save()
     {
         MainClient.currentUser.posiSend(mClient.mCt, true);
         save = true;
+    }
+
+    public void ClearPlayer()
+    {
+        transform.gameObject.tag = "Player";
+        pName.playerNameText.color = Color.black;
     }
 }

@@ -3,7 +3,7 @@ import Axios from "axios";
 import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import {Button, Table, Modal, Form, Stack} from 'react-bootstrap';
-
+import Quiz from './quiz';
 
 const axios1 = (url: string) => Axios.get(url).then((res) => res.data);
 
@@ -12,7 +12,9 @@ const Quizlist1 = () => {
     const [smShow, setSmShow] = useState(false);
     const [ipt1, setipt1] = useState("");
     const [ipt2, setipt2] = useState("");
+    const [ipt3, setipt3] = useState("");
     const handleClose = () => setSmShow(false);
+
 
     if (error) {
         return <>error!</>;
@@ -23,30 +25,32 @@ const Quizlist1 = () => {
 
     return (
         <>
-            <div>
-                <Table striped bordered hover className={"mt-3"}>
-                    {data?.map((e: { content: string, answer: String }) => {
-                        return <>
+            <Quiz/>
+            <Table striped bordered hover className={"mt-3"}>
+                {data?.map((e: { content: string, answer: String , explain: String}) => {
+                    return <>
+                        <tr>
+                            <th>퀴즈 내용:</th>
+                            <th>{e.content}</th>
+                            <th> 정답!! :</th>
+                            <th>{e.answer}</th>
+                            <th>오답 설명:</th>
+                            <th>{e.explain}</th>
                             <tr>
-                                <th>퀴즈 내용:</th>
-                                <th><a href={'/user/' + e.content}>{e.content}</a></th>
-                                <th> 정답!! :</th>
-                                <th>{e.answer}</th>
-                                <tr>
-                                    <Stack direction="horizontal" gap={2}>
-                                        <Button onClick={() => setSmShow(true)}>수정</Button>
-                                        <Button onClick={() => {
-                                            Axios.get("http://localhost:3000/api/metaquiz?del=" + e.content);
-                                            alert("삭제!!");
-                                        }}>삭제</Button>
-                                    </Stack>
-                                </tr>
+                                <Stack direction="horizontal" gap={2}>
+                                    <Button onClick={() => setSmShow(true)}>수정</Button>
+                                    <Button onClick={() => {
+                                        Axios.get("http://localhost:3000/api/metaquiz?del=" + e.content);
+                                        alert("삭제!!");
+                                    }}>삭제</Button>
+                                </Stack>
                             </tr>
-                        </>
-                    })
-                    }
-                </Table>
-            </div>
+                        </tr>
+                    </>
+                })
+                }
+            </Table>
+                
             <Modal
                 size="sm"
                 show={smShow}
@@ -69,11 +73,16 @@ const Quizlist1 = () => {
                         <Form.Control value={ipt2} onChange={(e) => setipt2(e.target.value)}
                                       placeholder="퀴즈 정답 O/X"/>
                     </Form.Group>
+                    <Form.Group className='mb-3'>
+                        <Form.Label>설명</Form.Label>
+                        <Form.Control value={ipt3} onChange={(e) => setipt3(e.target.value)}
+                                      placeholder="설명"/>
+                    </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={handleClose} variant="secondary">Close</Button>
                     <Button variant="primary" onClick={() => {
-                        Axios.get("http://localhost:3000/api/metaquiz?update=" + ipt1 + "&answer=" + ipt2).then(() => {
+                        Axios.get("http://localhost:3000/api/metaquiz?update=" + ipt1 + "&answer=" + ipt2 + "&explain=" + ipt3).then(() => {
                             setSmShow(false);
                         });
                     }}>Save changes</Button>

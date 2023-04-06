@@ -12,6 +12,7 @@ export default function Competition() {
     );
     const [ipt1, setipt1] = useState("");
     const [ipt2, setipt2] = useState("");
+    const [ipt3, setipt3] = useState("");
     const [smShow1, setSmShow1] = useState(false);
     const handleClose = () => setSmShow1(false);
     const startday = startDate.toLocaleString('ja-JP').slice(0, 20);
@@ -56,12 +57,20 @@ export default function Competition() {
                                 dateFormat="MMMM d, yyyy h:mm aa"
                             />
                         </Form.Group>
+                        <Form.Group className='mb-3'>
+                            <Form.Label>퀴즈 선택</Form.Label>
+                            <Form.Control as='select' value={ipt3} onChange={(e) => setipt3(e.target.value)}>
+                            <option value=''>선택하세요</option>
+                            <option value='quiz'>OX퀴즈</option>
+                            <option value='quiz2'>4지선다형</option>
+                            </Form.Control>
+                        </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button type="button" className='btn btn-secondary' data-bs-dismiss="modal"
                                 onClick={handleClose}>Close</Button>
                         <Button className='btn btn-primary' onClick={(e) => {
-                            Axios.get("http://localhost:3000/api/nftlist?add=" + ipt1 + "&nftId=" + "&winner=" + "&EOA="+ "&CA="+ ipt2 + "&startTime=" + startday + "&count=").then(() => {
+                            Axios.get("http://localhost:3000/api/nftlist?add=" + ipt1 + "&nftId=" + "&winner=" + "&EOA="+ "&CA="+ ipt2 + "&startTime=" + startday + "&quiz="+ ipt3 +"&count=" ).then(() => {
                                 setSmShow1(false);
                             });
                             alert("대회 추가");

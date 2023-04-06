@@ -7,6 +7,7 @@ import {Button, Modal, Dropdown, Form} from 'react-bootstrap';
 export default function Quiz(){
     const[ipt1, setipt1] = useState("");
     const[ipt2, setipt2] = useState("");
+    const[ipt3, setipt3] = useState("");
     const [smShow3, setSmShow3] = useState(false);
     const handleClose = () => setSmShow3(false);
 
@@ -44,11 +45,15 @@ export default function Quiz(){
                             <Form.Label>퀴즈 정답!</Form.Label>
                             <Form.Control value={ipt2} onChange={(e)=> setipt2(e.target.value)} placeholder="퀴즈 정답(O/X)"/>
                         </Form.Group>
+                        <Form.Group className='mb-3'>
+                            <Form.Label>정답이 X일 경우 설명</Form.Label>
+                            <Form.Control value={ipt3} onChange={(e)=> setipt3(e.target.value)} placeholder="설명"/>
+                        </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button type="button" className='btn btn-secondary' data-bs-dismiss="modal" onClick={handleClose}>Close</Button>
                         <Button className='btn btn-primary' onClick={(e)=>{
-                            Axios.get("http://localhost:3000/api/metaquiz?add="+ipt1+"&answer="+ipt2).then(()=>{setSmShow3(false);});}}>Save</Button>
+                            Axios.get("http://localhost:3000/api/metaquiz?add="+ipt1+"&answer="+ipt2 + "&explain=" +ipt3).then(()=>{setSmShow3(false);});}}>Save</Button>
                     </Modal.Footer>
                 </Modal>
             </div>

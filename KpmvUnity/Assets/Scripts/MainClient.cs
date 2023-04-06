@@ -9,6 +9,7 @@ public class MainClient : MonoBehaviour
 
     public class PlayerObj
     {
+        public string mGame;
         public string mUserName;
         public string mEOA;
         public string mUserid;
@@ -19,6 +20,7 @@ public class MainClient : MonoBehaviour
         {
             using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(111))
             {
+                pkw.wStr1(mGame);
                 pkw.wStr1(mUserName);
                 pkw.wStr1(mEOA);
                 ct.send(pkw);
@@ -55,12 +57,11 @@ public class MainClient : MonoBehaviour
             tmp.SetText(string.Join("\n", mLines));
         }
     }
-
+    public static Quizinfo quizKind;
     public class Quizinfo
     {
-        public string mGame, mTime, mWinner;
+        public string mGame, mTime, mWinner, mQuiz;
     }
-
 
     public class Client : JcCtUnity1.JcCtUnity1
     {
@@ -92,23 +93,57 @@ public class MainClient : MonoBehaviour
         {
             switch (pkrd.getPkt())
             {
-                case 100:
+                case 99:
                     {
-                        
                         var count = pkrd.rInt32s();
 
                         var s1 = "";
                         var s2 = "";
+                        var s3 = "";
+                        var s4 = "";
+                        var s5 = "";
+                        var s6 = "";
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            QuizManager.QuizData2 quizdata2 = new QuizManager.QuizData2();
+                            s1 = pkrd.rStr1def();
+                            s2 = pkrd.rStr1def();
+                            s3 = pkrd.rStr1def();
+                            s4 = pkrd.rStr1def();
+                            s5 = pkrd.rStr1def();
+                            s6 = pkrd.rStr1def();
+                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3 : " + s3 + " s4 : " + s4 + " s5 : " + s5 + " s6 :" + s6);
+                            quizdata2.mContent2 = s1;
+                            quizdata2.mEx1 = s2;
+                            quizdata2.mEx2 = s3;
+                            quizdata2.mEx3 = s4;
+                            quizdata2.mEx4 = s5;
+                            quizdata2.mCorrect = s6;
+
+                            mQuizManager.mQuizList2.Add(quizdata2);
+                        }
+                    }
+                    break;
+                case 100:
+                    {
+                        var count = pkrd.rInt32s();
+
+                        var s1 = "";
+                        var s2 = "";
+                        var s3 = "";
 
                         for (int i = 0; i < count; i++)
                         {
                             QuizManager.QuizData quizdata = new QuizManager.QuizData();
                             s1 = pkrd.rStr1def();
                             s2 = pkrd.rStr1def();
+                            s3 = pkrd.rStr1def();
 
-                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2);
+                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3 : " + s3);
                             quizdata.mContent = s1;
                             quizdata.mAnswer = s2;
+                            quizdata.mExplain = s3;
                             qv("recv 100 qm: " + (mQuizManager == null));
                             qv("ql: " + mQuizManager.mQuizList);
                             qv("qd: " + quizdata);
@@ -155,17 +190,23 @@ public class MainClient : MonoBehaviour
                         var s1 = "";
                         var s2 = "";
                         var s3 = "";
+                        var s4 = "";
                         for (int i = 0; i < count; i++)
                         {
                             Quizinfo mQuizinfo = new Quizinfo();
+                            PlayerObj mObjP = new PlayerObj();
                             s1 = pkrd.rStr1def();
                             s2 = pkrd.rStr1def();
                             s3 = pkrd.rStr1def();
-                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3: " + s3);
+                            s4 = pkrd.rStr1def();
+                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3: " + s3 + " s4: " + s4);
                             mQuizinfo.mGame = s1;
+                            mObjP.mGame = s1;
                             mQuizinfo.mTime = s2;
                             mQuizinfo.mWinner = s3;
+                            mQuizinfo.mQuiz = s4;
                             qv("Quiz Start Time : " + s2);
+                            qv("선택한 Quiz : " + s4);
                             quizinfo.Add(mQuizinfo);
                         }
                     }

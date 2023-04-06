@@ -13,14 +13,28 @@ namespace Nc1Ex1Server
         public const string
             Dbn = "test",
             Clcn = "quiz",
-            Clcn1 = "users",
-            Clcn2 = "nftLists";
+            Clcn1 = "quiz2",
+            Clcn2 = "users",
+            Clcn3 = "nftLists";
 
         public static IMongoDatabase DbCon1(string dbn = Dbn)
         {
             var client = new MongoClient("mongodb://127.0.0.1:27017");
             var database = client.GetDatabase(dbn);
             return database;
+        }
+
+        public static List<BsonDocument> Quiz2()
+        {
+            List<BsonDocument> list = new List<BsonDocument>();
+            var db1 = DbCon1();
+            var clc1 = db1.GetCollection<BsonDocument>(Clcn1);
+            var docs1 = clc1.Find(new BsonDocument()).ToList();
+            foreach (var d1 in docs1)
+            {
+                list.Add(d1);
+            }
+            return list;
         }
 
         public static List<BsonDocument> DbEx_FindAll()
@@ -31,8 +45,6 @@ namespace Nc1Ex1Server
             var docs1 = clc1.Find(new BsonDocument()).ToList();
             foreach (var d1 in docs1)
             {
-                // DB에서 잘가져오는지 체크용
-                // Console.WriteLine(d1.ToString() + "FindAll " + d1.GetValue("name"));
                 list.Add(d1);
             }
             return list;
@@ -42,7 +54,7 @@ namespace Nc1Ex1Server
         {
             List<BsonDocument> list = new List<BsonDocument>();
             var db1 = DbCon1();
-            var clc1 = db1.GetCollection<BsonDocument>(Clcn1);
+            var clc1 = db1.GetCollection<BsonDocument>(Clcn2);
             var docs1 = clc1.Find(new BsonDocument()).ToList();
             foreach (var d1 in docs1)
             {
@@ -66,7 +78,7 @@ namespace Nc1Ex1Server
         public static void DbEx_UpdateTest(string gameName, string winner, string nftAddr)
         {
             var db1 = DbCon1();
-            var clc1 = db1.GetCollection<MongoDB.Bson.BsonDocument>(Clcn2);
+            var clc1 = db1.GetCollection<MongoDB.Bson.BsonDocument>(Clcn3);
 
             var rand = new Random(DateTime.Now.Millisecond);
             var ft1 = Builders<MongoDB.Bson.BsonDocument>.Filter.Eq("game", gameName);
@@ -78,7 +90,7 @@ namespace Nc1Ex1Server
         {
             List<BsonDocument> list = new List<BsonDocument>();
             var db1 = DbCon1();
-            var clc1 = db1.GetCollection<BsonDocument>(Clcn2);
+            var clc1 = db1.GetCollection<BsonDocument>(Clcn3);
             var docs1 = clc1.Find(new BsonDocument()).ToList();
             foreach (var d1 in docs1)
             {

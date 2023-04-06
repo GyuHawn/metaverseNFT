@@ -11,7 +11,7 @@ async function DbConnect1(){
 }
 
 // 우승자 등록
-async function DbWrite(game:String, nftId:String, winner:String, EOA: String, CA:String, startTime: String, count:Number){
+async function DbWrite(game:String, nftId:String, winner:String, EOA: String, CA:String, startTime: String, count:Number,  quiz:String){
   const clc1 = await DbConnect1();
   const data1 = {
     game: game,
@@ -21,6 +21,7 @@ async function DbWrite(game:String, nftId:String, winner:String, EOA: String, CA
     startTime: startTime,
     CA: CA,
     count: count,
+    quiz: quiz,
   };
   const result = await clc1.insertOne(data1);
 }
@@ -55,6 +56,10 @@ async function DbUpdate3(game:String, nftId:String){
   const clc1 = await DbConnect1();
   const result = clc1.updateOne({game:game},{$set:{nftId:nftId}});
 }
+async function DbUpdate4(game:String, quiz:String){
+  const clc1 = await DbConnect1();
+  const result = clc1.updateOne({game:game},{$set:{quiz:quiz}});
+} 
 
 //삭제
 async function DbDelete1(nftId:String){
@@ -71,7 +76,7 @@ async function DbReadAll(limit = 100){
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse)=>{
-  const{add, read1, read2,read3, update1, update2, update3, del, nftId, winner, EOA} =req.query;
+  const{add, read1, read2,read3, update1, update2, update3,update4, del, nftId, winner, EOA} =req.query;
   
   console.log("usr get add: "+add+" read: "+read1+" read2: "+read2+" update1: "+update3+" nftId: "+nftId+" winner: "+winner + "EOA: " + EOA);
   console.log("어디서 나오는거임?1111111111111");
@@ -86,7 +91,7 @@ export default async (req: NextApiRequest, res: NextApiResponse)=>{
     return res.send(JSON.stringify(ar1));
   }
   else if(add){
-    await DbWrite(String(add), String(req.query.nftId), String(req.query.winner), String(req.query.EOA), String(req.query.CA), String(req.query.startTime), Number(req.query.count));
+    await DbWrite(String(add), String(req.query.nftId), String(req.query.winner), String(req.query.EOA), String(req.query.CA), String(req.query.startTime), Number(req.query.count), String(req.query.quiz));
     return res.send(await DbReadAll());
   }else if(update1){
     await DbUpdate1(String(update1),String(req.query.winner), String(req.query.nftId), String(req.query.EOA));
@@ -98,7 +103,10 @@ export default async (req: NextApiRequest, res: NextApiResponse)=>{
     await DbUpdate3(String(update3), String(req.query.nftId));
     console.log("어디서 나오는거임? nft발급완료?");
     return res.send(await DbReadAll());
-  }else if(del){
+  }else if(update4){
+    await DbUpdate4(String(update4), String(req.query.quiz));
+  }
+  else if(del){
     await DbDelete1(String(del));
   }else{
     let ar1 = await DbReadAll();
