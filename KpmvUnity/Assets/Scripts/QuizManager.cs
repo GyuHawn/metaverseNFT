@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class QuizManager //: MonoBehaviour
 {
@@ -33,7 +32,7 @@ public class QuizManager //: MonoBehaviour
     }
 
     public bool ox; // 문제 정답이 맞았는지 여부
-
+    public string sname;
     public float mRemainCompetitionTime = 600.0f; // 퀴즈 시작까지 시간
     public float mAnswerTimeOut = 3.0f; // 문제 시간
     public float mNextAnswerDelayTimeOut = 3.0f; // 다음 문제 시간
@@ -198,13 +197,13 @@ public class QuizManager //: MonoBehaviour
         mRemainCompetitionTime -= Time.deltaTime;
     }
 
-    Scene scene = SceneManager.GetActiveScene();
     //게임 시작
     public bool isCompetitionState_Starting()
     {
+        Debug.Log("scene.name : " + sname);
         //게임 시작조건 :
         //남은 퀴즈 개수 > 0 
-        if (scene.name == "Quiz1") //OX퀴즈
+        if (sname == "Quiz1") //OX퀴즈
         {
             if (getRemainQuizCount() > 0)
             {
@@ -215,7 +214,7 @@ public class QuizManager //: MonoBehaviour
                 }
             }
         }
-        else if (scene.name == "Quiz2") //4지선다형
+        else if (sname == "Quiz2") //4지선다형
         {
             if (getRemainQuizCount2() > 0)
             {
@@ -234,7 +233,7 @@ public class QuizManager //: MonoBehaviour
     {
         //게임 Play조건 :
         //남은 퀴즈 개수 > 0 
-        if (scene.name == "Quiz1") //OX퀴즈
+        if (sname == "Quiz1") //OX퀴즈
         {
             if (getRemainQuizCount() > 0)
             {
@@ -250,7 +249,7 @@ public class QuizManager //: MonoBehaviour
                 }
             }
         }
-        else if (scene.name == "Quiz2") //4지선다형
+        else if (sname == "Quiz2") //4지선다형
         {
             if (getRemainQuizCount2() > 0)
             {
@@ -273,7 +272,7 @@ public class QuizManager //: MonoBehaviour
     {
         //퀴즈 푸는 조건 :
         //남은 퀴즈 개수 > 0 
-        if (scene.name == "Quiz1") //OX퀴즈
+        if (sname == "Quiz1") //OX퀴즈
         {
             if (getRemainQuizCount() > 0)
             {
@@ -294,7 +293,7 @@ public class QuizManager //: MonoBehaviour
                 }
             }
         }
-        else if (scene.name == "Quiz2") //4지선다형
+        else if (sname == "Quiz2") //4지선다형
         {
             if (getRemainQuizCount2() > 0)
             {
@@ -322,7 +321,7 @@ public class QuizManager //: MonoBehaviour
     {
         //퀴즈 다음으로 넘어가는 조건 :
         //남은 퀴즈 개수 > 0 
-        if (scene.name == "Quiz1") //OX퀴즈
+        if (sname == "Quiz1") //OX퀴즈
         {
             if (getRemainQuizCount() > 0)
             {
@@ -349,7 +348,7 @@ public class QuizManager //: MonoBehaviour
                 }
             }
         }
-        else if (scene.name == "Quiz2") //4지선다형
+        else if (sname == "Quiz2") //4지선다형
         {
             if (getRemainQuizCount2() > 0)
             {

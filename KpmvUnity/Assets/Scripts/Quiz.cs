@@ -34,13 +34,15 @@ public class Quiz : MonoBehaviour
         mPlayer = GameObject.Find("Player");
     }
 
-    void Update()
+    public void Update()
     {
         Scene scene = SceneManager.GetActiveScene();
+        mMainClient.mQuizManager.sname = scene.name;
         //게임 시작(게임 유)
         if (scene.name == "Quiz1")
         {
             //게임 시작(게임 유)
+            
             if (mMainClient.mQuizManager.isCompetitionState_Starting())
             {
                 mQuizText.text = "OX퀴즈 문제를 선택하셨습니다." + System.Environment.NewLine + "10초 후 퀴즈가 시작됩니다" + System.Environment.NewLine +

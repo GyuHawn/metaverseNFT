@@ -1193,6 +1193,14 @@ MonoBehaviour:
   mTerrain: {fileID: 1985588125}
   mWinner: {fileID: 1112619166}
   mPlayer: {fileID: 1851793368}
+  mEx1Text: {fileID: 0}
+  mEx2Text: {fileID: 0}
+  mEx3Text: {fileID: 0}
+  mEx4Text: {fileID: 0}
+  mCube: {fileID: 0}
+  mPMotion: {fileID: 0}
+  mFailWall: {fileID: 0}
+  fail: 0
   mOobj: {fileID: 95550343}
   mXobj: {fileID: 2076019259}
 --- !u!114 &705330506

@@ -223,6 +223,11 @@ public class MainClient : MonoBehaviour
     static public List<string> mLines = new List<string>();
     static public string serverAddress;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+
+    }
     void Start()
     {
         mQuizManager = new QuizManager();
