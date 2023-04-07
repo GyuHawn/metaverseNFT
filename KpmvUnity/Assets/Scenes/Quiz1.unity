@@ -218,7 +218,7 @@ RectTransform:
   - {fileID: 529321869}
   - {fileID: 1027370176}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -442,7 +442,7 @@ RectTransform:
   - {fileID: 4405293655434098532}
   - {fileID: 6852491259289976245}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -625,15 +625,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -661,7 +661,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -12.844147, y: -78.5849, z: -173.94101, w: -111.618866}
+  m_margin: {x: -12.844147, y: 0, z: -173.94101, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1063,6 +1063,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 93808403}
     - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 11400000, guid: 704d1b0b055123a40bbd2f326824acc4, type: 2}
+    - target: {fileID: 8426393524330095234, guid: ea1c50f5b4b5713488e9d2166bc0a048, type: 3}
       propertyPath: splayer
       value: 
       objectReference: {fileID: 1851793368}
@@ -1189,14 +1193,6 @@ MonoBehaviour:
   mTerrain: {fileID: 1985588125}
   mWinner: {fileID: 1112619166}
   mPlayer: {fileID: 1851793368}
-  mEx1Text: {fileID: 0}
-  mEx2Text: {fileID: 0}
-  mEx3Text: {fileID: 0}
-  mEx4Text: {fileID: 0}
-  mCube: {fileID: 0}
-  mPMotion: {fileID: 0}
-  mFailWall: {fileID: 0}
-  fail: 0
   mOobj: {fileID: 95550343}
   mXobj: {fileID: 2076019259}
 --- !u!114 &705330506
@@ -1220,7 +1216,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8327612088127679466, guid: 813488125ad781c4ca63a4ecfb88f52b, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8327612088127679466, guid: 813488125ad781c4ca63a4ecfb88f52b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1262,21 +1258,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8366322994890673210, guid: 813488125ad781c4ca63a4ecfb88f52b, type: 3}
-      propertyPath: win
-      value: 
-      objectReference: {fileID: 1112619168}
     - target: {fileID: 8708360507182625104, guid: 813488125ad781c4ca63a4ecfb88f52b, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 813488125ad781c4ca63a4ecfb88f52b, type: 3}
---- !u!4 &778060747 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8327612088127679466, guid: 813488125ad781c4ca63a4ecfb88f52b, type: 3}
-  m_PrefabInstance: {fileID: 778060746}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &779725804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1639553416573130669, guid: 7d93b38c68841fc4a9d0ee21807b5d5c, type: 3}
@@ -2023,7 +2010,7 @@ Transform:
   - {fileID: 1624518190}
   - {fileID: 779725804}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1060668496
 GameObject:
@@ -2119,7 +2106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winner: {fileID: 1112619166}
-  target: {fileID: 778060747}
+  target: {fileID: 0}
   isFollowing: 0
 --- !u!136 &1112619169
 CapsuleCollider:
@@ -2230,7 +2217,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1209603675
 PrefabInstance:

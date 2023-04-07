@@ -81,18 +81,34 @@ public class MultiClient : MonoBehaviour
                         var xx = pkrd.rReal32();
                         var yy = pkrd.rReal32();
                         var zz = pkrd.rReal32();
-                       
+
+                        string name="", color="";
+                        if (code==0)
+                        {
+                            name = pkrd.rStr1def();
+                            color = pkrd.rStr1def();
+                        }
                         if (pidx >= 0 )
                         {
                             Debug.Log("server ¼ö½Å pidx, code: " + pidx + " , "+code);
                             if (LcIPT.Instance.mPlayers[pidx] == null)
                             {
-                                LcIPT.Instance.InstantiatePlayer(pidx);
+                                LcIPT.Instance.InstantiatePlayer(pidx,color);
+                                GameObject t = new GameObject("myname");
+                                t.transform.parent = LcIPT.Instance.mPlayers[pidx].transform;
+                                t.transform.localPosition = new Vector3(0f, 8f, 0f);
+
+                                var t1 = t.AddComponent<TextMeshPro>();
+                                t1.GetComponent<TMP_Text>().font = LcIPT.Instance.m_Font;
+                                t1.GetComponent<TMP_Text>().color = Color.magenta;
+                                if (MainClient.currentUser != null) { t1.text = name; }
+                                t1.alignment = TextAlignmentOptions.Center;
+                                t1.fontSize = 15;
 
                             }
                             LcIPT.Instance.mPlayers[pidx].GetComponent<PlayerMotion>().SetKey((KeyCode)code);
                             LcIPT.Instance.mPlayers[pidx].GetComponent<PlayerMotion>().ThisUpdate();
-                            LcIPT.Instance.mPlayers[pidx].transform.position = new Vector3(xx, yy, zz);
+                            LcIPT.Instance.mPlayers[pidx].transform.position = new Vector3(xx, yy, zz);                          
                         }
                     }
                     break;

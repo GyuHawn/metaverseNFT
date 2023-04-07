@@ -1,4 +1,4 @@
-Ôªøusing System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -16,6 +16,7 @@ public class LcIPT : MonoBehaviour
     public GameObject go;
     public GameObject Camera;
     public GameObject inputField;
+    public TMP_FontAsset m_Font;
 
 
     public const int maxP = 3;
@@ -40,14 +41,28 @@ public class LcIPT : MonoBehaviour
         pIndex = _index;
         if (pIndex >= 0)
         {
-            InstantiatePlayer(pIndex);
+            InstantiatePlayer(pIndex, MainClient.currentUser==null?"":MainClient.currentUser.mColor);
             go = mPlayers[pIndex];
             Camera.GetComponent<camera>().SetTarget(go);
+
+            GameObject t = new GameObject("myname");
+            t.transform.parent = go.transform;
+            t.transform.localPosition = new Vector3(0f, 8f, 0f);
+
+            var t1 = t.AddComponent<TextMeshPro>();
+            t1.GetComponent<TMP_Text>().font = m_Font;
+            if (MainClient.currentUser != null) 
+            { 
+                t1.text = MainClient.currentUser.mUserName;
+                t1.GetComponent<TMP_Text>().color = Color.magenta;
+            }
+            t1.alignment = TextAlignmentOptions.Center;
+            t1.fontSize = 12;
 
         }
         else
         {
-            Debug.Log("Ïù∏ÏõêÏàò Ï¥àÍ≥º2"); mCf.mCt.disconnect();
+            Debug.Log("¿Œø¯ºˆ √ ∞˙2"); mCf.mCt.disconnect();
         }
 
     }
@@ -71,6 +86,20 @@ public class LcIPT : MonoBehaviour
         mPlayers = new GameObject[maxP];
 
         go = splayer;
+
+        GameObject t = new GameObject("myname");
+        t.transform.parent = go.transform;
+        t.transform.localPosition = new Vector3(0f, 8f, 0f);
+        
+        var t1 = t.AddComponent<TextMeshPro>();
+        t1.GetComponent<TMP_Text>().font = m_Font;
+        if (MainClient.currentUser!=null) {
+            t1.text = MainClient.currentUser.mUserName;
+            t1.GetComponent<TMP_Text>().color = Color.magenta;
+        } 
+        t1.alignment = TextAlignmentOptions.Center;
+        t1.fontSize = 12;
+
         go.SetActive(true);
         Camera.GetComponent<camera>().SetTarget(go);
     }
@@ -87,7 +116,7 @@ public class LcIPT : MonoBehaviour
                     Debug.Log("Destroy pidx: " + i);
                 }
             }
-            if (mCf.mCt.connect("127.0.0.3", 7771))
+            if (mCf.mCt.connect(MainClient.serverAddress, 7771))
             {
                 go = null;
                 splayer.SetActive(false);
@@ -118,17 +147,17 @@ public class LcIPT : MonoBehaviour
         GameObject.Find("Text1").GetComponent<TextMeshProUGUI>().SetText(string.Join("\n", MainClient.mLines));
     }
 
-    public void InstantiatePlayer(int i)
+    public void InstantiatePlayer(int i, string color)
     {
         Scene scene = SceneManager.GetActiveScene();
         GameObject myPF;
         int ipf = -1;
 
-        switch (MainClient.currentUser.mColor)
+        switch (color)
         {
-            case "blue": ipf = 0; break;
-            case "white": ipf = 1; break;
-            case "red": ipf = 2; break;
+            case "blue":  ipf = 0;    break;
+            case "white": ipf = 1;    break;
+            case "red":  ipf = 2;    break;
         }
         if (ipf < 0) { return; }
         myPF = playerPF[ipf];
@@ -156,15 +185,20 @@ public class LcIPT : MonoBehaviour
         }
     }
 
-    public void currentSend(JcCtUnity1.JcCtUnity1 ct, int isNew = 0)
+    public void currentSend(JcCtUnity1.JcCtUnity1 ct, int code = 0)
     {
         using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(3))
         {
             pkw.wInt32s(LcIPT.Instance.pIndex);
-            pkw.wInt32s(isNew);
+            pkw.wInt32s(code);
             pkw.wReal32(go.transform.position.x);
             pkw.wReal32(go.transform.position.y);
             pkw.wReal32(go.transform.position.z);
+            if (code ==0)
+            {
+                pkw.wStr1(MainClient.currentUser == null ? "" : MainClient.currentUser.mUserName);
+                pkw.wStr1(MainClient.currentUser == null ? "" : MainClient.currentUser.mColor);
+            }
             ct.send(pkw);
         }
     }

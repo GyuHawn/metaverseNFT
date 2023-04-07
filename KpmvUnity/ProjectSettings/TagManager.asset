@@ -9,6 +9,11 @@ TagManager:
   - Die
   - QuizStart
   - Win
+  - Red
+  - Yellow
+  - Green
+  - Blue
+  - Fail
   layers:
   - Default
   - TransparentFX

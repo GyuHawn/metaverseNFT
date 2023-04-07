@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerMotion : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class PlayerMotion : MonoBehaviour
 
     public void Update()
     {
+        if (LcIPT.Instance.inputField.GetComponent<UnityEngine.UI.InputField>().isFocused) { return; }
         if (!LcIPT.Instance.isOnline())
         {
             ThisUpdate();
@@ -111,6 +113,12 @@ public class PlayerMotion : MonoBehaviour
         }
 
         transform.LookAt(transform.position + zeroVec);
+
+        if (transform.Find("myname"))
+        {
+            transform.Find("myname").rotation = Quaternion.Euler(0, 0, 0);
+        }
+
     }
 
     void OnCollisionEnter(Collision collision)
@@ -147,27 +155,32 @@ public class PlayerMotion : MonoBehaviour
             if (collision.gameObject.CompareTag("Red"))
             {
                 transform.gameObject.tag = "Red";
-                pName.playerNameText.color = Color.red;
+                transform.Find("myname").GetComponentInChildren<TMP_Text>().color = Color.red;
+                //pName.playerNameText.color = Color.red;
             }
             else if (collision.gameObject.CompareTag("Blue"))
             {
                 transform.gameObject.tag = "Blue";
-                pName.playerNameText.color = Color.blue;
+                transform.Find("myname").GetComponentInChildren<TMP_Text>().color = Color.blue;
+                //pName.playerNameText.color = Color.blue;
             }
             else if (collision.gameObject.CompareTag("Green"))
             {
                 transform.gameObject.tag = "Green";
-                pName.playerNameText.color = Color.green;
+                transform.Find("myname").GetComponentInChildren<TMP_Text>().color = Color.green;
+                //pName.playerNameText.color = Color.green;
             }
             else if (collision.gameObject.CompareTag("Yellow"))
             {
                 transform.gameObject.tag = "Yellow";
-                pName.playerNameText.color = Color.yellow;
+                transform.Find("myname").GetComponentInChildren<TMP_Text>().color = Color.yellow;
+                //pName.playerNameText.color = Color.yellow;
             }
             if (collision.gameObject.CompareTag("Fail"))
             {
                 transform.gameObject.tag = "Fail";
-                pName.playerNameText.color = Color.black;
+                transform.Find("myname").GetComponentInChildren<TMP_Text>().color = Color.black;
+                // pName.playerNameText.color = Color.black;
             }
             canCollide = false;
             StartCoroutine(ChangeCollide());

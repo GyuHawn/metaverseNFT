@@ -578,6 +578,7 @@ MonoBehaviour:
   go: {fileID: 0}
   Camera: {fileID: 963194225}
   inputField: {fileID: 816431800}
+  m_Font: {fileID: 11400000, guid: 704d1b0b055123a40bbd2f326824acc4, type: 2}
   mPlayers: []
 --- !u!114 &88302604
 MonoBehaviour:
@@ -2391,7 +2392,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911475864}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fcec306bf8486f468484524881edddd, type: 3}
   m_Name: 
@@ -4565,7 +4566,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1954817816}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 

@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using static MainClient;
+using TMPro;
 
 public class Login : MonoBehaviour
 {
     public InputField useridField;
     public InputField pwdField;
+    public TMP_InputField serverField;
 
     public GameObject error;
 
@@ -21,6 +23,7 @@ public class Login : MonoBehaviour
     private void Awake()
     {
         mClient = GameObject.FindObjectOfType<MainClient>();
+        serverField.text = "127.0.0.1";
     }
 
     private void Update()
@@ -44,11 +47,23 @@ public class Login : MonoBehaviour
 
     public void GetLoginInfo()
     {
+        serverAddress = serverField.text;
+        mClient.mCt.connect(serverAddress, 7777);
+        Debug.Log("Client Start 1111");
+
         enteredId = useridField.text;
         enteredPwd = pwdField.text;
-        ValidateLogin();
+
+        StartCoroutine(validate());
+
+        IEnumerator validate()
+        {          
+            yield return new WaitForSeconds(1.5f);
+            ValidateLogin();
+        }
         useridField.text = "";
         pwdField.text = "";
+        
     }
 
     public void ValidateLogin()

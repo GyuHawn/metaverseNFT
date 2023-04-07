@@ -221,14 +221,14 @@ public class MainClient : MonoBehaviour
     static public List<Quizinfo> quizinfo;
     static public List<PlayerObj> pdbList;
     static public List<string> mLines = new List<string>();
+    static public string serverAddress;
 
     void Start()
     {
         mQuizManager = new QuizManager();
 
         mCt = new Client(mQuizManager);
-        mCt.connect("127.0.0.1", 7777);
-        Debug.Log("Client Start 1111");
+        
     }
 
     void Update()
