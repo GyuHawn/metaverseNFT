@@ -100,10 +100,10 @@ public class MultiClient : MonoBehaviour
 
                                 var t1 = t.AddComponent<TextMeshPro>();
                                 t1.GetComponent<TMP_Text>().font = LcIPT.Instance.m_Font;
-                                t1.GetComponent<TMP_Text>().color = Color.magenta;
+                                t1.GetComponent<TMP_Text>().color = Color.black;
                                 if (MainClient.currentUser != null) { t1.text = name; }
                                 t1.alignment = TextAlignmentOptions.Center;
-                                t1.fontSize = 15;
+                                t1.fontSize = 5;
 
                             }
                             LcIPT.Instance.mPlayers[pidx].GetComponent<PlayerMotion>().SetKey((KeyCode)code);
@@ -112,7 +112,19 @@ public class MultiClient : MonoBehaviour
                         }
                     }
                     break;
-                
+
+                case 31:
+                    {
+                        var pidx = pkrd.rInt32s();
+                        var jumpForce = pkrd.rReal32();
+
+                        if (pidx >= 0 && LcIPT.Instance.mPlayers[pidx] != null)
+                        {
+                            Rigidbody rb = LcIPT.Instance.mPlayers[pidx].GetComponent<Rigidbody>();
+                            rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+                        }
+                    }
+                    break;
                 case 4:
                     {
                         int pidx = pkrd.rInt32s();

@@ -54,10 +54,10 @@ public class LcIPT : MonoBehaviour
             if (MainClient.currentUser != null) 
             { 
                 t1.text = MainClient.currentUser.mUserName;
-                t1.GetComponent<TMP_Text>().color = Color.magenta;
+                t1.GetComponent<TMP_Text>().color = Color.black;
             }
             t1.alignment = TextAlignmentOptions.Center;
-            t1.fontSize = 12;
+            t1.fontSize = 5;
 
         }
         else
@@ -68,6 +68,7 @@ public class LcIPT : MonoBehaviour
     }
 
     public int GetIndex() { return pIndex; }
+    public MultiClient GetMultiClient() { return mCf; }
 
     public void Awake()
     {
@@ -95,10 +96,10 @@ public class LcIPT : MonoBehaviour
         t1.GetComponent<TMP_Text>().font = m_Font;
         if (MainClient.currentUser!=null) {
             t1.text = MainClient.currentUser.mUserName;
-            t1.GetComponent<TMP_Text>().color = Color.magenta;
+            t1.GetComponent<TMP_Text>().color = Color.black;
         } 
         t1.alignment = TextAlignmentOptions.Center;
-        t1.fontSize = 12;
+        t1.fontSize = 5;
 
         go.SetActive(true);
         Camera.GetComponent<camera>().SetTarget(go);
@@ -203,6 +204,16 @@ public class LcIPT : MonoBehaviour
         }
     }
 
+    public void jumpSend(JcCtUnity1.JcCtUnity1 ct, float force)
+    {
+        using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(31))
+        {           
+            pkw.wInt32s(LcIPT.Instance.pIndex);
+            pkw.wReal32(force);
+            ct.send(pkw);
+        }
+    }
+
     void Update()
     {
         Move();
@@ -271,7 +282,9 @@ public class LcIPT : MonoBehaviour
                 {
                     if (mbOnline)
                     {
-                        moveSend(mCf.mCt, go, (int)KeyCode.Space, 0, mJumpHeight, 0);
+                        float jumpForce = Mathf.Sqrt(mJumpHeight * -2 * Physics.gravity.y);
+                        jumpSend(mCf.mCt,jumpForce);
+                       // moveSend(mCf.mCt, go, (int)KeyCode.Space, 0, mJumpHeight, 0);
                     }
                     else
                     {

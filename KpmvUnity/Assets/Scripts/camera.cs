@@ -15,7 +15,7 @@ public class camera : MonoBehaviour
     {
         target = obj.transform;
     }
-    void Update()
+    void LateUpdate()
     {
         if (target)
         {

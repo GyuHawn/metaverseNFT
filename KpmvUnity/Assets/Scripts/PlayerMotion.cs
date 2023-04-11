@@ -61,6 +61,13 @@ public class PlayerMotion : MonoBehaviour
         if (!LcIPT.Instance.isOnline())
         {
             ThisUpdate();
+        } else
+        {
+            if (! (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && currentKeycode != (KeyCode)1 )
+            {
+                LcIPT.Instance.currentSend(LcIPT.Instance.GetMultiClient().mCt,1);
+            }
+ 
         }
     }
 
@@ -134,11 +141,24 @@ public class PlayerMotion : MonoBehaviour
         //oxƒ˚¡Ó
         if (collision.gameObject.CompareTag("Die"))
         {
-            transform.position = new Vector3(8, 30, -12);
+            if (!LcIPT.Instance.isOnline())
+            {
+                transform.position = new Vector3(8, 30, -12);
+            } else
+            {
+                LcIPT.Instance.moveSend(LcIPT.Instance.GetMultiClient().mCt, gameObject, 1, 8 - transform.position.x, 30 - transform.position.y, -12 - transform.position.z);
+            }
         }
         if (collision.gameObject.CompareTag("Respawn"))
         {
-            transform.position = new Vector3(8, 30, -12);
+            if (!LcIPT.Instance.isOnline())
+            {
+                transform.position = new Vector3(8, 30, -12);
+            }
+            else
+            {
+                LcIPT.Instance.moveSend(LcIPT.Instance.GetMultiClient().mCt, gameObject, 1, 8 - transform.position.x, 30 - transform.position.y, -12 - transform.position.z);
+            }
         }
         //∞¯≈Î
         if (collision.gameObject.CompareTag("Win"))
