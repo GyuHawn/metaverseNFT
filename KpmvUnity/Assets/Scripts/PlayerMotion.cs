@@ -20,6 +20,7 @@ public class PlayerMotion : MonoBehaviour
     public PlayerName pName;
 
     public Winner win;
+    public GameObject mWin;
 
     public bool save = false;
 
@@ -52,6 +53,8 @@ public class PlayerMotion : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         terrain = GameObject.Find("Terrain");
+        mWin = GameObject.Find("Trophy");
+        win = GameObject.FindObjectOfType<Winner>();
 
     }
 
@@ -149,7 +152,7 @@ public class PlayerMotion : MonoBehaviour
                 Save();
             }
         }
-        //4지선다 퀴즈
+        //4지선다 퀴즈, it
         if (canCollide)
         {
             if (collision.gameObject.CompareTag("Red"))

@@ -10,6 +10,7 @@ public class QuizStart : MonoBehaviour
     public MainClient mMainClient;
 
     public TextMeshProUGUI mQuizText;
+    public TextMeshProUGUI mTimeText;
     public DateTime quizDate;
     public bool textOn = false;
 
@@ -17,7 +18,7 @@ public class QuizStart : MonoBehaviour
     {
         mMainClient = GameObject.FindObjectOfType<MainClient>();
     }
-   
+    
     private void Update()
     {
         if (!textOn)
@@ -45,6 +46,22 @@ public class QuizStart : MonoBehaviour
                     canvas.gameObject.SetActive(true);
                     mMainClient.mQuizManager.mRemainCompetitionTime = 5.0f;
                     textOn = true;
+                }
+                else if(differ > TimeSpan.Zero)
+                {
+                    canvas.gameObject.SetActive(true);
+                    if(differ.TotalMinutes == 10)
+                    {
+                        mTimeText.text = "10분 남았습니다!!!";
+                    }
+                    else if(differ.TotalMinutes == 1)
+                    {
+                        mTimeText.text = "게임 시작 1분전 입니다.!!!";
+                    }
+                    else
+                    {
+                        mTimeText.text = quizName + System.Environment.NewLine + " 선택한 Quiz : " + mMainClient.mQuizManager.quizType() +System.Environment.NewLine + " Quiz대회 남은시간 : " + mMainClient.mQuizManager.leftTime();
+                    }
                 }
             }
         }

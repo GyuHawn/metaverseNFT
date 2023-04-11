@@ -1193,16 +1193,21 @@ MonoBehaviour:
   mTerrain: {fileID: 1985588125}
   mWinner: {fileID: 1112619166}
   mPlayer: {fileID: 1851793368}
-  mEx1Text: {fileID: 0}
-  mEx2Text: {fileID: 0}
-  mEx3Text: {fileID: 0}
-  mEx4Text: {fileID: 0}
+  fEx1Text: {fileID: 0}
+  fEx2Text: {fileID: 0}
+  fEx3Text: {fileID: 0}
+  fEx4Text: {fileID: 0}
+  itEx1Text: {fileID: 0}
+  itEx2Text: {fileID: 0}
+  itEx3Text: {fileID: 0}
+  itEx4Text: {fileID: 0}
   mCube: {fileID: 0}
   mPMotion: {fileID: 0}
   mFailWall: {fileID: 0}
   fail: 0
   mOobj: {fileID: 95550343}
   mXobj: {fileID: 2076019259}
+  lcipt: {fileID: 0}
 --- !u!114 &705330506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1266,6 +1271,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8366322994890673210, guid: 813488125ad781c4ca63a4ecfb88f52b, type: 3}
+      propertyPath: win
+      value: 
+      objectReference: {fileID: 1112619168}
     - target: {fileID: 8708360507182625104, guid: 813488125ad781c4ca63a4ecfb88f52b, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1673,6 +1682,7 @@ MonoBehaviour:
   canvas: {fileID: 645795065}
   mMainClient: {fileID: 540360219}
   mQuizText: {fileID: 998349680}
+  mTimeText: {fileID: 267531654}
   textOn: 0
 --- !u!1 &1027370175
 GameObject:
@@ -2114,7 +2124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winner: {fileID: 1112619166}
-  target: {fileID: 0}
+  lcipt: {fileID: 0}
   isFollowing: 0
 --- !u!136 &1112619169
 CapsuleCollider:

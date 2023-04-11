@@ -63,6 +63,7 @@ export default function Competition() {
                             <option value=''>선택하세요</option>
                             <option value='quiz'>OX퀴즈</option>
                             <option value='quiz2'>4지선다형</option>
+                            <option value='quiz3'>IT문제</option>
                             </Form.Control>
                         </Form.Group>
                     </Modal.Body>

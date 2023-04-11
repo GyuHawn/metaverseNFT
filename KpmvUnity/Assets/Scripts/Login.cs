@@ -71,6 +71,7 @@ public class Login : MonoBehaviour
         bool loginSuccess = false;
         string quizName = "";
         string quizKind = "";
+        Debug.Log("MainClient.quizinfo.Count : " + MainClient.quizinfo.Count);
         for (int i = 0; i < MainClient.quizinfo.Count; i++)
         {
             if (MainClient.quizinfo[i].mWinner == "")
@@ -90,6 +91,9 @@ public class Login : MonoBehaviour
                 else if(quizKind == "quiz2")
                 {
                     SceneManager.LoadScene("Scenes/Quiz2");
+                }else if(quizKind == "quiz3")
+                {
+                    SceneManager.LoadScene("Scenes/Quiz3");
                 }
                 else
                 {

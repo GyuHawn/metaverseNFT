@@ -1,6 +1,7 @@
 import {Tab, Tabs} from "react-bootstrap";
 import Quizlist1 from "@/pages/quiz/quizlist1";
 import Quizlist2 from "@/pages/quiz/quizlist2";
+import Quizlist3 from "@/pages/quiz/quizlist3";
 import Choice from "@/pages/quiz/choice";
 function QuizCategory() {
     return (
@@ -20,8 +21,9 @@ function QuizCategory() {
                     <Choice/>
                 </div>
             </Tab>
-            <Tab eventKey="Quiz3" title="수학문제">
-                Quiz3
+            <Tab eventKey="Quiz3" title="IT문제">
+                    <Quizlist3/>
+                    <Choice/>
             </Tab>
             <Tab eventKey="Quiz4" title="another Quiz">
                 Quiz4

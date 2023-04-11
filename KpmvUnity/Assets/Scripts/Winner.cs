@@ -6,14 +6,20 @@ public class Winner : MonoBehaviour
 {
     public GameObject winner;
 
-    public Transform target;
+    //public Transform target;
+    public LcIPT lcipt;
     public bool isFollowing;
+
+    private void Awake()
+    {
+        lcipt = GameObject.FindObjectOfType<LcIPT>();
+    }
 
     void Update()
     {
         if (isFollowing)
         {
-            winner.transform.position = new Vector3(target.position.x, target.position.y + 2.5f, target.position.z);
+            winner.transform.position = new Vector3(lcipt.go.transform.position.x, lcipt.go.transform.position.y + 2.5f, lcipt.go.transform.position.z);
         }
     }
 

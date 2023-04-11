@@ -93,7 +93,7 @@ public class MainClient : MonoBehaviour
         {
             switch (pkrd.getPkt())
             {
-                case 99:
+                case 98: //it문제
                     {
                         var count = pkrd.rInt32s();
 
@@ -103,6 +103,43 @@ public class MainClient : MonoBehaviour
                         var s4 = "";
                         var s5 = "";
                         var s6 = "";
+                        var s7 = "";
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            QuizManager.QuizData3 quizdata3 = new QuizManager.QuizData3();
+                            s1 = pkrd.rStr1def();
+                            s2 = pkrd.rStr1def();
+                            s3 = pkrd.rStr1def();
+                            s4 = pkrd.rStr1def();
+                            s5 = pkrd.rStr1def();
+                            s6 = pkrd.rStr1def();
+                            s7 = pkrd.rStr1def();
+                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3 : " + s3 + " s4 : " + s4 + " s5 : " + s5 + " s6 : " + s6 + " s7 : " + s7);
+                            quizdata3.itContent = s1;
+                            quizdata3.itEx1 = s2;
+                            quizdata3.itEx2 = s3;
+                            quizdata3.itEx3 = s4;
+                            quizdata3.itEx4 = s5;
+                            quizdata3.itCorrect = s6;
+                            quizdata3.itKind = s7;
+
+                            mQuizManager.mQuizList3.Add(quizdata3);
+                        }
+                    }
+                    break;
+
+                case 99: //4지선다
+                    {
+                        var count = pkrd.rInt32s();
+
+                        var s1 = "";
+                        var s2 = "";
+                        var s3 = "";
+                        var s4 = "";
+                        var s5 = "";
+                        var s6 = "";
+                        var s7 = "";
 
                         for (int i = 0; i < count; i++)
                         {
@@ -113,25 +150,30 @@ public class MainClient : MonoBehaviour
                             s4 = pkrd.rStr1def();
                             s5 = pkrd.rStr1def();
                             s6 = pkrd.rStr1def();
-                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3 : " + s3 + " s4 : " + s4 + " s5 : " + s5 + " s6 :" + s6);
-                            quizdata2.mContent2 = s1;
-                            quizdata2.mEx1 = s2;
-                            quizdata2.mEx2 = s3;
-                            quizdata2.mEx3 = s4;
-                            quizdata2.mEx4 = s5;
-                            quizdata2.mCorrect = s6;
+                            s7 = pkrd.rStr1def();
+                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3 : " + s3 + " s4 : " + s4 + " s5 : " + s5 + " s6 :" + s6 + " s7 : " + s7);
+                            quizdata2.fContent = s1;
+                            quizdata2.fEx1 = s2;
+                            quizdata2.fEx2 = s3;
+                            quizdata2.fEx3 = s4;
+                            quizdata2.fEx4 = s5;
+                            quizdata2.fCorrect = s6;
+                            quizdata2.fKind = s7;
 
                             mQuizManager.mQuizList2.Add(quizdata2);
                         }
                     }
                     break;
-                case 100:
+
+                case 100: //ox문제
                     {
                         var count = pkrd.rInt32s();
+                        Debug.Log("pkrd.rInt32s() : " + count);
 
                         var s1 = "";
                         var s2 = "";
                         var s3 = "";
+                        var s4 = "";
 
                         for (int i = 0; i < count; i++)
                         {
@@ -139,14 +181,13 @@ public class MainClient : MonoBehaviour
                             s1 = pkrd.rStr1def();
                             s2 = pkrd.rStr1def();
                             s3 = pkrd.rStr1def();
+                            s4 = pkrd.rStr1def();
 
-                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3 : " + s3);
+                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3 : " + s3 + " s4 :" + s4);
                             quizdata.mContent = s1;
                             quizdata.mAnswer = s2;
                             quizdata.mExplain = s3;
-                            qv("recv 100 qm: " + (mQuizManager == null));
-                            qv("ql: " + mQuizManager.mQuizList);
-                            qv("qd: " + quizdata);
+                            quizdata.mKind = s4;
                             mQuizManager.mQuizList.Add(quizdata);
                             qv("dbList : " + mQuizManager.mQuizList.Count);
                         }
