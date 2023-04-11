@@ -15,7 +15,6 @@ const Quizlist1 = () => {
     const [ipt3, setipt3] = useState("");
     const handleClose = () => setSmShow(false);
 
-
     if (error) {
         return <>error!</>;
     }
@@ -27,21 +26,21 @@ const Quizlist1 = () => {
         <>
             <Quiz/>
             <Table striped bordered hover className={"mt-3"}>
-                {data?.map((e: { content: string, answer: String , explain: String}) => {
+                {data?.filter((e: { Kind: string }) => e.Kind === "ox").map((e: { OXcontent: string, OXanswer: String , OXexplain: String}) => {
                     return <>
                         <tr>
                             <th>퀴즈 내용:</th>
-                            <th>{e.content}</th>
+                            <th>{e.OXcontent}</th>
                             <th> 정답!! :</th>
-                            <th>{e.answer}</th>
+                            <th>{e.OXanswer}</th>
                             <th>오답 설명:</th>
-                            <th>{e.explain}</th>
+                            <th>{e.OXexplain}</th>
                             <tr>
                                 <Stack direction="horizontal" gap={2}>
                                     <Button onClick={() => setSmShow(true)}>수정</Button>
                                     <Button onClick={() => {
-                                        Axios.get("http://localhost:3000/api/metaquiz?del=" + e.content);
-                                        alert("삭제!!");
+                                        Axios.get("http://localhost:3000/api/metaquiz?del=" + e.OXcontent);
+                                        alert("삭제완료!");
                                     }}>삭제</Button>
                                 </Stack>
                             </tr>
@@ -82,8 +81,9 @@ const Quizlist1 = () => {
                 <Modal.Footer>
                     <Button onClick={handleClose} variant="secondary">Close</Button>
                     <Button variant="primary" onClick={() => {
-                        Axios.get("http://localhost:3000/api/metaquiz?update=" + ipt1 + "&answer=" + ipt2 + "&explain=" + ipt3).then(() => {
+                        Axios.get("http://localhost:3000/api/metaquiz?update=" + ipt1 + "&OXanswer=" + ipt2 + "&OXexplain=" + ipt3).then(() => {
                             setSmShow(false);
+                            alert("수정완료!");
                         });
                     }}>Save changes</Button>
                 </Modal.Footer>

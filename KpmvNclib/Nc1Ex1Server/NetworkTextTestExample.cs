@@ -6,14 +6,29 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Nc1Ex1Server
-
 {
     class NetworkTextTestExample
     {
-        public List<BsonDocument> mQuizList = new List<BsonDocument>();
-        public List<BsonDocument> mQuizList2 = new List<BsonDocument>();
+        public List<oxQuiz> mQuizList = new List<oxQuiz>(); //OX문제
+        public List<fQuiz> mQuizList2 = new List<fQuiz>(); //4지선다
+        public List<itQuiz> mQuizList3 = new List<itQuiz>(); //IT문제
         public List<BsonDocument> mPlayerList = new List<BsonDocument>();
         public List<BsonDocument> mQuizName = new List<BsonDocument>();
+
+        public class oxQuiz
+        {
+            public string oxContent, oxAnswer, oxExplain, oxKind;
+        }
+
+        public class fQuiz
+        {
+            public string fContent, fEx1, fEx2, fEx3, fEx4, fCorrect, fKind;
+        }
+
+        public class itQuiz
+        {
+            public string itContent, itEx1, itEx2, itEx3, itEx4, itCorrect, itKind;
+        }
 
         public List<BsonDocument> QuizName()
         {
@@ -46,20 +61,32 @@ namespace Nc1Ex1Server
             }
         }
 
-        public List<BsonDocument> Db()
+        public List<oxQuiz> Db() //OX퀴즈
         {
-            mQuizList = Mdb1.DbEx_FindAll();
-            foreach (var d1 in mQuizList)
+            var quizList = Mdb1.DbEx_FindAll();
+            foreach (var d1 in quizList)
             {
-                var s1 = d1.GetValue("content");
-                var s2 = d1.GetValue("answer");
-                var s3 = d1.GetValue("explain");
-                Nc1Ex1ServerMainAm2.qv("Dbg mongodb content " + s1 + " : " + s2 + " : " + s3);
+                if (d1.Contains("OXcontent"))
+                {
+                    oxQuiz oxlist = new oxQuiz();
+                    var s1 = (string)d1.GetValue("OXcontent");
+                    var s2 = (string)d1.GetValue("OXanswer");
+                    var s3 = (string)d1.GetValue("OXexplain");
+                    var s4 = (string)d1.GetValue("Kind");
+                    Nc1Ex1ServerMainAm2.qv("Dbg mongodb OXcontent " + s1 + " : " + s2 + " : " + s3 + " Kind : " + s4);
+
+                    oxlist.oxContent = s1;
+                    oxlist.oxAnswer = s2;
+                    oxlist.oxExplain = s3;
+                    oxlist.oxKind = s4;
+
+                    mQuizList.Add(oxlist);
+                }
             }
             return mQuizList;
         }
 
-        public void QuizDataSend(Nc1Ex1ServerMainAm2.Sv sv, int cti)
+        public void QuizDataSend(Nc1Ex1ServerMainAm2.Sv sv, int cti) //OX퀴즈
         {
             using (var pkw = sv.mMm.allocNw1pk(0xff))
             {
@@ -68,52 +95,119 @@ namespace Nc1Ex1Server
                 pkw.wInt32s(mQuizList.Count);
                 foreach (var d1 in mQuizList)
                 {
-                    pkw.wStrToNclib1FromClr((string)d1.GetValue("content"));
-                    pkw.wStrToNclib1FromClr((string)d1.GetValue("answer"));
-                    pkw.wStrToNclib1FromClr((string)d1.GetValue("explain"));
-
-                    Nc1Ex1ServerMainAm2.qv("quizdata" + (string)d1.GetValue("content") + (string)d1.GetValue("answer") + (string)d1.GetValue("explain"));
+                    pkw.wStrToNclib1FromClr(d1.oxContent);
+                    pkw.wStrToNclib1FromClr(d1.oxAnswer);
+                    pkw.wStrToNclib1FromClr(d1.oxExplain);
+                    pkw.wStrToNclib1FromClr(d1.oxKind);
                 }
                 sv.send(cti, pkw);
             }
         }
 
-        public List<BsonDocument> Db2()
+        public List<fQuiz> Db2() //4지선다
         {
-            mQuizList2 = Mdb1.Quiz2();
-            foreach (var q2 in mQuizList2)
+            var quizList2 = Mdb1.Quiz2();
+
+            foreach (var q2 in quizList2)
             {
-                var s1 = q2.GetValue("content");
-                var s2 = q2.GetValue("answer1");
-                var s3 = q2.GetValue("answer2");
-                var s4 = q2.GetValue("answer3");
-                var s5 = q2.GetValue("answer4");
-                var s6 = q2.GetValue("correct");
-                Nc1Ex1ServerMainAm2.qv("Dbg mongodb content " + s1 + " : " + s2 + " : " + s3 + " : " + s4 + " : " + s5 + " ,정답 : " + s6);
+                if (q2.Contains("Fcontent"))
+                {
+                    fQuiz flist = new fQuiz();
+                    var s1 = (string)q2.GetValue("Fcontent");
+                    var s2 = (string)q2.GetValue("Fexp1");
+                    var s3 = (string)q2.GetValue("Fexp2");
+                    var s4 = (string)q2.GetValue("Fexp3");
+                    var s5 = (string)q2.GetValue("Fexp4");
+                    var s6 = (string)q2.GetValue("Fcorrect");
+                    var s7 = (string)q2.GetValue("Kind");
+                    Nc1Ex1ServerMainAm2.qv("Dbg mongodb 4content " + s1 + " : " + s2 + " : " + s3 + " : " + s4 + " : " + s5 + " ,정답 : " + s6 + " ,Kind : " + s7);
+
+                    flist.fContent = s1;
+                    flist.fEx1 = s2;
+                    flist.fEx2 = s3;
+                    flist.fEx3 = s4;
+                    flist.fEx4 = s5;
+                    flist.fCorrect = s6;
+                    flist.fKind = s7;
+                    mQuizList2.Add(flist);
+                }
             }
             return mQuizList2;
         }
 
-        public void QuizDataSend2(Nc1Ex1ServerMainAm2.Sv sv, int cti)
+        public void QuizDataSend2(Nc1Ex1ServerMainAm2.Sv sv, int cti) //4지선다
         {
             using (var pkw = sv.mMm.allocNw1pk(0xff))
             {
                 pkw.setType(99);
+                //pkw.setType(100);
                 pkw.wInt32s(mQuizList2.Count);
                 foreach (var q2 in mQuizList2)
                 {
-                    pkw.wStrToNclib1FromClr((string)q2.GetValue("content"));
-                    pkw.wStrToNclib1FromClr((string)q2.GetValue("answer1"));
-                    pkw.wStrToNclib1FromClr((string)q2.GetValue("answer2"));
-                    pkw.wStrToNclib1FromClr((string)q2.GetValue("answer3"));
-                    pkw.wStrToNclib1FromClr((string)q2.GetValue("answer4"));
-                    pkw.wStrToNclib1FromClr((string)q2.GetValue("correct"));
-
-                    Nc1Ex1ServerMainAm2.qv("quizdata2" + (string)q2.GetValue("content") + (string)q2.GetValue("answer1") + (string)q2.GetValue("answer2") + (string)q2.GetValue("answer3") + (string)q2.GetValue("answer4") + "정답:" + (string)q2.GetValue("correct"));
+                    pkw.wStrToNclib1FromClr(q2.fContent);
+                    pkw.wStrToNclib1FromClr(q2.fEx1);
+                    pkw.wStrToNclib1FromClr(q2.fEx2);
+                    pkw.wStrToNclib1FromClr(q2.fEx3);
+                    pkw.wStrToNclib1FromClr(q2.fEx4);
+                    pkw.wStrToNclib1FromClr(q2.fCorrect);
+                    pkw.wStrToNclib1FromClr(q2.fKind);
                 }
                 sv.send(cti, pkw);
             }
         }
+
+        public List<itQuiz> Db3() //IT문제
+        {
+            
+            var mquizList3 = Mdb1.Quiz3();
+            foreach (var q2 in mquizList3)
+            {
+                if (q2.Contains("ITcontent"))
+                {
+                    itQuiz itlist = new itQuiz();
+                    var s1 = (string)q2.GetValue("ITcontent");
+                    var s2 = (string)q2.GetValue("ITexp1");
+                    var s3 = (string)q2.GetValue("ITexp2");
+                    var s4 = (string)q2.GetValue("ITexp3");
+                    var s5 = (string)q2.GetValue("ITexp4");
+                    var s6 = (string)q2.GetValue("ITcorrect");
+                    var s7 = (string)q2.GetValue("Kind");
+                    Nc1Ex1ServerMainAm2.qv("Dbg mongodb ITcontent " + s1 + " : " + s2 + " : " + s3 + " : " + s4 + " : " + s5 + " ,정답 : " + s6 + " ,kind : " + s7);
+
+                    itlist.itContent = s1;
+                    itlist.itEx1 = s2;
+                    itlist.itEx2 = s3;
+                    itlist.itEx3 = s4;
+                    itlist.itEx4 = s5;
+                    itlist.itCorrect = s6;
+                    itlist.itKind = s7;
+                    mQuizList3.Add(itlist);
+                }
+            }
+            return mQuizList3;
+        }
+
+        public void QuizDataSend3(Nc1Ex1ServerMainAm2.Sv sv, int cti) //IT문제
+        {
+            using (var pkw = sv.mMm.allocNw1pk(0xff))
+            {
+                pkw.setType(98);
+                //pkw.setType(100);
+                pkw.wInt32s(mQuizList3.Count);
+                foreach (var q2 in mQuizList3)
+                {
+                    pkw.wStrToNclib1FromClr(q2.itContent);
+                    pkw.wStrToNclib1FromClr(q2.itEx1);
+                    pkw.wStrToNclib1FromClr(q2.itEx2);
+                    pkw.wStrToNclib1FromClr(q2.itEx3);
+                    pkw.wStrToNclib1FromClr(q2.itEx4);
+                    pkw.wStrToNclib1FromClr(q2.itCorrect);
+                    pkw.wStrToNclib1FromClr(q2.itKind);
+                }
+                sv.send(cti, pkw);
+            }
+        }
+
 
         public List<BsonDocument> Dbp()
         {

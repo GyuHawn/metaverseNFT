@@ -8,6 +8,9 @@ export default function Quiz(){
     const[ipt1, setipt1] = useState("");
     const[ipt2, setipt2] = useState("");
     const[ipt3, setipt3] = useState("");
+
+    const[kind, setKind] = useState("");
+
     const [smShow3, setSmShow3] = useState(false);
     const handleClose = () => setSmShow3(false);
 
@@ -20,10 +23,11 @@ export default function Quiz(){
                         퀴즈 추가
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item  onClick={() => setSmShow3(true)}> 퀴즈추가 </Dropdown.Item>
+                        <Dropdown.Item onClick={() => {setKind("ox"); setSmShow3(true);}}> OX퀴즈추가 </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
+
             <div>
                 <Modal
                     size="sm"
@@ -53,7 +57,7 @@ export default function Quiz(){
                     <Modal.Footer>
                         <Button type="button" className='btn btn-secondary' data-bs-dismiss="modal" onClick={handleClose}>Close</Button>
                         <Button className='btn btn-primary' onClick={(e)=>{
-                            Axios.get("http://localhost:3000/api/metaquiz?add="+ipt1+"&answer="+ipt2 + "&explain=" +ipt3).then(()=>{setSmShow3(false);});}}>Save</Button>
+                            Axios.get("http://localhost:3000/api/metaquiz?add="+ipt1+"&OXanswer="+ipt2 + "&OXexplain=" +ipt3 + "&Kind=" + kind).then(()=>{setSmShow3(false);});}}>Save</Button>
                     </Modal.Footer>
                 </Modal>
             </div>

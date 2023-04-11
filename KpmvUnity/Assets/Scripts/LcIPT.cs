@@ -30,6 +30,11 @@ public class LcIPT : MonoBehaviour
         new Vector3(-21, -1, 6), new Vector3(-27, -1, 6), new Vector3(-14, -1, 6), new Vector3(-31, -1, 6)
     };
 
+    Vector3[] positions3 =
+    {
+        new Vector3(-21, -1, 6), new Vector3(-27, -1, 6), new Vector3(-14, -1, 6), new Vector3(-31, -1, 6)
+    };
+
     public GameObject[] mPlayers;
 
     private int pIndex = -1;
@@ -169,6 +174,9 @@ public class LcIPT : MonoBehaviour
         }else if(scene.name == "Quiz2")
         {
             player = Instantiate(myPF, positions2[i], Quaternion.identity);
+        }else if(scene.name == "Quiz3")
+        {
+            player = Instantiate(myPF, positions3[i], Quaternion.identity);
         }
             mPlayers[i] = player;
 

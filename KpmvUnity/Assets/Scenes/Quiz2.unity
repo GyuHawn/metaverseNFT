@@ -547,16 +547,21 @@ MonoBehaviour:
   mTerrain: {fileID: 0}
   mWinner: {fileID: 1150890336}
   mPlayer: {fileID: 1746457741}
-  mEx1Text: {fileID: 2007224503}
-  mEx2Text: {fileID: 192370752}
-  mEx3Text: {fileID: 341725223}
-  mEx4Text: {fileID: 1479593445}
+  fEx1Text: {fileID: 2007224503}
+  fEx2Text: {fileID: 192370752}
+  fEx3Text: {fileID: 341725223}
+  fEx4Text: {fileID: 1479593445}
+  itEx1Text: {fileID: 0}
+  itEx2Text: {fileID: 0}
+  itEx3Text: {fileID: 0}
+  itEx4Text: {fileID: 0}
   mCube: {fileID: 1447314687}
   mPMotion: {fileID: 1037476157}
   mFailWall: {fileID: 1297461826}
   fail: 0
   mOobj: {fileID: 0}
   mXobj: {fileID: 0}
+  lcipt: {fileID: 0}
 --- !u!114 &88302603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3088,7 +3093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winner: {fileID: 1150890336}
-  target: {fileID: 1746457746}
+  lcipt: {fileID: 0}
   isFollowing: 0
 --- !u!136 &1150890338
 CapsuleCollider:
@@ -4024,6 +4029,7 @@ MonoBehaviour:
   canvas: {fileID: 1428183}
   mMainClient: {fileID: 88302604}
   mQuizText: {fileID: 1568175522}
+  mTimeText: {fileID: 4554564}
   textOn: 0
 --- !u!114 &1568175522
 MonoBehaviour:
