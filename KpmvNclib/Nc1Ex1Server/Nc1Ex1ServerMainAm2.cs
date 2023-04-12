@@ -10,11 +10,9 @@ namespace Nc1Ex1Server
         public class Sv : NccpcDll.NccpcNw1Sv
         {
             public List<int> mCs = new List<int>();
-            public NetworkTextTestExample mNtte = new NetworkTextTestExample(); //OX문제
+            public NetworkTextTestExample mNtte = new NetworkTextTestExample();
             public NetworkTextTestExample mNttep = new NetworkTextTestExample();
             public NetworkTextTestExample mNtteG = new NetworkTextTestExample();
-            public NetworkTextTestExample mNtteG2 = new NetworkTextTestExample(); //4지선다
-            public NetworkTextTestExample mNtteG3 = new NetworkTextTestExample(); //IT문제
             public NccpcDll.NccpcMemmgr2Mgr mMm;
 
             public Sv()
@@ -28,8 +26,6 @@ namespace Nc1Ex1Server
                 mNtte.Db();
                 mNttep.Dbp();
                 mNtteG.QuizName();
-                mNtteG2.Db2();
-                mNtteG3.Db3();
 
                 if (!mMm.create()) { return false; }
 
@@ -55,8 +51,6 @@ namespace Nc1Ex1Server
                 mNtteG.QuizNameSend(this, cti);
                 mNttep.PlayerDataSend(this, cti);
                 mNtte.QuizDataSend(this, cti);
-                mNtteG2.QuizDataSend2(this, cti);
-                mNtteG3.QuizDataSend3(this, cti);
             }
 
             public override void onNccpcNwRecv(int cti, NccpcDll.NccpcNw1Pk2 ncpk)

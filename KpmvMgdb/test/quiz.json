@@ -1,106 +1,39 @@
 [{
   "_id": {
-    "$oid": "64223af77242dacfdbe9aa25"
+    "$oid": "64337d846c411fbeb735f7ea"
   },
+  "Kind": "ox",
   "answer": "O",
-  "content": "한국의수도는 서울이다.",
+  "content": "hello=안녕",
   "explain": ""
 },{
   "_id": {
-    "$oid": "642a70291c10e2c5415e3efc"
+    "$oid": "64337daf6c411fbeb735f7eb"
   },
-  "content": "아라비아 숫자 1부터 100사이에는 9라는 숫자가 모두 19개 들어 있다.",
-  "answer": "X",
-  "explain": "20개, 99는 2개"
-},{
-  "_id": {
-    "$oid": "642b776dc083b678a06f9366"
-  },
-  "content": "달팽이도 이빨이 있다.",
+  "Kind": "ox",
   "answer": "O",
+  "content": "한국의 수도는 서울이다.",
   "explain": ""
 },{
   "_id": {
-    "$oid": "642b7790c083b678a06f9367"
+    "$oid": "6433815e6c411fbeb735f7ec"
   },
-  "content": " 딸기는 장미과에 속한다.",
-  "answer": "O",
-  "explain": ""
+  "Kind": "four",
+  "content": "미국수도?",
+  "correct": "1",
+  "exp1": "워싱턴",
+  "exp2": "LA",
+  "exp3": "뉴욕",
+  "exp4": "샌프란시스코"
 },{
   "_id": {
-    "$oid": "642b77f0c083b678a06f9368"
+    "$oid": "6433816d6c411fbeb735f7ed"
   },
-  "content": " 호적법에 의하면 사람이 출생한 후 출생신고를 하게 되어 있다. 신고는 보름 이내에 해야한다.",
-  "answer": "X",
-  "explain": "한달 이내"
-},{
-  "_id": {
-    "$oid": "642b780dc083b678a06f9369"
-  },
-  "content": " 윤선도의 '오우가'중 다섯 벗이란 물, 돌, 소나무, 대나무, 해이다.",
-  "answer": "X",
-  "explain": "해가 아니고 달이다."
-},{
-  "_id": {
-    "$oid": "642b782ac083b678a06f936a"
-  },
-  "content": " 옛 서당에도 오늘날의 반장이 있었다.",
-  "answer": "O",
-  "explain": ""
-},{
-  "_id": {
-    "$oid": "642b7840c083b678a06f936b"
-  },
-  "content": " 차례 상을 차릴 때 흰 과일은 동쪽, 붉은 과일은 서쪽에 놓는다. ",
-  "answer": "O",
-  "explain": ""
-},{
-  "_id": {
-    "$oid": "642b7852c083b678a06f936c"
-  },
-  "content": " 남극에도 우편번호가 있다. ",
-  "answer": "X",
-  "explain": "주소 이외에는 없다."
-},{
-  "_id": {
-    "$oid": "642b7898c083b678a06f936d"
-  },
-  "content": " 꺼벙이란 꿩의 새끼를 말한다. ",
-  "answer": "O",
-  "explain": ""
-},{
-  "_id": {
-    "$oid": "642b78efc083b678a06f936f"
-  },
-  "content": " 사람의 세포는 개미의 세포보다 크다.",
-  "answer": "X",
-  "explain": "세포크기는 같다. 양이 다르다"
-},{
-  "_id": {
-    "$oid": "642b790ac083b678a06f9370"
-  },
-  "content": " 위가 없어도 사람은 살 수 있다.",
-  "answer": "O",
-  "explain": ""
-},{
-  "_id": {
-    "$oid": "642b7934c083b678a06f9371"
-  },
-  "content": " 채찍이라는 뜻을 가진 '람바다'는 브라질 춤이다.",
-  "answer": "O",
-  "explain": ""
-},{
-  "_id": {
-    "$oid": "642b7954c083b678a06f9372"
-  },
-  "content": " 인간의 뇌 세포는 재생이 안 되는 신체세포이다.",
-  "answer": "O",
-  "explain": ""
-},{
-  "_id": {
-    "$oid": "642b796bc083b678a06f9373"
-  },
-  "content": " 조선시대 호패는 (주민등록증) 16세 이상 모든 남녀가 소지했다.",
-  "answer": "X",
-  "explain": "남자만"
+  "Kind": "it",
+  "content": "테스트 버전?",
+  "correct": "2",
+  "exp1": "메타",
+  "exp2": "베타",
+  "exp3": "알바",
+  "exp4": "리테인"
 }]

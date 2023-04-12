@@ -93,103 +93,77 @@ public class MainClient : MonoBehaviour
         {
             switch (pkrd.getPkt())
             {
-                case 98: //it문제
+                case 100: 
                     {
-                        var count = pkrd.rInt32s();
+                        var tCnt = pkrd.rInt32s(); //전체퀴즈 개수
 
-                        var s1 = "";
-                        var s2 = "";
-                        var s3 = "";
-                        var s4 = "";
-                        var s5 = "";
-                        var s6 = "";
-                        var s7 = "";
-
-                        for (int i = 0; i < count; i++)
+                        for (int j = 0; j < tCnt; j++)
                         {
-                            QuizManager.QuizData3 quizdata3 = new QuizManager.QuizData3();
-                            s1 = pkrd.rStr1def();
-                            s2 = pkrd.rStr1def();
-                            s3 = pkrd.rStr1def();
-                            s4 = pkrd.rStr1def();
-                            s5 = pkrd.rStr1def();
-                            s6 = pkrd.rStr1def();
-                            s7 = pkrd.rStr1def();
-                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3 : " + s3 + " s4 : " + s4 + " s5 : " + s5 + " s6 : " + s6 + " s7 : " + s7);
-                            quizdata3.itContent = s1;
-                            quizdata3.itEx1 = s2;
-                            quizdata3.itEx2 = s3;
-                            quizdata3.itEx3 = s4;
-                            quizdata3.itEx4 = s5;
-                            quizdata3.itCorrect = s6;
-                            quizdata3.itKind = s7;
+                            var s1 = pkrd.rStr1def();
 
-                            mQuizManager.mQuizList3.Add(quizdata3);
-                        }
-                    }
-                    break;
+                            if (s1 == "ox")
+                            {
+                                QuizManager.QuizData quizdata = new QuizManager.QuizData();
+                                string s2 = pkrd.rStr1def();
+                                string s3 = pkrd.rStr1def();
+                                string s4 = pkrd.rStr1def();
 
-                case 99: //4지선다
-                    {
-                        var count = pkrd.rInt32s();
+                                qv("ServerEnter 수신 Kind: " + s1 + ", Content : " + s2 + ", Answer : " + s3 + ", Explain :" + s4);
 
-                        var s1 = "";
-                        var s2 = "";
-                        var s3 = "";
-                        var s4 = "";
-                        var s5 = "";
-                        var s6 = "";
-                        var s7 = "";
+                                quizdata.mKind = s1;
+                                quizdata.mContent = s2;
+                                quizdata.mAnswer = s3;
+                                quizdata.mExplain = s4;
+                                mQuizManager.mQuizList.Add(quizdata);
+                                qv("OXQuiz dbList : " + mQuizManager.mQuizList.Count);
+                            }
+                            else if (s1 == "four")
+                            {
+                                QuizManager.QuizData2 quizdata2 = new QuizManager.QuizData2();
+                                string s2 = pkrd.rStr1def();
+                                string s3 = pkrd.rStr1def();
+                                string s4 = pkrd.rStr1def();
+                                string s5 = pkrd.rStr1def();
+                                string s6 = pkrd.rStr1def();
+                                string s7 = pkrd.rStr1def();
 
-                        for (int i = 0; i < count; i++)
-                        {
-                            QuizManager.QuizData2 quizdata2 = new QuizManager.QuizData2();
-                            s1 = pkrd.rStr1def();
-                            s2 = pkrd.rStr1def();
-                            s3 = pkrd.rStr1def();
-                            s4 = pkrd.rStr1def();
-                            s5 = pkrd.rStr1def();
-                            s6 = pkrd.rStr1def();
-                            s7 = pkrd.rStr1def();
-                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3 : " + s3 + " s4 : " + s4 + " s5 : " + s5 + " s6 :" + s6 + " s7 : " + s7);
-                            quizdata2.fContent = s1;
-                            quizdata2.fEx1 = s2;
-                            quizdata2.fEx2 = s3;
-                            quizdata2.fEx3 = s4;
-                            quizdata2.fEx4 = s5;
-                            quizdata2.fCorrect = s6;
-                            quizdata2.fKind = s7;
+                                qv("ServerEnter 수신 Kind: " + s1 + ", Content : " + s2 + ", ex1 : " + s3 + ", ex2 : " + s4 + ", ex3 : " + s5 + ", ex4 : " + s6 + ", Correct :" + s7);
 
-                            mQuizManager.mQuizList2.Add(quizdata2);
-                        }
-                    }
-                    break;
+                                quizdata2.fKind = s1;
+                                quizdata2.fContent = s2;
+                                quizdata2.fEx1 = s3;
+                                quizdata2.fEx2 = s4;
+                                quizdata2.fEx3 = s5;
+                                quizdata2.fEx4 = s6;
+                                quizdata2.fCorrect = s7;
 
-                case 100: //ox문제
-                    {
-                        var count = pkrd.rInt32s();
-                        Debug.Log("pkrd.rInt32s() : " + count);
+                                mQuizManager.mQuizList2.Add(quizdata2);
+                                qv("FourQuiz dbList : " + mQuizManager.mQuizList2.Count);
+                            }
+                            else if (s1 == "it")
+                            {
+                                QuizManager.QuizData3 quizdata3 = new QuizManager.QuizData3();
 
-                        var s1 = "";
-                        var s2 = "";
-                        var s3 = "";
-                        var s4 = "";
+                                string s2 = pkrd.rStr1def();
+                                string s3 = pkrd.rStr1def();
+                                string s4 = pkrd.rStr1def();
+                                string s5 = pkrd.rStr1def();
+                                string s6 = pkrd.rStr1def();
+                                string s7 = pkrd.rStr1def();
 
-                        for (int i = 0; i < count; i++)
-                        {
-                            QuizManager.QuizData quizdata = new QuizManager.QuizData();
-                            s1 = pkrd.rStr1def();
-                            s2 = pkrd.rStr1def();
-                            s3 = pkrd.rStr1def();
-                            s4 = pkrd.rStr1def();
+                                qv("ServerEnter 수신 Kind: " + s1 + ", Content : " + s2 + ", ex1 : " + s3 + ", ex2 : " + s4 + ", ex3 : " + s5 + ", ex4 : " + s6 + ", Correct :" + s7);
 
-                            qv("ServerEnter 수신 s1: " + s1 + " s2 : " + s2 + " s3 : " + s3 + " s4 :" + s4);
-                            quizdata.mContent = s1;
-                            quizdata.mAnswer = s2;
-                            quizdata.mExplain = s3;
-                            quizdata.mKind = s4;
-                            mQuizManager.mQuizList.Add(quizdata);
-                            qv("dbList : " + mQuizManager.mQuizList.Count);
+                                quizdata3.itKind = s1;
+                                quizdata3.itContent = s2;
+                                quizdata3.itEx1 = s3;
+                                quizdata3.itEx2 = s4;
+                                quizdata3.itEx3 = s5;
+                                quizdata3.itEx4 = s6;
+                                quizdata3.itCorrect = s7;
+
+                                mQuizManager.mQuizList3.Add(quizdata3);
+                                qv("ITQuiz dbList : " + mQuizManager.mQuizList3.Count);
+                            }
                         }
                     }
                     break;

@@ -23,33 +23,7 @@ namespace Nc1Ex1Server
             return database;
         }
 
-        public static List<BsonDocument> Quiz3() //IT문제
-        {
-            List<BsonDocument> list = new List<BsonDocument>();
-            var db1 = DbCon1();
-            var clc1 = db1.GetCollection<BsonDocument>(Clcn);
-            var docs1 = clc1.Find(new BsonDocument()).ToList();
-            foreach (var d1 in docs1)
-            {
-                list.Add(d1);
-            }
-            return list;
-        }
-
-        public static List<BsonDocument> Quiz2() //4지선다
-        {
-            List<BsonDocument> list = new List<BsonDocument>();
-            var db1 = DbCon1();
-            var clc1 = db1.GetCollection<BsonDocument>(Clcn);
-            var docs1 = clc1.Find(new BsonDocument()).ToList();
-            foreach (var d1 in docs1)
-            {
-                list.Add(d1);
-            }
-            return list;
-        }
-
-        public static List<BsonDocument> DbEx_FindAll() //OX
+        public static List<BsonDocument> DbEx_FindAll()
         {
             List<BsonDocument> list = new List<BsonDocument>();
             var db1 = DbCon1();
