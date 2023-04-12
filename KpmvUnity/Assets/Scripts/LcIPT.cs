@@ -194,6 +194,18 @@ public class LcIPT : MonoBehaviour
         }
     }
 
+    public void incSend(JcCtUnity1.JcCtUnity1 ct, int code, float plusx, float plusy, float plusz)
+    {
+        using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(30))
+        {
+            pkw.wInt32s(LcIPT.Instance.pIndex);
+            pkw.wInt32s(code);
+            pkw.wReal32(plusx);
+            pkw.wReal32(plusy);
+            pkw.wReal32(plusz);
+            ct.send(pkw);
+        }
+    }
     public void currentSend(JcCtUnity1.JcCtUnity1 ct, int code = 0)
     {
         using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(3))
@@ -240,7 +252,7 @@ public class LcIPT : MonoBehaviour
             {
                 if (mbOnline)
                 {
-                    moveSend(mCf.mCt, go, (int)KeyCode.W, 0, 0, +spd);
+                    incSend(mCf.mCt, (int)KeyCode.W, 0, 0, +spd);
                 }
                 else
                 {
@@ -252,7 +264,7 @@ public class LcIPT : MonoBehaviour
             {
                 if (mbOnline)
                 {
-                    moveSend(mCf.mCt, go, (int)KeyCode.S, 0, 0, -spd);
+                    incSend(mCf.mCt, (int)KeyCode.S, 0, 0, -spd);
                 }
                 else
                 {
@@ -264,7 +276,7 @@ public class LcIPT : MonoBehaviour
             {
                 if (mbOnline)
                 {
-                    moveSend(mCf.mCt, go, (int)KeyCode.A, -spd, 0, 0);
+                    incSend(mCf.mCt, (int)KeyCode.A, -spd, 0, 0);
                 }
                 else
                 {
@@ -276,13 +288,20 @@ public class LcIPT : MonoBehaviour
             {
                 if (mbOnline)
                 {
-                    moveSend(mCf.mCt, go, (int)KeyCode.D, +spd, 0, 0);
+                    incSend(mCf.mCt, (int)KeyCode.D, +spd, 0, 0);
                 }
                 else
                 {
                     go.GetComponent<PlayerMotion>().zeroVec = new Vector3(+spd, 0, 0);
                     go.transform.position += new Vector3(+spd, 0, 0);
                 }
+            }
+            if (mbOnline)
+            {
+                if (Input.GetKeyDown(KeyCode.W)) { moveSend(mCf.mCt, go, (int)KeyCode.W, 0, 0, 0); }
+                if (Input.GetKeyDown(KeyCode.S)) { moveSend(mCf.mCt, go, (int)KeyCode.S, 0, 0, 0); }
+                if (Input.GetKeyDown(KeyCode.A)) { moveSend(mCf.mCt, go, (int)KeyCode.A, 0, 0, 0); }
+                if (Input.GetKeyDown(KeyCode.D)) { moveSend(mCf.mCt, go, (int)KeyCode.D, 0, 0, 0); }
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -291,8 +310,7 @@ public class LcIPT : MonoBehaviour
                     if (mbOnline)
                     {
                         float jumpForce = Mathf.Sqrt(mJumpHeight * -2 * Physics.gravity.y);
-                        jumpSend(mCf.mCt,jumpForce);
-                       // moveSend(mCf.mCt, go, (int)KeyCode.Space, 0, mJumpHeight, 0);
+                        jumpSend(mCf.mCt,jumpForce);;
                     }
                     else
                     {

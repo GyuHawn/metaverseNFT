@@ -112,7 +112,20 @@ public class MultiClient : MonoBehaviour
                         }
                     }
                     break;
+                case 30:
+                    {
+                        var pidx = pkrd.rInt32s();
+                        int code = pkrd.rInt32s();
+                        var xx = pkrd.rReal32();
+                        var yy = pkrd.rReal32();
+                        var zz = pkrd.rReal32();
 
+                        if (pidx >= 0 && LcIPT.Instance.mPlayers[pidx] != null)
+                        {
+                            LcIPT.Instance.mPlayers[pidx].transform.position += new Vector3(xx, yy, zz);
+                        }
+                    }
+                    break;
                 case 31:
                     {
                         var pidx = pkrd.rInt32s();
