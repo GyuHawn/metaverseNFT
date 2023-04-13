@@ -29,9 +29,11 @@ public class PlayerMotion : MonoBehaviour
     
     private KeyCode currentKeycode;
 
+    float time;
+
     private bool GetKey(KeyCode code)
     {
-        if (LcIPT.Instance.isOnline())
+        if (LcIPT.GetThis().isOnline())
         {
             return currentKeycode == code;
         }
@@ -49,7 +51,8 @@ public class PlayerMotion : MonoBehaviour
 
     private void Awake()
     {
-        mClient = GameObject.FindObjectOfType<MainClient>();
+        time = Time.time;
+        mClient = LcIPT.GetThis().mMc;
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         terrain = GameObject.Find("Terrain");
@@ -60,15 +63,18 @@ public class PlayerMotion : MonoBehaviour
 
     public void Update()
     {
-        if (LcIPT.Instance.inputField.GetComponent<UnityEngine.UI.InputField>().isFocused) { return; }
-        if (!LcIPT.Instance.isOnline())
+        if (LcIPT.GetThis().inputField)
+        {
+            if (LcIPT.GetThis().inputField.GetComponent<UnityEngine.UI.InputField>().isFocused) { return; }
+        }
+        if (!LcIPT.GetThis().isOnline())
         {
             ThisUpdate();
         } else
         {
             if (! (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && currentKeycode != (KeyCode)1 )
             {
-                LcIPT.Instance.currentSend(LcIPT.Instance.GetMultiClient().mCt,1);
+                LcIPT.GetThis().currentSend(LcIPT.GetThis().GetMultiClient().mCt,1);
             }
  
         }
@@ -92,6 +98,7 @@ public class PlayerMotion : MonoBehaviour
         else
         {
             anim.SetBool("Run", false);
+            LcIPT.GetThis().go.GetComponent<Rigidbody>().velocity += new Vector3(0, -0.02f, 0);
         }
     }
 
@@ -144,23 +151,23 @@ public class PlayerMotion : MonoBehaviour
         //oxƒ˚¡Ó
         if (collision.gameObject.CompareTag("Die"))
         {
-            if (!LcIPT.Instance.isOnline())
+            if (!LcIPT.GetThis().isOnline())
             {
                 transform.position = new Vector3(8, 30, -12);
             } else
             {
-                LcIPT.Instance.moveSend(LcIPT.Instance.GetMultiClient().mCt, gameObject, 1, 8 - transform.position.x, 30 - transform.position.y, -12 - transform.position.z);
+                LcIPT.GetThis().moveSend(LcIPT.GetThis().GetMultiClient().mCt, gameObject, 1, 8 - transform.position.x, 30 - transform.position.y, -12 - transform.position.z);
             }
         }
         if (collision.gameObject.CompareTag("Respawn"))
         {
-            if (!LcIPT.Instance.isOnline())
+            if (!LcIPT.GetThis().isOnline())
             {
                 transform.position = new Vector3(8, 30, -12);
             }
             else
             {
-                LcIPT.Instance.moveSend(LcIPT.Instance.GetMultiClient().mCt, gameObject, 1, 8 - transform.position.x, 30 - transform.position.y, -12 - transform.position.z);
+                LcIPT.GetThis().moveSend(LcIPT.GetThis().GetMultiClient().mCt, gameObject, 1, 8 - transform.position.x, 30 - transform.position.y, -12 - transform.position.z);
             }
         }
         //∞¯≈Î

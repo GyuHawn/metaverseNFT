@@ -12,7 +12,7 @@ public class Winner : MonoBehaviour
 
     private void Awake()
     {
-        lcipt = GameObject.FindObjectOfType<LcIPT>();
+        lcipt = LcIPT.GetThis();
     }
 
     void Update()

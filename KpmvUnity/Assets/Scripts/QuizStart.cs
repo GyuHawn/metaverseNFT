@@ -16,7 +16,7 @@ public class QuizStart : MonoBehaviour
 
     void Awake()
     {
-        mMainClient = GameObject.FindObjectOfType<MainClient>();
+        mMainClient = LcIPT.GetThis().mMc;
     }
     
     private void Update()

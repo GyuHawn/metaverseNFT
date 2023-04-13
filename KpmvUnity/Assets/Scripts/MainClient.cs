@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class MainClient : MonoBehaviour
+public class MainClient/* : MonoBehaviour*/
 {
     public QuizManager mQuizManager;
     public static PlayerObj currentUser;
@@ -238,12 +238,8 @@ public class MainClient : MonoBehaviour
     static public List<string> mLines = new List<string>();
     static public string serverAddress;
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-
-    }
-    void Start()
+   
+    public void Start()
     {
         mQuizManager = new QuizManager();
 
@@ -251,7 +247,7 @@ public class MainClient : MonoBehaviour
         
     }
 
-    void Update()
+    public void Update()
     {
         mQuizManager.framemove();
         mCt.framemove();

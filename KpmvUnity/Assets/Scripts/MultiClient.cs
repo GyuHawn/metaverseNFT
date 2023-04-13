@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class MultiClient : MonoBehaviour
+public class MultiClient/* : MonoBehaviour*/
 {
     public class TexstObj
     {
@@ -55,7 +55,7 @@ public class MultiClient : MonoBehaviour
                             this.disconnect(); return false;
                         }
 
-                        LcIPT.Instance.SetIndex(pIndex);
+                        LcIPT.GetThis().SetIndex(pIndex);
 
                         using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(20))
                         {
@@ -69,7 +69,7 @@ public class MultiClient : MonoBehaviour
                 case 20:
                     {
                          qv("수신 20: will currentSend");
-                         LcIPT.Instance.currentSend(this);
+                        LcIPT.GetThis().currentSend(this);
 
                     }
                     break;
@@ -91,24 +91,24 @@ public class MultiClient : MonoBehaviour
                         if (pidx >= 0 )
                         {
                             Debug.Log("server 수신 pidx, code: " + pidx + " , "+code);
-                            if (LcIPT.Instance.mPlayers[pidx] == null)
+                            if (LcIPT.GetThis().mPlayers[pidx] == null)
                             {
-                                LcIPT.Instance.InstantiatePlayer(pidx,color);
+                                LcIPT.GetThis().InstantiatePlayer(pidx,color);
                                 GameObject t = new GameObject("myname");
-                                t.transform.parent = LcIPT.Instance.mPlayers[pidx].transform;
+                                t.transform.parent = LcIPT.GetThis().mPlayers[pidx].transform;
                                 t.transform.localPosition = new Vector3(0f, 8f, 0f);
 
                                 var t1 = t.AddComponent<TextMeshPro>();
-                                t1.GetComponent<TMP_Text>().font = LcIPT.Instance.m_Font;
+                                t1.GetComponent<TMP_Text>().font = LcIPT.GetThis().m_Font;
                                 t1.GetComponent<TMP_Text>().color = Color.black;
                                 if (MainClient.currentUser != null) { t1.text = name; }
                                 t1.alignment = TextAlignmentOptions.Center;
                                 t1.fontSize = 5;
 
                             }
-                            LcIPT.Instance.mPlayers[pidx].GetComponent<PlayerMotion>().SetKey((KeyCode)code);
-                            LcIPT.Instance.mPlayers[pidx].GetComponent<PlayerMotion>().ThisUpdate();
-                            LcIPT.Instance.mPlayers[pidx].transform.position = new Vector3(xx, yy, zz);                          
+                            LcIPT.GetThis().mPlayers[pidx].GetComponent<PlayerMotion>().SetKey((KeyCode)code);
+                            LcIPT.GetThis().mPlayers[pidx].GetComponent<PlayerMotion>().ThisUpdate();
+                            LcIPT.GetThis().mPlayers[pidx].transform.position = new Vector3(xx, yy, zz);                          
                         }
                     }
                     break;
@@ -120,9 +120,9 @@ public class MultiClient : MonoBehaviour
                         var yy = pkrd.rReal32();
                         var zz = pkrd.rReal32();
 
-                        if (pidx >= 0 && LcIPT.Instance.mPlayers[pidx] != null)
+                        if (pidx >= 0 && LcIPT.GetThis().mPlayers[pidx] != null)
                         {
-                            LcIPT.Instance.mPlayers[pidx].transform.position += new Vector3(xx, yy, zz);
+                            LcIPT.GetThis().mPlayers[pidx].transform.position += new Vector3(xx, yy, zz);
                         }
                     }
                     break;
@@ -131,9 +131,9 @@ public class MultiClient : MonoBehaviour
                         var pidx = pkrd.rInt32s();
                         var jumpForce = pkrd.rReal32();
 
-                        if (pidx >= 0 && LcIPT.Instance.mPlayers[pidx] != null)
+                        if (pidx >= 0 && LcIPT.GetThis().mPlayers[pidx] != null)
                         {
-                            Rigidbody rb = LcIPT.Instance.mPlayers[pidx].GetComponent<Rigidbody>();
+                            Rigidbody rb = LcIPT.GetThis().mPlayers[pidx].GetComponent<Rigidbody>();
                             rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
                         }
                     }
@@ -141,7 +141,7 @@ public class MultiClient : MonoBehaviour
                 case 4:
                     {
                         int pidx = pkrd.rInt32s();
-                        Destroy(LcIPT.Instance.mPlayers[pidx]);
+                        GameObject.Destroy(LcIPT.GetThis().mPlayers[pidx]);
 
                     }
                     break;
@@ -171,14 +171,14 @@ public class MultiClient : MonoBehaviour
     public Client mCt;
     static public List<string> mLines = new List<string>();
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         mCt = new Client();
 
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         mCt.framemove();
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class camera : MonoBehaviour
 {
-    public Transform target;
+    public GameObject target;
     public Vector3 offset;
 
     private void Start()
@@ -13,13 +13,13 @@ public class camera : MonoBehaviour
 
     public void SetTarget(GameObject obj)
     {
-        target = obj.transform;
+        target = LcIPT.GetThis().go;
     }
     void LateUpdate()
     {
         if (target)
         {
-            transform.position = target.position + offset;
+            transform.position = target.transform.position + offset;
         }
     }
 }

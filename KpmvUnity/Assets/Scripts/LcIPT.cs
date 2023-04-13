@@ -4,13 +4,15 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class LcIPT : MonoBehaviour
+public class LcIPT/* : MonoBehaviour*/
 {
-    public static LcIPT Instance;
+    // public static LcIPT Instance;
+    static LcIPT gThis;
     private bool mbOnline = false;
     public float mJumpHeight = 2f;
 
-    private MultiClient mCf;
+    public MainClient mMc;
+    public MultiClient mMulti;
     public GameObject splayer;
     public GameObject[] playerPF;
     public GameObject go;
@@ -67,62 +69,79 @@ public class LcIPT : MonoBehaviour
         }
         else
         {
-            Debug.Log("인원수 초과2"); mCf.mCt.disconnect();
+            Debug.Log("인원수 초과2"); mMulti.mCt.disconnect();
         }
 
     }
 
     public int GetIndex() { return pIndex; }
-    public MultiClient GetMultiClient() { return mCf; }
+    public MultiClient GetMultiClient() { return mMulti; }
 
-    public void Awake()
+    float time;
+
+    public static LcIPT GetThis()
     {
-        if (Instance != null && Instance != this)
+
+        if (gThis == null)
         {
-            Destroy(this);
+            gThis = new LcIPT();
+            gThis.time = Time.time;
+            gThis.mMc = new MainClient();
+            gThis.mMulti = new MultiClient();
+
+            gThis.inputField = GameObject.Find("InputField");
+            if (gThis.inputField == null)
+            {
+                gThis.inputField = GameObject.Find("InputField2");
+                if (gThis.inputField == null)
+                {
+                    gThis.inputField = GameObject.Find("InputField3");
+                }
+            }
+
+            gThis.mMc.Start();
+            gThis.mMulti.Start();
         }
-        else
-        {
-            Instance = this;
-        }
+        return gThis;
     }
-    void Start()
+
+    public void Start()
     {
-        mCf = GetComponent<MultiClient>();
         mPlayers = new GameObject[maxP];
+        if (go)
+        {
+            GameObject t = new GameObject("myname");
+            t.transform.parent = go.transform;
+            t.transform.localPosition = new Vector3(0f, 8f, 0f);
 
-        go = splayer;
+            var t1 = t.AddComponent<TextMeshPro>();
+            t1.GetComponent<TMP_Text>().font = m_Font;
+            if (MainClient.currentUser != null)
+            {
+                t1.text = MainClient.currentUser.mUserName;
+                t1.GetComponent<TMP_Text>().fontSize = 5f;
+                t1.GetComponent<TMP_Text>().color = Color.black;
+            }
+            t1.alignment = TextAlignmentOptions.Center;
 
-        GameObject t = new GameObject("myname");
-        t.transform.parent = go.transform;
-        t.transform.localPosition = new Vector3(0f, 8f, 0f);
-        
-        var t1 = t.AddComponent<TextMeshPro>();
-        t1.GetComponent<TMP_Text>().font = m_Font;
-        if (MainClient.currentUser!=null) {
-            t1.text = MainClient.currentUser.mUserName;
-            t1.GetComponent<TMP_Text>().color = Color.black;
-        } 
-        t1.alignment = TextAlignmentOptions.Center;
-        t1.fontSize = 5;
-
-        go.SetActive(true);
-        Camera.GetComponent<camera>().SetTarget(go);
+            go.SetActive(true);
+            Camera.GetComponent<camera>().SetTarget(go);
+        }
     }
 
     public void Connect()
     {
-        if (!mCf.mCt.isConnected())
+        if (!mMulti.mCt.isConnected())
         {
             for (int i = 0; i < maxP; i++)
             {
                 if (mPlayers[i])
                 {
-                    Destroy(mPlayers[i]);
+                    GameObject.Destroy(mPlayers[i]);
                     Debug.Log("Destroy pidx: " + i);
                 }
             }
-            if (mCf.mCt.connect(MainClient.serverAddress, 7771))
+            if (mMulti.mCt.connect(MainClient.serverAddress, 7771))
             {
                 go = null;
                 splayer.SetActive(false);
@@ -140,12 +159,12 @@ public class LcIPT : MonoBehaviour
         {
             if (mPlayers[i])
             {
-                Destroy(mPlayers[i]);
+                GameObject.Destroy(mPlayers[i]);
                 Debug.Log("Destroy pidx: " + i);
             }
         }
         pIndex = -1;
-        mCf.mCt.disconnect();
+        mMulti.mCt.disconnect();
         mbOnline = false;
         go = splayer;
         go.SetActive(true);
@@ -170,13 +189,13 @@ public class LcIPT : MonoBehaviour
         GameObject player = new GameObject();
         if(scene.name == "Quiz1")
         {
-            player = Instantiate(myPF, positions[i], Quaternion.identity);
+            player = GameObject.Instantiate(myPF, positions[i], Quaternion.identity);
         }else if(scene.name == "Quiz2")
         {
-            player = Instantiate(myPF, positions2[i], Quaternion.identity);
+            player = GameObject.Instantiate(myPF, positions2[i], Quaternion.identity);
         }else if(scene.name == "Quiz3")
         {
-            player = Instantiate(myPF, positions3[i], Quaternion.identity);
+            player = GameObject.Instantiate(myPF, positions3[i], Quaternion.identity);
         }
             mPlayers[i] = player;
 
@@ -185,7 +204,7 @@ public class LcIPT : MonoBehaviour
     {
         using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(3))
         {
-            pkw.wInt32s(LcIPT.Instance.pIndex);
+            pkw.wInt32s(pIndex);
             pkw.wInt32s(code);
             pkw.wReal32(obj.transform.position.x + plusx);
             pkw.wReal32(obj.transform.position.y + plusy);
@@ -198,7 +217,7 @@ public class LcIPT : MonoBehaviour
     {
         using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(30))
         {
-            pkw.wInt32s(LcIPT.Instance.pIndex);
+            pkw.wInt32s(pIndex);
             pkw.wInt32s(code);
             pkw.wReal32(plusx);
             pkw.wReal32(plusy);
@@ -210,7 +229,7 @@ public class LcIPT : MonoBehaviour
     {
         using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(3))
         {
-            pkw.wInt32s(LcIPT.Instance.pIndex);
+            pkw.wInt32s(pIndex);
             pkw.wInt32s(code);
             pkw.wReal32(go.transform.position.x);
             pkw.wReal32(go.transform.position.y);
@@ -228,21 +247,32 @@ public class LcIPT : MonoBehaviour
     {
         using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(31))
         {           
-            pkw.wInt32s(LcIPT.Instance.pIndex);
+            pkw.wInt32s(pIndex);
             pkw.wReal32(force);
             ct.send(pkw);
         }
     }
 
-    void Update()
+    public void Update()
     {
+        mMc.Update();
+        mMulti.Update();
+
         Move();
     }
 
 
     void Move()
     {
-        if (inputField.GetComponent<UnityEngine.UI.InputField>().isFocused) { return; }
+        inputField = GameObject.Find("InputField");
+        if (inputField == null)
+        {
+            inputField = GameObject.Find("InputField2");
+        }
+        if (inputField)
+        {
+            if (inputField.GetComponent<UnityEngine.UI.InputField>().isFocused) { return; }
+        }
         float spd = 10.0f * Time.deltaTime;
 
         if (go)
@@ -264,7 +294,7 @@ public class LcIPT : MonoBehaviour
             {
                 if (mbOnline)
                 {
-                    incSend(mCf.mCt, (int)KeyCode.S, 0, 0, -spd);
+                    incSend(mMulti.mCt, (int)KeyCode.S, 0, 0, -spd);
                 }
                 else
                 {
@@ -276,7 +306,7 @@ public class LcIPT : MonoBehaviour
             {
                 if (mbOnline)
                 {
-                    incSend(mCf.mCt, (int)KeyCode.A, -spd, 0, 0);
+                    incSend(mMulti.mCt, (int)KeyCode.A, -spd, 0, 0);
                 }
                 else
                 {
@@ -288,7 +318,7 @@ public class LcIPT : MonoBehaviour
             {
                 if (mbOnline)
                 {
-                    incSend(mCf.mCt, (int)KeyCode.D, +spd, 0, 0);
+                    incSend(mMulti.mCt, (int)KeyCode.D, +spd, 0, 0);
                 }
                 else
                 {
@@ -298,10 +328,10 @@ public class LcIPT : MonoBehaviour
             }
             if (mbOnline)
             {
-                if (Input.GetKeyDown(KeyCode.W)) { moveSend(mCf.mCt, go, (int)KeyCode.W, 0, 0, 0); }
-                if (Input.GetKeyDown(KeyCode.S)) { moveSend(mCf.mCt, go, (int)KeyCode.S, 0, 0, 0); }
-                if (Input.GetKeyDown(KeyCode.A)) { moveSend(mCf.mCt, go, (int)KeyCode.A, 0, 0, 0); }
-                if (Input.GetKeyDown(KeyCode.D)) { moveSend(mCf.mCt, go, (int)KeyCode.D, 0, 0, 0); }
+                if (Input.GetKeyDown(KeyCode.W)) { moveSend(mMulti.mCt, go, (int)KeyCode.W, 0, 0, 0); }
+                if (Input.GetKeyDown(KeyCode.S)) { moveSend(mMulti.mCt, go, (int)KeyCode.S, 0, 0, 0); }
+                if (Input.GetKeyDown(KeyCode.A)) { moveSend(mMulti.mCt, go, (int)KeyCode.A, 0, 0, 0); }
+                if (Input.GetKeyDown(KeyCode.D)) { moveSend(mMulti.mCt, go, (int)KeyCode.D, 0, 0, 0); }
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {

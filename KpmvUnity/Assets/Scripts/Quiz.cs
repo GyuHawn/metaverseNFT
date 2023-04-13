@@ -31,15 +31,13 @@ public class Quiz : MonoBehaviour
 
     public GameObject mOobj;
     public GameObject mXobj;
-    public LcIPT lcipt;
 
     void Awake()
     {
-        mMainClient = GameObject.FindObjectOfType<MainClient>();
+        mMainClient = LcIPT.GetThis().mMc;
         mCube = GameObject.FindObjectOfType<Cube>();
         mTerrain = GameObject.Find("Terrain");
         mWinner = GameObject.Find("Trophy");
-        lcipt = GameObject.FindObjectOfType<LcIPT>();
     }
 
     public void Update()
@@ -101,7 +99,7 @@ public class Quiz : MonoBehaviour
             }
             else if(mMainClient.mQuizManager.getQuizType() == "quiz3") //it퀴즈
             {
-                mCube.MoveCubes();
+                mCube.MoveCubes();  
                 // 문제출력
                 mQuizText.text = mMainClient.mQuizManager.getQuizContentIT() + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.getAnswerTimeOut());
                 itEx1Text.text = mMainClient.mQuizManager.getQuizEx1IT();
@@ -176,7 +174,7 @@ public class Quiz : MonoBehaviour
 
                         ClearFloor();
 
-                        lcipt.go.GetComponent<PlayerMotion>().save = false;
+                        LcIPT.GetThis().go.GetComponent<PlayerMotion>().save = false;
                         mWinner.GetComponent<Winner>().isFollowing = false;
                         mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(8, 36f, 9);
                     }
@@ -204,7 +202,7 @@ public class Quiz : MonoBehaviour
                         yield return new WaitForSeconds(delay);
                         mQuizCanvas.gameObject.SetActive(false);
 
-                        lcipt.go.GetComponent<PlayerMotion>().save = false;
+                        LcIPT.GetThis().go.GetComponent<PlayerMotion>().save = false;
                         mWinner.GetComponent<Winner>().isFollowing = false;
                         mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(-23, 1f, -7);
                         yield return new WaitForSeconds(5f);
@@ -234,7 +232,7 @@ public class Quiz : MonoBehaviour
                         yield return new WaitForSeconds(delay);
                         mQuizCanvas.gameObject.SetActive(false);
 
-                        lcipt.go.GetComponent<PlayerMotion>().save = false;
+                        LcIPT.GetThis().go.GetComponent<PlayerMotion>().save = false;
                         mWinner.GetComponent<Winner>().isFollowing = false;
                         mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(-23, 1f, -7);
                         yield return new WaitForSeconds(5f);
@@ -285,37 +283,37 @@ public class Quiz : MonoBehaviour
     //4지선다형
     void CheckAnswer()
     {
-        if (!mMainClient.mQuizManager.isCompetitionPlay() || lcipt.go.gameObject.tag != "Fail")
+        if (!mMainClient.mQuizManager.isCompetitionPlay() || LcIPT.GetThis().go.gameObject.tag != "Fail")
         {
             if (mMainClient.mQuizManager.checkQuizAnswerFour("1"))
             {
-                if (lcipt.go.tag != "Red")
+                if (LcIPT.GetThis().go.tag != "Red")
                 {
-                    lcipt.go.transform.position = new Vector3(-22, -1.1f, 3);
+                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
                 }
                 mCube.RemoveCube1();
             }
             else if (mMainClient.mQuizManager.checkQuizAnswerFour("2"))
             {
-                if (lcipt.go.tag != "Blue")
+                if (LcIPT.GetThis().go.tag != "Blue")
                 {
-                    lcipt.go.transform.position = new Vector3(-22, -1.1f, 3);
+                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
                 }
                 mCube.RemoveCube2();
             }
             else if (mMainClient.mQuizManager.checkQuizAnswerFour("3"))
             {
-                if (lcipt.go.tag != "Yellow")
+                if (LcIPT.GetThis().go.tag != "Yellow")
                 {
-                    lcipt.go.transform.position = new Vector3(-22, -1.1f, 3);
+                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
                 }
                 mCube.RemoveCube3();
             }
             else if (mMainClient.mQuizManager.checkQuizAnswerFour("4"))
             {
-                if (lcipt.go.tag != "Green")
+                if (LcIPT.GetThis().go.tag != "Green")
                 {
-                    lcipt.go.transform.position = new Vector3(-22, -1.1f, 3);
+                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
                 }
                 mCube.RemoveCube4();
             }
@@ -325,37 +323,37 @@ public class Quiz : MonoBehaviour
     //it퀴즈
     void CheckAnswer2()
     {
-        if (!mMainClient.mQuizManager.isCompetitionPlay() || lcipt.go.gameObject.tag != "Fail")
+        if (!mMainClient.mQuizManager.isCompetitionPlay() || LcIPT.GetThis().go.gameObject.tag != "Fail")
         {
             if (mMainClient.mQuizManager.checkQuizAnswerIT("1"))
             {
-                if (lcipt.go.tag != "Red")
+                if (LcIPT.GetThis().go.tag != "Red")
                 {
-                    lcipt.go.transform.position = new Vector3(-22, -1.1f, 3);
+                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
                 }
                 mCube.RemoveCube1();
             }
             else if (mMainClient.mQuizManager.checkQuizAnswerIT("2"))
             {
-                if (lcipt.go.tag != "Blue")
+                if (LcIPT.GetThis().go.tag != "Blue")
                 {
-                    lcipt.go.transform.position = new Vector3(-22, -1.1f, 3);
+                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
                 }
                 mCube.RemoveCube2();
             }
             else if (mMainClient.mQuizManager.checkQuizAnswerIT("3"))
             {
-                if (lcipt.go.tag != "Yellow")
+                if (LcIPT.GetThis().go.tag != "Yellow")
                 {
-                    lcipt.go.transform.position = new Vector3(-22, -1.1f, 3);
+                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
                 }
                 mCube.RemoveCube3();
             }
             else if (mMainClient.mQuizManager.checkQuizAnswerIT("4"))
             {
-                if (lcipt.go.tag != "Green")
+                if (LcIPT.GetThis().go.tag != "Green")
                 {
-                    lcipt.go.transform.position = new Vector3(-22, -1.1f, 3);
+                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
                 }
                 mCube.RemoveCube4();
             }

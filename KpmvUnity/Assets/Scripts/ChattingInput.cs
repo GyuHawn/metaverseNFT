@@ -16,8 +16,8 @@ public class ChattingInput : MonoBehaviour
 
     private void Awake()
     {
-        mClient = GameObject.FindObjectOfType<MultiClient>();
-        maClient = GameObject.FindObjectOfType<MainClient>();
+        mClient = LcIPT.GetThis().mMulti;
+        maClient = LcIPT.GetThis().mMc;
     }
 
     public void inputSummit1()
@@ -25,7 +25,7 @@ public class ChattingInput : MonoBehaviour
         UnityEngine.UI.InputField if1 = GetComponent<UnityEngine.UI.InputField>();
         {
             string nameText = MainClient.currentUser.mUserName + " : " + if1.text;
-            if (LcIPT.Instance.isOnline())
+            if (LcIPT.GetThis().isOnline())
             {
                 chatObj.textSend(mClient.mCt, nameText);
             }

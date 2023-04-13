@@ -20,9 +20,10 @@ public class Login : MonoBehaviour
     private MainClient mClient;
 
     private PlayerObj loginObj = new PlayerObj();
-    private void Awake()
+    
+    private void Start()
     {
-        mClient = GameObject.FindObjectOfType<MainClient>();
+        mClient = LcIPT.GetThis().mMc;
         serverField.text = "127.0.0.1";
     }
 
