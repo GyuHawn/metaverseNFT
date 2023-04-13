@@ -282,7 +282,7 @@ public class LcIPT/* : MonoBehaviour*/
             {
                 if (mbOnline)
                 {
-                    incSend(mCf.mCt, (int)KeyCode.W, 0, 0, +spd);
+                    incSend(mMulti.mCt, (int)KeyCode.W, 0, 0, +spd);
                 }
                 else
                 {
