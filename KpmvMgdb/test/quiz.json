@@ -1,19 +1,11 @@
 [{
   "_id": {
-    "$oid": "64337d846c411fbeb735f7ea"
-  },
-  "Kind": "ox",
-  "answer": "X",
-  "content": "아라비아 숫자 1부터 100사이에는 9라는 숫자가 모두 19개 들어 있다.",
-  "explain": "20개, 99는 두 개입니다."
-},{
-  "_id": {
     "$oid": "64337daf6c411fbeb735f7eb"
   },
   "Kind": "ox",
-  "answer": "O",
   "content": "한국의 수도는 서울이다.",
-  "explain": ""
+  "explain": "",
+  "correct": "O"
 },{
   "_id": {
     "$oid": "6433815e6c411fbeb735f7ec"
@@ -36,4 +28,12 @@
   "exp2": "베타",
   "exp3": "알바",
   "exp4": "리테인"
+},{
+  "_id": {
+    "$oid": "6438991313d5ad9ef9b1fdde"
+  },
+  "content": "아라비아 숫자 1부터 100사이에는 9라는 숫자가 모두 19개 들어 있다.",
+  "correct": "X",
+  "explain": "20개, 99는 두 개입니다.",
+  "Kind": "ox"
 }]
