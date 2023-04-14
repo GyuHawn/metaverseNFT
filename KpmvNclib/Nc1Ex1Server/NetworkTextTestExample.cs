@@ -55,7 +55,7 @@ namespace Nc1Ex1Server
 
             foreach (var d1 in mQuizList)
             {
-                if (kind == "quiz")
+                if (kind == "ox")
                 {
                     var s1 = d1.GetValue("content");
                     var s2 = d1.GetValue("correct");
@@ -63,7 +63,7 @@ namespace Nc1Ex1Server
                     var s4 = d1.GetValue("explain");
                     Nc1Ex1ServerMainAm2.qv("Dbg mongodb content " + s1 + ", correct : " + s2 + ", Kind " + s3 + ", explain : " + s4);
                 }
-                else if (kind == "quiz2" || kind == "quiz3")
+                else if (kind == "four" || kind == "it")
                 {
                     var s1 = d1.GetValue("content");
                     var s2 = d1.GetValue("correct");
