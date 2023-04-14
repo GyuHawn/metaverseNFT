@@ -14,15 +14,10 @@ public class Quiz : MonoBehaviour
     public GameObject mWinner;
     public GameObject mPlayer;
 
-    public TextMeshProUGUI fEx1Text;
-    public TextMeshProUGUI fEx2Text;
-    public TextMeshProUGUI fEx3Text;
-    public TextMeshProUGUI fEx4Text;
-
-    public TextMeshProUGUI itEx1Text;
-    public TextMeshProUGUI itEx2Text;
-    public TextMeshProUGUI itEx3Text;
-    public TextMeshProUGUI itEx4Text;
+    public TextMeshProUGUI Ex1Text;
+    public TextMeshProUGUI Ex2Text;
+    public TextMeshProUGUI Ex3Text;
+    public TextMeshProUGUI Ex4Text;
 
     public Cube mCube;
     public PlayerMotion mPMotion;
@@ -45,27 +40,26 @@ public class Quiz : MonoBehaviour
         //게임 시작(게임 유)
         if (mMainClient.mQuizManager.isCompetitionState_Starting())
         {
-            if(mMainClient.mQuizManager.getQuizType() == "quiz") //ox퀴즈
+            string qzmsg1 = "err ";
+            switch (mMainClient.mQuizManager.getQuizType())
             {
-                mQuizText.text = "OX퀴즈 문제를 선택하셨습니다." + System.Environment.NewLine + "5초 후 퀴즈가 시작됩니다" + System.Environment.NewLine +
-                "문제 종료시 중앙에 있어도 탈락 처리 됩니다" + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.mRemainCompetitionTime);
-            }else if (mMainClient.mQuizManager.getQuizType() == "quiz2") //4지선다형
-            {
-                mQuizText.text = "4지선다형 문제를 선택하셨습니다." + System.Environment.NewLine + "5초 후 퀴즈가 시작됩니다" + System.Environment.NewLine +
-                "문제 종료시 중앙에 있어도 탈락 처리 됩니다" + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.mRemainCompetitionTime);
-                if (fail == false)
-                {
-                    StartCoroutine(EndQuiz4AfterDelay(10f)); //CenterWall 생성 시간 (텍스트 출력 후 10초) 수정가능
-                }
+                case "ox":
+                    qzmsg1 = "OX퀴즈 문제를 선택하셨습니다.";
+                    break;
+                case "four":
+                    qzmsg1 = "4지선다형 문제를 선택하셨습니다.";
+                    break;
+                case "it":
+                    qzmsg1 = "IT퀴즈를 선택하셨습니다.";
+                    break;
             }
-            else if (mMainClient.mQuizManager.getQuizType() == "quiz3") //it퀴즈
+
+            mQuizText.text = qzmsg1 + System.Environment.NewLine + "5초 후 퀴즈가 시작됩니다" + System.Environment.NewLine +
+            "문제 종료시 중앙에 있어도 탈락 처리 됩니다" + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.mRemainCompetitionTime);
+
+            if (mMainClient.mQuizManager.getQuizType() != "ox" && fail == false)
             {
-                mQuizText.text = "IT퀴즈를 선택하셨습니다." + System.Environment.NewLine + "5초 후 퀴즈가 시작됩니다" + System.Environment.NewLine +
-                "문제 종료시 중앙에 있어도 탈락 처리 됩니다" + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.mRemainCompetitionTime);
-                if (fail == false)
-                {
-                    StartCoroutine(EndQuiz4AfterDelay(10f)); //CenterWall 생성 시간 (텍스트 출력 후 10초) 수정가능
-                }
+                StartCoroutine(EndQuiz4AfterDelay(10f)); //CenterWall 생성 시간 (텍스트 출력 후 10초) 수정가능
             }
             IEnumerator EndQuiz4AfterDelay(float delay)
             {
@@ -77,35 +71,24 @@ public class Quiz : MonoBehaviour
         //게임 Play
         if (mMainClient.mQuizManager.isCompetitionState_QuizPlay())
         {
-            if (mMainClient.mQuizManager.getQuizType() == "quiz") //ox퀴즈
+            if (mMainClient.mQuizManager.getQuizType() == "ox") //ox퀴즈
             {
+                mMainClient.mQuizManager.getQuizContent();
                 mMainClient.mQuizManager.cleanFloor = true;
                 // 문제출력
-                mQuizText.text = mMainClient.mQuizManager.getQuizContentOX() + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.getAnswerTimeOut());
+                mQuizText.text = mMainClient.mQuizManager.getQuizContent() + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.getAnswerTimeOut());
                 //시간
                 mMainClient.mQuizManager.mAnswerTimeOut -= Time.deltaTime;
             }
-            else if (mMainClient.mQuizManager.getQuizType() == "quiz2") //4지선다형
+            else if (mMainClient.mQuizManager.getQuizType() == "four" || mMainClient.mQuizManager.getQuizType() == "it") //4지선다형
             {
                 mCube.MoveCubes();
                 // 문제출력
-                mQuizText.text = mMainClient.mQuizManager.getQuizContentFour() + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.getAnswerTimeOut());
-                fEx1Text.text = mMainClient.mQuizManager.getQuizEx1Four();
-                fEx2Text.text = mMainClient.mQuizManager.getQuizEx2Four();
-                fEx3Text.text = mMainClient.mQuizManager.getQuizEx3Four();
-                fEx4Text.text = mMainClient.mQuizManager.getQuizEx4Four();
-                //시간
-                mMainClient.mQuizManager.mAnswerTimeOut -= Time.deltaTime;
-            }
-            else if(mMainClient.mQuizManager.getQuizType() == "quiz3") //it퀴즈
-            {
-                mCube.MoveCubes();  
-                // 문제출력
-                mQuizText.text = mMainClient.mQuizManager.getQuizContentIT() + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.getAnswerTimeOut());
-                itEx1Text.text = mMainClient.mQuizManager.getQuizEx1IT();
-                itEx2Text.text = mMainClient.mQuizManager.getQuizEx2IT();
-                itEx3Text.text = mMainClient.mQuizManager.getQuizEx3IT();
-                itEx4Text.text = mMainClient.mQuizManager.getQuizEx4IT();
+                mQuizText.text = mMainClient.mQuizManager.getQuizContent() + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.getAnswerTimeOut());
+                Ex1Text.text = mMainClient.mQuizManager.getQuizEx1();
+                Ex2Text.text = mMainClient.mQuizManager.getQuizEx2();
+                Ex3Text.text = mMainClient.mQuizManager.getQuizEx3();
+                Ex4Text.text = mMainClient.mQuizManager.getQuizEx4();
                 //시간
                 mMainClient.mQuizManager.mAnswerTimeOut -= Time.deltaTime;
             }
@@ -113,11 +96,11 @@ public class Quiz : MonoBehaviour
         //답 비교 / 결과 출력
         if (mMainClient.mQuizManager.isCompetitionState_QuizAnswer())
         {
-            if (mMainClient.mQuizManager.getQuizType() == "quiz") //ox퀴즈
+            if (mMainClient.mQuizManager.getQuizType() == "ox") //ox퀴즈
             {
                 //정답 비교
-                string result = (mMainClient.mQuizManager.getQuizAnswerOX() == "O" ? "O" : "X");
-                string explain = mMainClient.mQuizManager.getQuizExplainOX();
+                string result = (mMainClient.mQuizManager.getQuizAnswer() == "O" ? "O" : "X");
+                string explain = mMainClient.mQuizManager.getQuizExplain();
                 //시간
                 mMainClient.mQuizManager.mNextAnswerDelayTimeOut -= Time.deltaTime;
                 if (result == "X")
@@ -132,111 +115,67 @@ public class Quiz : MonoBehaviour
                     CheckFloor();
                 }
             }
-            else if (mMainClient.mQuizManager.getQuizType() == "quiz2") //4지선다형
+            else if (mMainClient.mQuizManager.getQuizType() == "four" || mMainClient.mQuizManager.getQuizType() == "it") //4지선다형
             {
                 //시간
                 mMainClient.mQuizManager.mNextAnswerDelayTimeOut -= Time.deltaTime;
                 //결과 출력
-                mQuizText.text = "결과는 : " + mMainClient.mQuizManager.getQuizAnswerFour() + "입니다" + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.mNextAnswerDelayTimeOut);
+                mQuizText.text = "결과는 : " + mMainClient.mQuizManager.getQuizAnswer() + "입니다" + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.mNextAnswerDelayTimeOut);
                 CheckAnswer();
-            }
-            else if (mMainClient.mQuizManager.getQuizType() == "quiz3") //it퀴즈
-            {
-                //시간
-                mMainClient.mQuizManager.mNextAnswerDelayTimeOut -= Time.deltaTime;
-                //결과 출력
-                mQuizText.text = "결과는 : " + mMainClient.mQuizManager.getQuizAnswerIT() + "입니다" + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.mNextAnswerDelayTimeOut);
-                CheckAnswer2();
             }
         }
         //다음 퀴즈 넘어감
         if (mMainClient.mQuizManager.isCompetitionState_QuizNext())
         {
-            if(mMainClient.mQuizManager.getQuizType() == "quiz") //ox퀴즈
+            if (mMainClient.mQuizManager.getQuizType() == "ox" || mMainClient.mQuizManager.getQuizType() == "four" || mMainClient.mQuizManager.getQuizType() == "it") //ox퀴즈
             {
-                if (mMainClient.mQuizManager.nextAnswerOX()) //퀴즈가 남아있을때
+                if (mMainClient.mQuizManager.nextAnswer()) //퀴즈가 남아있을때
                 {
                     mMainClient.mQuizManager.mNextAnswerDelayTimeOut = 5.0f;
                 }
 
-                if (mMainClient.mQuizManager.getRemainQuizCountOX() == 0) //퀴즈가 남아있지 않을때 종료
+                if (mMainClient.mQuizManager.getRemainQuizCount() == 0) //퀴즈가 남아있지 않을때 종료
                 {
-                    mQuizText.text = "퀴즈가 종료되었습니다";
-
-                    if (mQuizCanvas.gameObject.activeSelf)
+                    if(mMainClient.mQuizManager.getQuizType() == "ox")
                     {
-                        StartCoroutine(EndQuizAfterDelay(5f));
-                    }
-                    IEnumerator EndQuizAfterDelay(float delay)
+                        mQuizText.text = "퀴즈가 종료되었습니다";
+
+                        if (mQuizCanvas.gameObject.activeSelf)
+                        {
+                            StartCoroutine(EndQuizAfterDelay(5f));
+                        }
+                        IEnumerator EndQuizAfterDelay(float delay)
+                        {
+                            yield return new WaitForSeconds(delay);
+                            mQuizCanvas.gameObject.SetActive(false);
+
+                            ClearFloor();
+
+                            LcIPT.GetThis().go.GetComponent<PlayerMotion>().save = false;
+                            mWinner.GetComponent<Winner>().isFollowing = false;
+                            mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(8, 36f, 9);
+                        }
+                    }else if(mMainClient.mQuizManager.getQuizType() == "four" || mMainClient.mQuizManager.getQuizType() == "it")
                     {
-                        yield return new WaitForSeconds(delay);
-                        mQuizCanvas.gameObject.SetActive(false);
+                        mPMotion.ClearPlayer();
+                        fail = false;
+                        mQuizText.text = "퀴즈가 종료되었습니다";
 
-                        ClearFloor();
+                        if (mQuizCanvas.gameObject.activeSelf)
+                        {
+                            StartCoroutine(EndQuizAfterDelay(3f));
+                        }
+                        IEnumerator EndQuizAfterDelay(float delay)
+                        {
+                            yield return new WaitForSeconds(delay);
+                            mQuizCanvas.gameObject.SetActive(false);
 
-                        LcIPT.GetThis().go.GetComponent<PlayerMotion>().save = false;
-                        mWinner.GetComponent<Winner>().isFollowing = false;
-                        mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(8, 36f, 9);
-                    }
-                }
-            }
-            else if (mMainClient.mQuizManager.getQuizType() == "quiz2") //4지선다형
-            {
-                if (mMainClient.mQuizManager.nextAnswerFour()) //퀴즈가 남아있을때
-                {
-                    mMainClient.mQuizManager.mNextAnswerDelayTimeOut = 5.0f;
-                }
-
-                if (mMainClient.mQuizManager.getRemainQuizCountFour() == 0) //퀴즈가 남아있지 않을때 종료
-                {
-                    mPMotion.ClearPlayer();
-                    fail = false;
-                    mQuizText.text = "퀴즈가 종료되었습니다";
-
-                    if (mQuizCanvas.gameObject.activeSelf)
-                    {
-                        StartCoroutine(EndQuizAfterDelay(3f));
-                    }
-                    IEnumerator EndQuizAfterDelay(float delay)
-                    {
-                        yield return new WaitForSeconds(delay);
-                        mQuizCanvas.gameObject.SetActive(false);
-
-                        LcIPT.GetThis().go.GetComponent<PlayerMotion>().save = false;
-                        mWinner.GetComponent<Winner>().isFollowing = false;
-                        mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(-23, 1f, -7);
-                        yield return new WaitForSeconds(5f);
-                        mFailWall.SetActive(false);
-                    }
-                }
-            }
-            else if (mMainClient.mQuizManager.getQuizType() == "quiz3") //it퀴즈
-            {
-                if (mMainClient.mQuizManager.nextAnswerIT()) //퀴즈가 남아있을때
-                {
-                    mMainClient.mQuizManager.mNextAnswerDelayTimeOut = 5.0f;
-                }
-
-                if (mMainClient.mQuizManager.getRemainQuizCountIT() == 0) //퀴즈가 남아있지 않을때 종료
-                {
-                    mPMotion.ClearPlayer();
-                    fail = false;
-                    mQuizText.text = "퀴즈가 종료되었습니다";
-
-                    if (mQuizCanvas.gameObject.activeSelf)
-                    {
-                        StartCoroutine(EndQuizAfterDelay(3f));
-                    }
-                    IEnumerator EndQuizAfterDelay(float delay)
-                    {
-                        yield return new WaitForSeconds(delay);
-                        mQuizCanvas.gameObject.SetActive(false);
-
-                        LcIPT.GetThis().go.GetComponent<PlayerMotion>().save = false;
-                        mWinner.GetComponent<Winner>().isFollowing = false;
-                        mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(-23, 1f, -7);
-                        yield return new WaitForSeconds(5f);
-                        mFailWall.SetActive(false);
+                            LcIPT.GetThis().go.GetComponent<PlayerMotion>().save = false;
+                            mWinner.GetComponent<Winner>().isFollowing = false;
+                            mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(-23, 1f, -7);
+                            yield return new WaitForSeconds(5f);
+                            mFailWall.SetActive(false);
+                        }
                     }
                 }
             }
@@ -250,7 +189,7 @@ public class Quiz : MonoBehaviour
         if (mMainClient.mQuizManager.cleanFloor && !mMainClient.mQuizManager.isCompetitionPlay())
         {
             //문제 정답이 O일 때 X 발판을 Die로 변경하고, X일 때 O 발판을 Die로 변경
-            if (mMainClient.mQuizManager.checkQuizAnswerOX("O"))
+            if (mMainClient.mQuizManager.checkQuizAnswer("O"))
             {
                 mTerrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Quiz";
                 mTerrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Die";
@@ -258,7 +197,7 @@ public class Quiz : MonoBehaviour
                 mOobj.gameObject.tag = "Quiz";
                 mXobj.gameObject.tag = "Die";
             }
-            else if (mMainClient.mQuizManager.checkQuizAnswerOX("X"))
+            else if (mMainClient.mQuizManager.checkQuizAnswer("X"))
             {
                 mTerrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Die";
                 mTerrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Die";
@@ -280,12 +219,11 @@ public class Quiz : MonoBehaviour
         mXobj.gameObject.tag = "Quiz";
     }
 
-    //4지선다형
     void CheckAnswer()
     {
         if (!mMainClient.mQuizManager.isCompetitionPlay() || LcIPT.GetThis().go.gameObject.tag != "Fail")
         {
-            if (mMainClient.mQuizManager.checkQuizAnswerFour("1"))
+            if (mMainClient.mQuizManager.checkQuizAnswer("1"))
             {
                 if (LcIPT.GetThis().go.tag != "Red")
                 {
@@ -293,7 +231,7 @@ public class Quiz : MonoBehaviour
                 }
                 mCube.RemoveCube1();
             }
-            else if (mMainClient.mQuizManager.checkQuizAnswerFour("2"))
+            else if (mMainClient.mQuizManager.checkQuizAnswer("2"))
             {
                 if (LcIPT.GetThis().go.tag != "Blue")
                 {
@@ -301,7 +239,7 @@ public class Quiz : MonoBehaviour
                 }
                 mCube.RemoveCube2();
             }
-            else if (mMainClient.mQuizManager.checkQuizAnswerFour("3"))
+            else if (mMainClient.mQuizManager.checkQuizAnswer("3"))
             {
                 if (LcIPT.GetThis().go.tag != "Yellow")
                 {
@@ -309,47 +247,7 @@ public class Quiz : MonoBehaviour
                 }
                 mCube.RemoveCube3();
             }
-            else if (mMainClient.mQuizManager.checkQuizAnswerFour("4"))
-            {
-                if (LcIPT.GetThis().go.tag != "Green")
-                {
-                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
-                }
-                mCube.RemoveCube4();
-            }
-        }
-    }
-
-    //it퀴즈
-    void CheckAnswer2()
-    {
-        if (!mMainClient.mQuizManager.isCompetitionPlay() || LcIPT.GetThis().go.gameObject.tag != "Fail")
-        {
-            if (mMainClient.mQuizManager.checkQuizAnswerIT("1"))
-            {
-                if (LcIPT.GetThis().go.tag != "Red")
-                {
-                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
-                }
-                mCube.RemoveCube1();
-            }
-            else if (mMainClient.mQuizManager.checkQuizAnswerIT("2"))
-            {
-                if (LcIPT.GetThis().go.tag != "Blue")
-                {
-                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
-                }
-                mCube.RemoveCube2();
-            }
-            else if (mMainClient.mQuizManager.checkQuizAnswerIT("3"))
-            {
-                if (LcIPT.GetThis().go.tag != "Yellow")
-                {
-                    LcIPT.GetThis().go.transform.position = new Vector3(-22, -1.1f, 3);
-                }
-                mCube.RemoveCube3();
-            }
-            else if (mMainClient.mQuizManager.checkQuizAnswerIT("4"))
+            else if (mMainClient.mQuizManager.checkQuizAnswer("4"))
             {
                 if (LcIPT.GetThis().go.tag != "Green")
                 {

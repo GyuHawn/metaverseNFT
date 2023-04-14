@@ -12,17 +12,21 @@ namespace Nc1Ex1Server
         public List<BsonDocument> mQuizList = new List<BsonDocument>();
         public List<BsonDocument> mPlayerList = new List<BsonDocument>();
         public List<BsonDocument> mQuizName = new List<BsonDocument>();
+        string kind;
 
         public List<BsonDocument> QuizName()
         {
             mQuizName = Mdb1.QuizName();
             foreach (var q1 in mQuizName)
             {
+                if (q1.GetValue("winner") == "")
+                {
+                    kind = (string)q1.GetValue("quiz");
+                }
                 var s1 = q1.GetValue("game");
                 var s2 = q1.GetValue("startTime");
                 var s3 = q1.GetValue("winner");
-                var s4 = q1.GetValue("quiz");
-                Nc1Ex1ServerMainAm2.qv("Dbg mongodb gamename " + s1 + " startTime : " + s2 + " winner : " + s3 + " quiz: " + s4);
+                Nc1Ex1ServerMainAm2.qv("Dbg mongodb gamename " + s1 + " startTime : " + s2 + " winner : " + s3 + " quiz: " + kind);
             }
             return mQuizName;
         }
@@ -46,38 +50,29 @@ namespace Nc1Ex1Server
 
         public List<BsonDocument> Db()
         {
+
             mQuizList = Mdb1.DbEx_FindAll();
+
             foreach (var d1 in mQuizList)
             {
-                if (d1.GetValue("Kind") == "ox")
+                if (kind == "quiz")
                 {
                     var s1 = d1.GetValue("content");
-                    var s2 = d1.GetValue("answer");
-                    var s3 = d1.GetValue("explain");
-                    var s4 = d1.GetValue("Kind");
-                    Nc1Ex1ServerMainAm2.qv("Dbg mongodb OXcontent " + s1 + " : " + s2 + " : " + s3 + " Kind : " + s4);
+                    var s2 = d1.GetValue("correct");
+                    var s3 = d1.GetValue("Kind");
+                    var s4 = d1.GetValue("explain");
+                    Nc1Ex1ServerMainAm2.qv("Dbg mongodb content " + s1 + ", correct : " + s2 + ", Kind " + s3 + ", explain : " + s4);
                 }
-                else if (d1.GetValue("Kind") == "four")
+                else if (kind == "quiz2" || kind == "quiz3")
                 {
                     var s1 = d1.GetValue("content");
-                    var s2 = d1.GetValue("exp1");
-                    var s3 = d1.GetValue("exp2");
-                    var s4 = d1.GetValue("exp3");
-                    var s5 = d1.GetValue("exp4");
-                    var s6 = d1.GetValue("correct");
-                    var s7 = d1.GetValue("Kind");
-                    Nc1Ex1ServerMainAm2.qv("Dbg mongodb 4content " + s1 + " : " + s2 + " : " + s3 + " : " + s4 + " : " + s5 + " ,정답 : " + s6 + " ,Kind : " + s7);
-                }
-                else if (d1.GetValue("Kind") == "it")
-                {
-                    var s1 = d1.GetValue("content");
-                    var s2 = d1.GetValue("exp1");
-                    var s3 = d1.GetValue("exp2");
-                    var s4 = d1.GetValue("exp3");
-                    var s5 = d1.GetValue("exp4");
-                    var s6 = d1.GetValue("correct");
-                    var s7 = d1.GetValue("Kind");
-                    Nc1Ex1ServerMainAm2.qv("Dbg mongodb itcontent " + s1 + " : " + s2 + " : " + s3 + " : " + s4 + " : " + s5 + " ,정답 : " + s6 + " ,Kind : " + s7);
+                    var s2 = d1.GetValue("correct");
+                    var s3 = d1.GetValue("Kind");
+                    var s4 = d1.GetValue("exp1");
+                    var s5 = d1.GetValue("exp2");
+                    var s6 = d1.GetValue("exp3");
+                    var s7 = d1.GetValue("exp4");
+                    Nc1Ex1ServerMainAm2.qv("Dbg mongodb content " + s1 + ", correct : " + s2 + " : " + s4 + " : " + s5 + " : " + s6 + " : " + s7 + ", Kind : " + s3);
                 }
             }
             return mQuizList;
@@ -85,31 +80,36 @@ namespace Nc1Ex1Server
 
         public void QuizDataSend(Nc1Ex1ServerMainAm2.Sv sv, int cti)
         {
+            var qzname = ""; //<-대회정보
+            foreach (var q1 in mQuizName)
+            {
+                if ((string)q1.GetValue("winner") == "")
+                {
+                    qzname = (string)q1.GetValue("quiz");
+                }
+            }
+            var qzs = mQuizList.FindAll(x => x["Kind"] == qzname);
             using (var pkw = sv.mMm.allocNw1pk(0xff))
             {
                 pkw.setType(100);
-                pkw.wInt32s(mQuizList.Count);
+                pkw.wInt32s(qzs.Count);
 
-                foreach (var d1 in mQuizList)
+                foreach (var d1 in qzs)
                 {
                     var kind = (string)d1.GetValue("Kind");
-
                     pkw.wStrToNclib1FromClr(kind);
-
+                    pkw.wStrToNclib1FromClr((string)d1.GetValue("content"));
+                    pkw.wStrToNclib1FromClr((string)d1.GetValue("correct"));
                     if (kind == "ox")
                     {
-                        pkw.wStrToNclib1FromClr((string)d1.GetValue("content"));
-                        pkw.wStrToNclib1FromClr((string)d1.GetValue("answer"));
                         pkw.wStrToNclib1FromClr((string)d1.GetValue("explain"));
                     }
-                    else if (kind == "four" || kind == "it")
+                    if (kind == "four" || kind == "it")
                     {
-                        pkw.wStrToNclib1FromClr((string)d1.GetValue("content"));
                         pkw.wStrToNclib1FromClr((string)d1.GetValue("exp1"));
                         pkw.wStrToNclib1FromClr((string)d1.GetValue("exp2"));
                         pkw.wStrToNclib1FromClr((string)d1.GetValue("exp3"));
                         pkw.wStrToNclib1FromClr((string)d1.GetValue("exp4"));
-                        pkw.wStrToNclib1FromClr((string)d1.GetValue("correct"));
                     }
                 }
                 sv.send(cti, pkw);

@@ -19,22 +19,10 @@ public class QuizManager //: MonoBehaviour
     CompetitionState mState;
 
     public List<int> userQuiz = new List<int>();
-    public List<int> userQuiz2 = new List<int>();
-    public List<int> userQuiz3 = new List<int>();
 
-    public class QuizData //OX퀴즈
+    public class QuizData
     {
-        public string mContent, mAnswer, mExplain, mKind;
-    }
-
-    public class QuizData2 //4지선다
-    {
-        public string fContent, fEx1, fEx2, fEx3, fEx4, fCorrect, fKind;
-    }
-
-    public class QuizData3 //IT문제
-    {
-        public string itContent, itEx1, itEx2, itEx3, itEx4, itCorrect, itKind;
+        public string mContent, mCorrect, mExp1, mExp2, mExp3, mExp4, mExplain, mKind;
     }
 
     public bool ox; // 문제 정답이 맞았는지 여부
@@ -46,8 +34,6 @@ public class QuizManager //: MonoBehaviour
     public bool cleanFloor = true;
 
     public List<QuizData> mQuizList = new List<QuizData>();
-    public List<QuizData2> mQuizList2 = new List<QuizData2>();
-    public List<QuizData3> mQuizList3 = new List<QuizData3>();
 
     public string leftTime() //게임 시작전 남은시간 구할때사용
     {
@@ -69,15 +55,15 @@ public class QuizManager //: MonoBehaviour
 
     public string quizType()
     {
-        if (getQuizType() == "quiz")
+        if (getQuizType() == "ox")
         {
             return "OX퀴즈";
         }
-        else if (getQuizType() == "quiz2")
+        else if (getQuizType() == "four")
         {
             return "4지선다형 기본상식";
         }
-        else if (getQuizType() == "quiz3")
+        else if (getQuizType() == "it")
         {
             return "IT퀴즈";
         }
@@ -85,25 +71,15 @@ public class QuizManager //: MonoBehaviour
         return quizType();
     }
 
-    public void quizAddOX(QuizData quiz)
+    public void quizAdd(QuizData quiz)
     {
         mQuizList.Add(quiz);
-    }
-
-    public void quizAdd2Four(QuizData2 quiz2)
-    {
-        mQuizList2.Add(quiz2);
-    }
-
-    public void quizAddIT(QuizData3 quiz3)
-    {
-        mQuizList3.Add(quiz3);
     }
 
     public string getQuizType() //퀴즈 종류 : ox
     {
         string quizName = "";
-        for (int i = 0; i<MainClient.quizinfo.Count; i++)
+        for (int i = 0; i < MainClient.quizinfo.Count; i++)
         {
             if (MainClient.quizinfo[i].mWinner == "")
             {
@@ -113,22 +89,12 @@ public class QuizManager //: MonoBehaviour
         return quizName;
     }
 
-    public string getQuizAnswerOX() //ox 정답
+    public string getQuizAnswer()
     {
-        return mQuizList[mCurrentQuizIndex].mAnswer;
+        return mQuizList[mCurrentQuizIndex].mCorrect;
     }
 
-    public string getQuizAnswerFour() //4지선다형 정답
-    {
-        return mQuizList2[mCurrentQuizIndex].fCorrect;
-    }
-
-    public string getQuizAnswerIT() //it 정답
-    {
-        return mQuizList3[mCurrentQuizIndex].itCorrect;
-    }
-
-    public string getQuizExplainOX() //ox 설명
+    public string getQuizExplain()
     {
         return mQuizList[mCurrentQuizIndex].mExplain;
     }
@@ -138,71 +104,35 @@ public class QuizManager //: MonoBehaviour
         return mAnswerTimeOut;
     }
 
-    public bool checkQuizAnswerOX(string answer) //ox퀴즈 정답 확인
+    public bool checkQuizAnswer(string answer)
     {
-        return getQuizAnswerOX() == answer;
+        return getQuizAnswer() == answer;
     }
 
-    public bool checkQuizAnswerFour(string answer) //4지선다형 정답 확인
+    public string getQuizContent()
     {
-        return getQuizAnswerFour() == answer;
-    }
-
-    public bool checkQuizAnswerIT(string answer) //it퀴즈 정답 확인
-    {
-        return getQuizAnswerIT() == answer;
-    }
-
-    public string getQuizContentOX() //ox퀴즈 문제
-    {
+        if (mQuizList[mCurrentQuizIndex].mKind == "ox" || mQuizList[mCurrentQuizIndex].mKind == "four" || mQuizList[mCurrentQuizIndex].mKind == "it")
+        {
+            return mQuizList[mCurrentQuizIndex].mContent;
+        }
         return mQuizList[mCurrentQuizIndex].mContent;
     }
 
-    public string getQuizContentFour() //4지선다형 문제
+    public string getQuizEx1()
     {
-        return mQuizList2[mCurrentQuizIndex].fContent;
+        return mQuizList[mCurrentQuizIndex].mExp1;
     }
-
-    public string getQuizContentIT()
+    public string getQuizEx2()
     {
-        return mQuizList3[mCurrentQuizIndex].itContent;
+        return mQuizList[mCurrentQuizIndex].mExp2;
     }
-
-    public string getQuizEx1Four() //4지선다형 보기1번
+    public string getQuizEx3()
     {
-        return mQuizList2[mCurrentQuizIndex].fEx1;
+        return mQuizList[mCurrentQuizIndex].mExp3;
     }
-    public string getQuizEx2Four() //4지선다형 보기2번
+    public string getQuizEx4()
     {
-        return mQuizList2[mCurrentQuizIndex].fEx2;
-    }
-    public string getQuizEx3Four() //4지선다형 보기3번
-    {
-        return mQuizList2[mCurrentQuizIndex].fEx3;
-    }
-    public string getQuizEx4Four() //4지선다형 보기4번
-    {
-        return mQuizList2[mCurrentQuizIndex].fEx4;
-    }
-
-    public string getQuizEx1IT() //it문제 보기1번
-    {
-        return mQuizList3[mCurrentQuizIndex].itEx1;
-    }
-
-    public string getQuizEx2IT() //it문제 보기2번
-    {
-        return mQuizList3[mCurrentQuizIndex].itEx2;
-    }
-
-    public string getQuizEx3IT() //it문제 보기3번
-    {
-        return mQuizList3[mCurrentQuizIndex].itEx3;
-    }
-
-    public string getQuizEx4IT() //it문제 보기4번
-    {
-        return mQuizList3[mCurrentQuizIndex].itEx4;
+        return mQuizList[mCurrentQuizIndex].mExp4;
     }
 
     public bool isCompetitionPlay() //대회여부(유/무)
@@ -210,67 +140,25 @@ public class QuizManager //: MonoBehaviour
         return gameStarted;
     }
 
-    public void setCompetitionPlayOX() //ox 대회여부(유/무) 
+    public void setCompetitionPlay() //대회여부(유/무) 
     {
         gameStarted = true;
-        nextAnswerOX();
+        nextAnswer();
     }
 
-    public void setCompetitionPlayFour() //4지선다형 대회여부(유/무)
-    {
-        gameStarted = true;
-        nextAnswerFour();
-    }
-
-    public void setCompetititonPlayIT() //it퀴즈 대회여부(유/무)
-    {
-        gameStarted = true;
-        nextAnswerIT();
-    }
-
-    public int getQuizMaxOX()
+    public int getQuizMax()
     {
         return mQuizList.Count;
     }
 
-    public int getQuizMaxFour()
-    {
-        return mQuizList2.Count;
-    }
-
-    public int getQuizMaxIT()
-    {
-        return mQuizList3.Count;
-    }
-
-    public int getUsedQuizCountOX()
+    public int getUsedQuizCount()
     {
         return userQuiz.Count;
     }
 
-    public int getUsedQuizCountFour()
+    public int getRemainQuizCount()
     {
-        return userQuiz2.Count;
-    }
-
-    public int getUsedQuizCountIT()
-    {
-        return userQuiz3.Count;
-    }
-
-    public int getRemainQuizCountOX()
-    {
-        return getQuizMaxOX() - getUsedQuizCountOX();
-    }
-
-    public int getRemainQuizCountFour()
-    {
-        return getQuizMaxFour() - getUsedQuizCountFour();
-    }
-
-    public int getRemainQuizCountIT()
-    {
-        return getQuizMaxIT() - getUsedQuizCountIT();
+        return getQuizMax() - getUsedQuizCount();
     }
 
     public void setCompetitionResult(string ss)
@@ -282,39 +170,18 @@ public class QuizManager //: MonoBehaviour
     {
         return mRemainCompetitionTime;
     }
-    //다음문제로
-    public bool nextAnswerOX()
+
+    public bool nextAnswer()
     {
         userQuiz.Add(mCurrentQuizIndex);
 
-        if (mQuizList.Count != 0)
+        if (mQuizList[mCurrentQuizIndex].mKind == "ox" || mQuizList[mCurrentQuizIndex].mKind == "four" || mQuizList[mCurrentQuizIndex].mKind == "it")
         {
-            mCurrentQuizIndex++;
-            mAnswerTimeOut = 3.0f;
-        }
-        return true;
-    }
-
-    public bool nextAnswerFour()
-    {
-        userQuiz2.Add(mCurrentQuizIndex);
-
-        if (mQuizList2.Count != 0)
-        {
-            mCurrentQuizIndex++;
-            mAnswerTimeOut = 5.0f;
-        }
-        return true;
-    }
-
-    public bool nextAnswerIT()
-    {
-        userQuiz3.Add(mCurrentQuizIndex);
-
-        if (mQuizList3.Count != 0)
-        {
-            mCurrentQuizIndex++;
-            mAnswerTimeOut = 5.0f;
+            if (mQuizList.Count != 0)
+            {
+                mCurrentQuizIndex++;
+                mAnswerTimeOut = 3.0f;
+            }
         }
         return true;
     }
@@ -330,31 +197,11 @@ public class QuizManager //: MonoBehaviour
     {
         //게임 시작조건 :
         //남은 퀴즈 개수 > 0 
-        if (getQuizType() == "quiz") //OX퀴즈
+        if (getQuizType() == "ox" || getQuizType() == "four" || getQuizType() == "it") //OX퀴즈
         {
-            if (getRemainQuizCountOX() > 0)
+            if (getRemainQuizCount() > 0)
             {
                 //게임유무가 true이고 퀴즈시작시간 > 0
-                if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
-                {
-                    return true;
-                }
-            }
-        }
-        else if (getQuizType() == "quiz2") //4지선다형
-        {
-            if (getRemainQuizCountFour() > 0)
-            {
-                if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
-                {
-                    return true;
-                }
-            }
-        }
-        else if (getQuizType() == "quiz3") //IT퀴즈
-        {
-            if (getRemainQuizCountIT() > 0)
-            {
                 if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
                 {
                     return true;
@@ -370,9 +217,9 @@ public class QuizManager //: MonoBehaviour
     {
         //게임 Play조건 :
         //남은 퀴즈 개수 > 0 
-        if (getQuizType() == "quiz") //OX퀴즈
+        if (getQuizType() == "ox" || getQuizType() == "four" || getQuizType() == "it") //OX퀴즈
         {
-            if (getRemainQuizCountOX() > 0)
+            if (getRemainQuizCount() > 0)
             {
                 //게임유무가 true이고 퀴즈시작시간 > 0
                 if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
@@ -380,34 +227,6 @@ public class QuizManager //: MonoBehaviour
 
                 }
                 //문제 시간(지금설정5초) > 0
-                else if (getAnswerTimeOut() > 0)
-                {
-                    return true;
-                }
-            }
-        }
-        else if (getQuizType() == "quiz2") //4지선다형
-        {
-            if (getRemainQuizCountFour() > 0)
-            {
-                if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
-                {
-
-                }
-                else if (getAnswerTimeOut() > 0)
-                {
-                    return true;
-                }
-            }
-        }
-        else if (getQuizType() == "quiz3") //it
-        {
-            if (getRemainQuizCountIT() > 0)
-            {
-                if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
-                {
-
-                }
                 else if (getAnswerTimeOut() > 0)
                 {
                     return true;
@@ -423,9 +242,9 @@ public class QuizManager //: MonoBehaviour
     {
         //퀴즈 푸는 조건 :
         //남은 퀴즈 개수 > 0 
-        if (getQuizType() == "quiz") //OX퀴즈
+        if (getQuizType() == "ox" || getQuizType() == "four" || getQuizType() == "it") //OX퀴즈
         {
-            if (getRemainQuizCountOX() > 0)
+            if (getRemainQuizCount() > 0)
             {
                 //게임유무가 true이고 퀴즈시작시간 > 0
                 if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
@@ -444,42 +263,6 @@ public class QuizManager //: MonoBehaviour
                 }
             }
         }
-        else if (getQuizType() == "quiz2") //4지선다형
-        {
-            if (getRemainQuizCountFour() > 0)
-            {
-                if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
-                {
-
-                }
-                else if (getAnswerTimeOut() > 0)
-                {
-
-                }
-                else if (mNextAnswerDelayTimeOut > 0)
-                {
-                    return true;
-                }
-            }
-        }
-        else if (getQuizType() == "quiz3") //IT퀴즈
-        {
-            if (getRemainQuizCountIT() > 0)
-            {
-                if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
-                {
-
-                }
-                else if (getAnswerTimeOut() > 0)
-                {
-
-                }
-                else if (mNextAnswerDelayTimeOut > 0)
-                {
-                    return true;
-                }
-            }
-        }
         //게임 남은퀴즈 개수가 0 이하 이거나 게임 유무가false이고 퀴즈시작시간이 0이하 이거나 문제푸는시간이 0보다 작거나
         //다음 문제로넘어가는 시간이(지금설정한 시간) 0초 이하가 되면 false
         return false;
@@ -490,9 +273,9 @@ public class QuizManager //: MonoBehaviour
     {
         //퀴즈 다음으로 넘어가는 조건 :
         //남은 퀴즈 개수 > 0 
-        if (getQuizType() == "quiz") //OX퀴즈
+        if (getQuizType() == "ox" || getQuizType() == "four" || getQuizType() == "it") //OX퀴즈
         {
-            if (getRemainQuizCountOX() > 0)
+            if (getRemainQuizCount() > 0)
             {
                 //게임유무가 true이고 퀴즈시작시간 > 0
                 if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
@@ -513,50 +296,6 @@ public class QuizManager //: MonoBehaviour
                 {
                     //게임유무가 false이고 퀴즈시작시간이 0이하 이거나 문제푸는시간이 0보다 작거나
                     //다음 문제로넘어가는 시간이(지금설정한 시간) 0초 이하이면 true
-                    return true;
-                }
-            }
-        }
-        else if (getQuizType() == "quiz2") //4지선다형
-        {
-            if (getRemainQuizCountFour() > 0)
-            {
-                if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
-                {
-
-                }
-                else if (getAnswerTimeOut() > 0)
-                {
-
-                }
-                else if (mNextAnswerDelayTimeOut > 0)
-                {
-
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
-        else if (getQuizType() == "quiz3") //IT퀴즈
-        {
-            if (getRemainQuizCountIT() > 0)
-            {
-                if (!isCompetitionPlay() && mRemainCompetitionTime > 0)
-                {
-
-                }
-                else if (getAnswerTimeOut() > 0)
-                {
-
-                }
-                else if (mNextAnswerDelayTimeOut > 0)
-                {
-
-                }
-                else
-                {
                     return true;
                 }
             }

@@ -61,9 +61,9 @@ export default function Competition() {
                             <Form.Label>퀴즈 선택</Form.Label>
                             <Form.Control as='select' value={ipt3} onChange={(e) => setipt3(e.target.value)}>
                             <option value=''>선택하세요</option>
-                            <option value='quiz'>OX퀴즈</option>
-                            <option value='quiz2'>4지선다형</option>
-                            <option value='quiz3'>IT문제</option>
+                            <option value='ox'>OX퀴즈</option>
+                            <option value='four'>4지선다형</option>
+                            <option value='it'>IT문제</option>
                             </Form.Control>
                         </Form.Group>
                     </Modal.Body>

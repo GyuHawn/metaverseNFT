@@ -100,69 +100,43 @@ public class MainClient/* : MonoBehaviour*/
                         for (int j = 0; j < tCnt; j++)
                         {
                             var s1 = pkrd.rStr1def();
+                            var s2 = pkrd.rStr1def();
+                            var s3 = pkrd.rStr1def();
 
                             if (s1 == "ox")
                             {
                                 QuizManager.QuizData quizdata = new QuizManager.QuizData();
-                                string s2 = pkrd.rStr1def();
-                                string s3 = pkrd.rStr1def();
                                 string s4 = pkrd.rStr1def();
 
-                                qv("ServerEnter 수신 Kind: " + s1 + ", Content : " + s2 + ", Answer : " + s3 + ", Explain :" + s4);
+                                qv("ServerEnter 수신 Kind: " + s1 + ", Content : " + s2 + ", correct : " + s3 + ", Explain :" + s4);
 
                                 quizdata.mKind = s1;
                                 quizdata.mContent = s2;
-                                quizdata.mAnswer = s3;
+                                quizdata.mCorrect = s3;
                                 quizdata.mExplain = s4;
                                 mQuizManager.mQuizList.Add(quizdata);
                                 qv("OXQuiz dbList : " + mQuizManager.mQuizList.Count);
                             }
-                            else if (s1 == "four")
+                            else if (s1 == "four" || s1 == "it")
                             {
-                                QuizManager.QuizData2 quizdata2 = new QuizManager.QuizData2();
-                                string s2 = pkrd.rStr1def();
-                                string s3 = pkrd.rStr1def();
+                                QuizManager.QuizData quizdata = new QuizManager.QuizData();
                                 string s4 = pkrd.rStr1def();
                                 string s5 = pkrd.rStr1def();
                                 string s6 = pkrd.rStr1def();
                                 string s7 = pkrd.rStr1def();
 
-                                qv("ServerEnter 수신 Kind: " + s1 + ", Content : " + s2 + ", ex1 : " + s3 + ", ex2 : " + s4 + ", ex3 : " + s5 + ", ex4 : " + s6 + ", Correct :" + s7);
+                                qv("ServerEnter 수신 Kind: " + s1 + ", Content : " + s2 + ", Correct : " + s3 + ", ex1 : " + s4 + ", ex2 : " + s5 + ", ex3 : " + s6 + ", ex4 :" + s7);
 
-                                quizdata2.fKind = s1;
-                                quizdata2.fContent = s2;
-                                quizdata2.fEx1 = s3;
-                                quizdata2.fEx2 = s4;
-                                quizdata2.fEx3 = s5;
-                                quizdata2.fEx4 = s6;
-                                quizdata2.fCorrect = s7;
+                                quizdata.mKind = s1;
+                                quizdata.mContent = s2;
+                                quizdata.mCorrect = s3;
+                                quizdata.mExp1 = s4;
+                                quizdata.mExp2 = s5;
+                                quizdata.mExp3 = s6;
+                                quizdata.mExp4 = s7;
 
-                                mQuizManager.mQuizList2.Add(quizdata2);
-                                qv("FourQuiz dbList : " + mQuizManager.mQuizList2.Count);
-                            }
-                            else if (s1 == "it")
-                            {
-                                QuizManager.QuizData3 quizdata3 = new QuizManager.QuizData3();
-
-                                string s2 = pkrd.rStr1def();
-                                string s3 = pkrd.rStr1def();
-                                string s4 = pkrd.rStr1def();
-                                string s5 = pkrd.rStr1def();
-                                string s6 = pkrd.rStr1def();
-                                string s7 = pkrd.rStr1def();
-
-                                qv("ServerEnter 수신 Kind: " + s1 + ", Content : " + s2 + ", ex1 : " + s3 + ", ex2 : " + s4 + ", ex3 : " + s5 + ", ex4 : " + s6 + ", Correct :" + s7);
-
-                                quizdata3.itKind = s1;
-                                quizdata3.itContent = s2;
-                                quizdata3.itEx1 = s3;
-                                quizdata3.itEx2 = s4;
-                                quizdata3.itEx3 = s5;
-                                quizdata3.itEx4 = s6;
-                                quizdata3.itCorrect = s7;
-
-                                mQuizManager.mQuizList3.Add(quizdata3);
-                                qv("ITQuiz dbList : " + mQuizManager.mQuizList3.Count);
+                                mQuizManager.mQuizList.Add(quizdata);
+                                qv("FourQuiz dbList : " + mQuizManager.mQuizList.Count);
                             }
                         }
                     }

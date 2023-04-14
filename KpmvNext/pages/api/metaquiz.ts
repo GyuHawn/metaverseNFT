@@ -11,95 +11,95 @@ async function DbConnect1(){
 }
 //==============================================================================================================================
 // OX퀴즈
-async function DbWrite(OXcontent:String, OXanswer:String, OXexplain:String, Kind:String){
+async function DbWrite(content:String, correct:String, explain:String, Kind:String){
   const clc1 = await DbConnect1();
   const data1 = {
-    OXcontent: OXcontent,
-    OXanswer: OXanswer,
-    OXexplain: OXexplain,
+    content: content,
+    correct: correct,
+    explain: explain,
     Kind: Kind,
   };
   const result = await clc1.insertOne(data1);
 }
 //4지선다형
-async function DbWrite2(Fcontent:String, Fcorrect:String, Fexp1:String, Fexp2:String, Fexp3:String, Fexp4:String, Kind:String){
+async function DbWrite2(content:String, correct:String, exp1:String, exp2:String, exp3:String, exp4:String, Kind:String){
   const clc1 = await DbConnect1();
   const data1 = {
-    Fcontent: Fcontent,
-    Fcorrect: Fcorrect,
-    Fexp1: Fexp1,
-    Fexp2: Fexp2,
-    Fexp3: Fexp3,
-    Fexp4: Fexp4,
+    content: content,
+    correct: correct,
+    exp1: exp1,
+    exp2: exp2,
+    exp3: exp3,
+    exp4: exp4,
     Kind: Kind,
   };
   const result = await clc1.insertOne(data1);
 }
 //it문제
-async function DbWrite3(ITcontent:String, ITcorrect:String, ITexp1:String, ITexp2:String, ITexp3:String, ITexp4:String, Kind:String){
+async function DbWrite3(content:String, correct:String, exp1:String, exp2:String, exp3:String, exp4:String, Kind:String){
   const clc1 = await DbConnect1();
   const data1 = {
-    ITcontent: ITcontent,
-    ITcorrect: ITcorrect,
-    ITexp1: ITexp1,
-    ITexp2: ITexp2,
-    ITexp3: ITexp3,
-    ITexp4: ITexp4,
+    content: content,
+    correct: correct,
+    exp1: exp1,
+    exp2: exp2,
+    exp3: exp3,
+    exp4: exp4,
     Kind: Kind,
   };
   const result = await clc1.insertOne(data1);
 }
 //==============================================================================================================================
 //읽기 OX
-async function DbRead1(OXcontent:String){
+async function DbRead1(content:String){
   const clc1 = await DbConnect1();
-  const data1 = await clc1.findOne({OXcontent:OXcontent});
+  const data1 = await clc1.findOne({content:content});
   return data1;
 }
 //읽기 4지선다
-async function DbRead2(Fcontent:String){
+async function DbRead2(content:String){
   const clc1 = await DbConnect1();
-  const data1 = await clc1.findOne({Fcontent:Fcontent});
+  const data1 = await clc1.findOne({content:content});
   return data1;
 }
 //읽기 it문제
-async function DbRead3(ITcontent:String){
+async function DbRead3(content:String){
   const clc1 = await DbConnect1();
-  const data1 = await clc1.findOne({ITcontent:ITcontent});
+  const data1 = await clc1.findOne({content:content});
   return data1;
 }
 
 //==============================================================================================================================
 //수정 OX
-async function DbUpdate1(OXcontent:String, OXanswer:String, OXexplain:String){
+async function DbUpdate1(content:String, correct:String, explain:String){
   const clc1 = await DbConnect1();
-  const result = await clc1.updateOne({OXcontent:OXcontent},{$set:{OXanswer, OXexplain}});
+  const result = await clc1.updateOne({content:content},{$set:{correct, explain}});
 }
 //수정 4지선다
-async function DbUpdate2(Fcontent:String, Fcorrect:String, Fexp1:String, Fexp2:String, Fexp3:String, Fexp4:String){
+async function DbUpdate2(content:String, correct:String, exp1:String, exp2:String, exp3:String, exp4:String){
   const clc1 = await DbConnect1();
-  const result = await clc1.updateOne({Fcontent:Fcontent},{$set:{Fcorrect, Fexp1, Fexp2, Fexp3, Fexp4 }});
+  const result = await clc1.updateOne({content:content},{$set:{correct, exp1, exp2, exp3, exp4 }});
 }
 //수정 it문제
-async function DbUpdate3(ITcontent:String, ITcorrect:String, ITexp1:String, ITexp2:String, ITexp3:String, ITexp4:String){
+async function DbUpdate3(content:String, correct:String, exp1:String, exp2:String, exp3:String, exp4:String){
   const clc1 = await DbConnect1();
-  const result = await clc1.updateOne({ITcontent:ITcontent},{$set:{ITcorrect, ITexp1, ITexp2, ITexp3, ITexp4 }});
+  const result = await clc1.updateOne({content:content},{$set:{correct, exp1, exp2, exp3, exp4 }});
 }
 //==============================================================================================================================
 //삭제 OX
-async function DbDelete1(OXcontent:String){
+async function DbDelete1(content:String){
   const clc1 = await DbConnect1();
-  const result= await clc1.deleteOne({OXcontent:OXcontent});
+  const result= await clc1.deleteOne({content:content});
 }
 //삭제 4지선다
-async function DbDelete2(Fcontent:String){
+async function DbDelete2(content:String){
   const clc1 = await DbConnect1();
-  const result= await clc1.deleteOne({Fcontent:Fcontent});
+  const result= await clc1.deleteOne({content:content});
 }
 //삭제 it문제
-async function DbDelete3(ITcontent:String){
+async function DbDelete3(content:String){
   const clc1 = await DbConnect1();
-  const result= await clc1.deleteOne({ITcontent:ITcontent});
+  const result= await clc1.deleteOne({content:content});
 }
 //==============================================================================================================================
 //전체 읽기
@@ -124,22 +124,22 @@ export default async (req: NextApiRequest, res: NextApiResponse)=>{
   }else if(read3){
     return res.send(await DbRead3(String(read3)));
   }else if(add){
-    await DbWrite(String(add),String(req.query.OXanswer), String(req.query.OXexplain), String(req.query.Kind));
+    await DbWrite(String(add),String(req.query.correct), String(req.query.explain), String(req.query.Kind));
     return res.send(await DbReadAll());
   }else if(add2){
-    await DbWrite2(String(add2), String(req.query.Fcorrect) ,String(req.query.Fexp1), String(req.query.Fexp2), String(req.query.Fexp3), String(req.query.Fexp4), String(req.query.Kind));
+    await DbWrite2(String(add2), String(req.query.correct) ,String(req.query.exp1), String(req.query.exp2), String(req.query.exp3), String(req.query.exp4), String(req.query.Kind));
     return res.send(await DbReadAll());
   }else if(add3){
-    await DbWrite3(String(add3), String(req.query.ITcorrect) ,String(req.query.ITexp1), String(req.query.ITexp2), String(req.query.ITexp3), String(req.query.ITexp4), String(req.query.Kind));
+    await DbWrite3(String(add3), String(req.query.correct) ,String(req.query.exp1), String(req.query.exp2), String(req.query.exp3), String(req.query.exp4), String(req.query.Kind));
     return res.send(await DbReadAll());
   }else if(update){
-    await DbUpdate1(String(update), String(req.query.OXanswer), String(req.query.OXexplain));
+    await DbUpdate1(String(update), String(req.query.correct), String(req.query.explain));
     return res.send(await DbReadAll());
   }else if(update2){
-    await DbUpdate2(String(update2), String(req.query.Fcorrect), String(req.query.Fexp1), String(req.query.Fexp2), String(req.query.Fexp3), String(req.query.Fexp4));
+    await DbUpdate2(String(update2), String(req.query.correct), String(req.query.exp1), String(req.query.exp2), String(req.query.exp3), String(req.query.exp4));
     return res.send(await DbReadAll());
   }else if(update3){
-    await DbUpdate3(String(update3), String(req.query.ITcorrect), String(req.query.ITexp1), String(req.query.ITexp2), String(req.query.ITexp3), String(req.query.ITexp4));
+    await DbUpdate3(String(update3), String(req.query.correct), String(req.query.exp1), String(req.query.exp2), String(req.query.exp3), String(req.query.exp4));
     return res.send(await DbReadAll());
   }else if(del){
     await DbDelete1(String(del));

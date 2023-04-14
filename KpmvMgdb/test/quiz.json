@@ -3,9 +3,9 @@
     "$oid": "64337d846c411fbeb735f7ea"
   },
   "Kind": "ox",
-  "answer": "O",
-  "content": "hello=안녕",
-  "explain": ""
+  "answer": "X",
+  "content": "아라비아 숫자 1부터 100사이에는 9라는 숫자가 모두 19개 들어 있다.",
+  "explain": "20개, 99는 두 개입니다."
 },{
   "_id": {
     "$oid": "64337daf6c411fbeb735f7eb"

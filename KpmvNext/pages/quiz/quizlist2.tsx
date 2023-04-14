@@ -30,20 +30,20 @@ const Quizlist2 = () => {
         <>
             <Quiz2/>
             <Table striped bordered hover className={"mt-3"}>
-                {data?.filter((e: { Kind: string }) => e.Kind === "four").map((e: { Fcontent: string, Fcorrect: String , Fexp1: String, Fexp2: String, Fexp3: String, Fexp4: String}) => {
+                {data?.filter((e: { Kind: string }) => e.Kind === "four").map((e: { content: string, correct: String , exp1: String, exp2: String, exp3: String, exp4: String}) => {
                     return <>
                         <tr>
                             <th>퀴즈 내용:</th>
-                            <th>{e.Fcontent}</th>
+                            <th>{e.content}</th>
                             <th> 보기 :</th>
-                            <th>{"1번:" + e.Fexp1 + ", 2번:"+ e.Fexp2+ ", 3번:" + e.Fexp3+ ", 4번:" + e.Fexp4}</th>
+                            <th>{"1번:" + e.exp1 + ", 2번:"+ e.exp2+ ", 3번:" + e.exp3+ ", 4번:" + e.exp4}</th>
                             <th> 정답!! :</th>
-                            <th>{e.Fcorrect}</th>
+                            <th>{e.correct}</th>
                             <tr>
                                 <Stack direction="horizontal" gap={2}>
                                     <Button onClick={() => setSmShow(true)}>수정</Button>
                                     <Button onClick={() => {
-                                        Axios.get("http://localhost:3000/api/metaquiz?del2=" + e.Fcontent);
+                                        Axios.get("http://localhost:3000/api/metaquiz?del2=" + e.content);
                                         alert("삭제!!");
                                     }}>삭제</Button>
                                 </Stack>
@@ -92,7 +92,7 @@ const Quizlist2 = () => {
                 <Modal.Footer>
                     <Button onClick={handleClose} variant="secondary">Close</Button>
                     <Button variant="primary" onClick={() => {
-                        Axios.get("http://localhost:3000/api/metaquiz?update2=" + ipt1 + "&Fexp1="+ipt2 + "&Fexp2="+ipt3 + "&Fexp3="+ipt4 + "&Fexp4="+ipt5 + "&Fcorrect=" + ipt6).then(() => {
+                        Axios.get("http://localhost:3000/api/metaquiz?update2=" + ipt1 + "&exp1="+ipt2 + "&exp2="+ipt3 + "&exp3="+ipt4 + "&exp4="+ipt5 + "&correct=" + ipt6).then(() => {
                             setSmShow(false);
                         });
                     }}>Save changes</Button>

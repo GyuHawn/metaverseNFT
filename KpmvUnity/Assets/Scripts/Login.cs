@@ -85,14 +85,15 @@ public class Login : MonoBehaviour
         {
             if (enteredId == user.mUserid && enteredPwd == user.mPassword)
             {
-                if(quizKind == "quiz")
+                if (quizKind == "ox")
                 {
                     SceneManager.LoadScene("Scenes/Quiz1");
                 }
-                else if(quizKind == "quiz2")
+                else if (quizKind == "four")
                 {
                     SceneManager.LoadScene("Scenes/Quiz2");
-                }else if(quizKind == "quiz3")
+                }
+                else if (quizKind == "it")
                 {
                     SceneManager.LoadScene("Scenes/Quiz3");
                 }

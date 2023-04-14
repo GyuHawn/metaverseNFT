@@ -18,9 +18,9 @@ const QuizChoice =()=>{
     const emptyWinners = data.filter((e: { winner: string}) => !e.winner);
     return (
         <div>
-        {emptyWinners?.map((e: { game: string}) => {
+        {emptyWinners?.map((e: { game: string, quiz: string}) => {
             return <>
-                <h1>현재 퀴즈 대회 : {e.game}</h1>
+                <h1>현재 퀴즈 대회 : {e.game}({e.quiz})</h1>
             </>
         })}
         </div>

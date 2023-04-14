@@ -11,8 +11,6 @@ namespace Nc1Ex1Server
         {
             public List<int> mCs = new List<int>();
             public NetworkTextTestExample mNtte = new NetworkTextTestExample();
-            public NetworkTextTestExample mNttep = new NetworkTextTestExample();
-            public NetworkTextTestExample mNtteG = new NetworkTextTestExample();
             public NccpcDll.NccpcMemmgr2Mgr mMm;
 
             public Sv()
@@ -24,8 +22,8 @@ namespace Nc1Ex1Server
             public bool create()
             {
                 mNtte.Db();
-                mNttep.Dbp();
-                mNtteG.QuizName();
+                mNtte.Dbp();
+                mNtte.QuizName();
 
                 if (!mMm.create()) { return false; }
 
@@ -48,8 +46,8 @@ namespace Nc1Ex1Server
             {
                 qv("Dbg NwEnter ct:" + cti + " Peer:" + peer);
                 mCs.Add(cti);
-                mNtteG.QuizNameSend(this, cti);
-                mNttep.PlayerDataSend(this, cti);
+                mNtte.QuizNameSend(this, cti);
+                mNtte.PlayerDataSend(this, cti);
                 mNtte.QuizDataSend(this, cti);
             }
 

@@ -57,7 +57,7 @@ export default function Quiz(){
                     <Modal.Footer>
                         <Button type="button" className='btn btn-secondary' data-bs-dismiss="modal" onClick={handleClose}>Close</Button>
                         <Button className='btn btn-primary' onClick={(e)=>{
-                            Axios.get("http://localhost:3000/api/metaquiz?add="+ipt1+"&OXanswer="+ipt2 + "&OXexplain=" +ipt3 + "&Kind=" + kind).then(()=>{setSmShow3(false);});}}>Save</Button>
+                            Axios.get("http://localhost:3000/api/metaquiz?add="+ipt1+"&correct="+ipt2 + "&explain=" +ipt3 + "&Kind=" + kind).then(()=>{setSmShow3(false);});}}>Save</Button>
                     </Modal.Footer>
                 </Modal>
             </div>

@@ -26,20 +26,20 @@ const Quizlist1 = () => {
         <>
             <Quiz/>
             <Table striped bordered hover className={"mt-3"}>
-                {data?.filter((e: { Kind: string }) => e.Kind === "ox").map((e: { OXcontent: string, OXanswer: String , OXexplain: String}) => {
+                {data?.filter((e: { Kind: string }) => e.Kind === "ox").map((e: { content: string, correct: String , explain: String}) => {
                     return <>
                         <tr>
                             <th>퀴즈 내용:</th>
-                            <th>{e.OXcontent}</th>
+                            <th>{e.content}</th>
                             <th> 정답!! :</th>
-                            <th>{e.OXanswer}</th>
+                            <th>{e.correct}</th>
                             <th>오답 설명:</th>
-                            <th>{e.OXexplain}</th>
+                            <th>{e.explain}</th>
                             <tr>
                                 <Stack direction="horizontal" gap={2}>
                                     <Button onClick={() => setSmShow(true)}>수정</Button>
                                     <Button onClick={() => {
-                                        Axios.get("http://localhost:3000/api/metaquiz?del=" + e.OXcontent);
+                                        Axios.get("http://localhost:3000/api/metaquiz?del=" + e.content);
                                         alert("삭제완료!");
                                     }}>삭제</Button>
                                 </Stack>
@@ -81,7 +81,7 @@ const Quizlist1 = () => {
                 <Modal.Footer>
                     <Button onClick={handleClose} variant="secondary">Close</Button>
                     <Button variant="primary" onClick={() => {
-                        Axios.get("http://localhost:3000/api/metaquiz?update=" + ipt1 + "&OXanswer=" + ipt2 + "&OXexplain=" + ipt3).then(() => {
+                        Axios.get("http://localhost:3000/api/metaquiz?update=" + ipt1 + "&correct=" + ipt2 + "&explain=" + ipt3).then(() => {
                             setSmShow(false);
                             alert("수정완료!");
                         });

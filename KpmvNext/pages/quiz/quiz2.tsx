@@ -64,7 +64,7 @@ export default function Quiz2(){
                     <Modal.Footer>
                     <Button type="button" className='btn btn-secondary' data-bs-dismiss="modal" onClick={handleClose}>Close</Button>
                         <Button className='btn btn-primary' onClick={(e)=>{
-                            Axios.get("http://localhost:3000/api/metaquiz?add2="+ipt1+"&Fexp1="+ipt2 + "&Fexp2="+ipt3 + "&Fexp3="+ipt4 + "&Fexp4="+ipt5 + "&Fcorrect=" + ipt6 + "&Kind=" + kind).then(()=>{setSmShow3(false);});
+                            Axios.get("http://localhost:3000/api/metaquiz?add2="+ipt1+"&exp1="+ipt2 + "&exp2="+ipt3 + "&exp3="+ipt4 + "&exp4="+ipt5 + "&correct=" + ipt6 + "&Kind=" + kind).then(()=>{setSmShow3(false);});
                         setSmShow3(false);
                         }}>Save</Button>
                     </Modal.Footer>

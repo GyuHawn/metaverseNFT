@@ -7,6 +7,8 @@ using TMPro;
 public class QuizStart : MonoBehaviour
 {
     public Canvas canvas;
+    public Canvas canvas2;
+
     public MainClient mMainClient;
 
     public TextMeshProUGUI mQuizText;
@@ -43,14 +45,15 @@ public class QuizStart : MonoBehaviour
 
                 if (differ == TimeSpan.Zero)
                 {
+                    canvas2.gameObject.SetActive(false);
                     canvas.gameObject.SetActive(true);
                     mMainClient.mQuizManager.mRemainCompetitionTime = 5.0f;
                     textOn = true;
                 }
                 else if(differ > TimeSpan.Zero)
                 {
-                    canvas.gameObject.SetActive(true);
-                    if(differ.TotalMinutes == 10)
+                    canvas2.gameObject.SetActive(true);
+                    if (differ.TotalMinutes == 10)
                     {
                         mTimeText.text = "10분 남았습니다!!!";
                     }
@@ -60,7 +63,8 @@ public class QuizStart : MonoBehaviour
                     }
                     else
                     {
-                        mTimeText.text = quizName + System.Environment.NewLine + " 선택한 Quiz : " + mMainClient.mQuizManager.quizType() +System.Environment.NewLine + " Quiz대회 남은시간 : " + mMainClient.mQuizManager.leftTime();
+                        mTimeText.text = quizName + System.Environment.NewLine + " 선택한 Quiz : " + mMainClient.mQuizManager.quizType() +
+                            System.Environment.NewLine + " Quiz대회 남은시간 : " + mMainClient.mQuizManager.leftTime();
                     }
                 }
             }
