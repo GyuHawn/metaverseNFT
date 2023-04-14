@@ -31,6 +31,8 @@ public class PlayerMotion : MonoBehaviour
 
     float time;
 
+    public bool mbAlive;
+
     private bool GetKey(KeyCode code)
     {
         if (LcIPT.GetThis().isOnline())
@@ -173,9 +175,9 @@ public class PlayerMotion : MonoBehaviour
         //°øÅë
         if (collision.gameObject.CompareTag("Win"))
         {
-            if (save == false)
+            if (save == false && mbAlive == true)
             {
-                win.isFollowing = true;
+                win.mWinner = this;
                 Save();
             }
         }
@@ -233,5 +235,10 @@ public class PlayerMotion : MonoBehaviour
     {
         transform.gameObject.tag = "Player";
         pName.playerNameText.color = Color.black;
+    }
+
+    public void Alive()
+    {
+        mbAlive = true;
     }
 }

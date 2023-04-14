@@ -20,13 +20,11 @@ public class LcIPT/* : MonoBehaviour*/
     public GameObject inputField;
     public TMP_FontAsset m_Font;
 
-
     public const int maxP = 3;
 
     Vector3[] positions = {
-        new Vector3(2, 40, 15), new Vector3(-2, 40, 15), new Vector3(2, 40, 15), new Vector3(-2, 40, 13)
+        new Vector3(-3, 30, -6), new Vector3(16, 30, -6), new Vector3(9, 30, -11), new Vector3(8, 32, -1)
     };
-    //  Color[] colors = { Color.blue, Color.red, C };
     Vector3[] positions2 =
     {
         new Vector3(-21, -1, 6), new Vector3(-27, -1, 6), new Vector3(-14, -1, 6), new Vector3(-31, -1, 6)
@@ -37,7 +35,7 @@ public class LcIPT/* : MonoBehaviour*/
         new Vector3(-21, -1, 6), new Vector3(-27, -1, 6), new Vector3(-14, -1, 6), new Vector3(-31, -1, 6)
     };
 
-    public GameObject[] mPlayers;
+    public List<PlayerMotion> mPlayers;
 
     private int pIndex = -1;
 
@@ -49,7 +47,7 @@ public class LcIPT/* : MonoBehaviour*/
         if (pIndex >= 0)
         {
             InstantiatePlayer(pIndex, MainClient.currentUser==null?"":MainClient.currentUser.mColor);
-            go = mPlayers[pIndex];
+            go = mPlayers[pIndex].gameObject;
             Camera.GetComponent<camera>().SetTarget(go);
 
             GameObject t = new GameObject("myname");
@@ -107,7 +105,9 @@ public class LcIPT/* : MonoBehaviour*/
 
     public void Start()
     {
-        mPlayers = new GameObject[maxP];
+        mPlayers = new List<PlayerMotion>();
+        for (int i = 0; i < maxP; i++) { mPlayers.Add(null); }
+
         if (go)
         {
             GameObject t = new GameObject("myname");
@@ -186,16 +186,18 @@ public class LcIPT/* : MonoBehaviour*/
         }
         if (ipf < 0) { return; }
         myPF = playerPF[ipf];
-        GameObject player = new GameObject();
-        if(scene.name == "Quiz1")
+        PlayerMotion player = null;
+        if (scene.name == "Quiz1")
         {
-            player = GameObject.Instantiate(myPF, positions[i], Quaternion.identity);
-        }else if(scene.name == "Quiz2")
+            player = GameObject.Instantiate(myPF, positions[i], Quaternion.identity).GetComponent<PlayerMotion>();
+        }
+        else if(scene.name == "Quiz2")
         {
-            player = GameObject.Instantiate(myPF, positions2[i], Quaternion.identity);
-        }else if(scene.name == "Quiz3")
+            player = GameObject.Instantiate(myPF, positions2[i], Quaternion.identity).GetComponent<PlayerMotion>();
+        }
+        else if(scene.name == "Quiz3")
         {
-            player = GameObject.Instantiate(myPF, positions3[i], Quaternion.identity);
+            player = GameObject.Instantiate(myPF, positions3[i], Quaternion.identity).GetComponent<PlayerMotion>();
         }
             mPlayers[i] = player;
 
@@ -273,7 +275,7 @@ public class LcIPT/* : MonoBehaviour*/
         {
             if (inputField.GetComponent<UnityEngine.UI.InputField>().isFocused) { return; }
         }
-        float spd = 10.0f * Time.deltaTime;
+        float spd = 8.0f * Time.deltaTime;
 
         if (go)
         {

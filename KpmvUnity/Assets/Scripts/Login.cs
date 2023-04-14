@@ -85,6 +85,8 @@ public class Login : MonoBehaviour
         {
             if (enteredId == user.mUserid && enteredPwd == user.mPassword)
             {
+                LcIPT.GetThis().mPlayers = new List<PlayerMotion>();
+                for (int i = 0; i < LcIPT.maxP; i++) { LcIPT.GetThis().mPlayers.Add(null); }
                 if (quizKind == "ox")
                 {
                     SceneManager.LoadScene("Scenes/Quiz1");

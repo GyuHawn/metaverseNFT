@@ -54,6 +54,14 @@ public class Quiz : MonoBehaviour
                     break;
             }
 
+            foreach (var player in LcIPT.GetThis().mPlayers)
+            {
+                if (player != null)
+                {
+                    player.Alive();
+                }
+            }
+
             mQuizText.text = qzmsg1 + System.Environment.NewLine + "5초 후 퀴즈가 시작됩니다" + System.Environment.NewLine +
             "문제 종료시 중앙에 있어도 탈락 처리 됩니다" + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.mRemainCompetitionTime);
 
@@ -152,8 +160,8 @@ public class Quiz : MonoBehaviour
                             ClearFloor();
 
                             LcIPT.GetThis().go.GetComponent<PlayerMotion>().save = false;
-                            mWinner.GetComponent<Winner>().isFollowing = false;
-                            mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(8, 36f, 9);
+                            mWinner.GetComponent<Winner>().mWinner = null;
+                            mWinner.GetComponent<Winner>().mTrophy.transform.position = new Vector3(8, 36f, 9);
                         }
                     }else if(mMainClient.mQuizManager.getQuizType() == "four" || mMainClient.mQuizManager.getQuizType() == "it")
                     {
@@ -171,8 +179,8 @@ public class Quiz : MonoBehaviour
                             mQuizCanvas.gameObject.SetActive(false);
 
                             LcIPT.GetThis().go.GetComponent<PlayerMotion>().save = false;
-                            mWinner.GetComponent<Winner>().isFollowing = false;
-                            mWinner.GetComponent<Winner>().winner.transform.position = new Vector3(-23, 1f, -7);
+                            mWinner.GetComponent<Winner>().mWinner = null;
+                            mWinner.GetComponent<Winner>().mTrophy.transform.position = new Vector3(-23, 1f, -7);
                             yield return new WaitForSeconds(5f);
                             mFailWall.SetActive(false);
                         }

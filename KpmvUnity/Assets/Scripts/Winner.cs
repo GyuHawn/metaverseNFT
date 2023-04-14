@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Winner : MonoBehaviour
 {
-    public GameObject winner;
+    public GameObject mTrophy;
+    public PlayerMotion mWinner;
 
-    //public Transform target;
     public LcIPT lcipt;
-    public bool isFollowing;
+
 
     private void Awake()
     {
@@ -17,9 +17,9 @@ public class Winner : MonoBehaviour
 
     void Update()
     {
-        if (isFollowing)
+        if (mWinner)
         {
-            winner.transform.position = new Vector3(lcipt.go.transform.position.x, lcipt.go.transform.position.y + 2.5f, lcipt.go.transform.position.z);
+            mTrophy.transform.position = new Vector3(mWinner.transform.position.x, mWinner.transform.position.y + 2.5f, mWinner.transform.position.z);
         }
     }
 

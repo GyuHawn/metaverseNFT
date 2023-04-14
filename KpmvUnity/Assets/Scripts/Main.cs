@@ -7,7 +7,7 @@ public class Main : MonoBehaviour
 {
     public GameObject splayer;
     public GameObject[] mPlayerPF;
-    public GameObject[] mPlayer;
+    public List<PlayerMotion> mPlayers;
     public GameObject go;
     public TMP_FontAsset m_Font;
     public GameObject Camera;
@@ -18,7 +18,6 @@ public class Main : MonoBehaviour
         LcIPT.GetThis().splayer = splayer;
         go = LcIPT.GetThis().splayer;
         LcIPT.GetThis().playerPF = mPlayerPF;
-        LcIPT.GetThis().mPlayers = mPlayer;
         LcIPT.GetThis().m_Font = m_Font;
         LcIPT.GetThis().Camera = Camera;
         LcIPT.GetThis().inputField = inputField;
@@ -32,6 +31,7 @@ public class Main : MonoBehaviour
     void Update()
     {
         LcIPT.GetThis().Update();
+        mPlayers = LcIPT.GetThis().mPlayers;
     }
 
     public void Connect()
@@ -47,6 +47,8 @@ public class Main : MonoBehaviour
     public void NextScenes()
     {
     Scene scene = SceneManager.GetActiveScene();
+        LcIPT.GetThis().mPlayers = new List<PlayerMotion>();
+        for (int i = 0; i < LcIPT.maxP; i++) { mPlayers.Add(null); }
         if (scene.name == "Quiz1")
         {
             SceneManager.LoadScene("Scenes/Quiz2");
