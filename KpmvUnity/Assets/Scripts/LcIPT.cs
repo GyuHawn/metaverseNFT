@@ -177,13 +177,22 @@ public class LcIPT/* : MonoBehaviour*/
         Scene scene = SceneManager.GetActiveScene();
         GameObject myPF;
         int ipf = -1;
+        Debug.Log("color : " + color);
+        Debug.Log("scene.name : " + scene.name);
+        //Debug.Log("GameObject.Instantiate(myPF, positions[i], Quaternion.identity)!=null).ToString() :" + (GameObject.Instantiate(myPF, positions[i], Quaternion.identity)!=null).ToString());
 
         switch (color)
         {
             case "blue":  ipf = 0;    break;
             case "white": ipf = 1;    break;
             case "red":  ipf = 2;    break;
+            default:
+                ipf = 0;
+                Debug.LogError("log에러 값 잘못입력!!!" + ipf);
+                break;
+            
         }
+
         if (ipf < 0) { return; }
         myPF = playerPF[ipf];
         PlayerMotion player = null;
@@ -240,6 +249,8 @@ public class LcIPT/* : MonoBehaviour*/
             {
                 pkw.wStr1(MainClient.currentUser == null ? "" : MainClient.currentUser.mUserName);
                 pkw.wStr1(MainClient.currentUser == null ? "" : MainClient.currentUser.mColor);
+                Debug.Log(" MainClient.currentUser.mUserName : " + MainClient.currentUser.mUserName);
+                Debug.Log(" MainClient.currentUser.mColor : " + MainClient.currentUser.mColor);
             }
             ct.send(pkw);
         }
@@ -275,7 +286,7 @@ public class LcIPT/* : MonoBehaviour*/
         {
             if (inputField.GetComponent<UnityEngine.UI.InputField>().isFocused) { return; }
         }
-        float spd = 8.0f * Time.deltaTime;
+        float spd = 5.0f * Time.deltaTime;
 
         if (go)
         {

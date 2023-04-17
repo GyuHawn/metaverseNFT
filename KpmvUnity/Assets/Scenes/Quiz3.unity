@@ -1664,7 +1664,7 @@ MonoBehaviour:
   - {fileID: 7077295617254742233, guid: 5bf579fe1efcdbf4e90243e92fc79e5c, type: 3}
   - {fileID: 8708360507182625104, guid: 813488125ad781c4ca63a4ecfb88f52b, type: 3}
   - {fileID: 3736731918500884606, guid: be423684f9ae0e5408e5e66af9a1937f, type: 3}
-  mPlayer: []
+  mPlayers: []
   go: {fileID: 0}
   m_Font: {fileID: 11400000, guid: 704d1b0b055123a40bbd2f326824acc4, type: 2}
   Camera: {fileID: 963194225}
@@ -3836,8 +3836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62e663fd4da888a4aad92846b90f44bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winner: {fileID: 1150890336}
-  isFollowing: 0
+  mTrophy: {fileID: 1150890336}
+  mWinner: {fileID: 0}
 --- !u!136 &1150890338
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4944,7 +4944,7 @@ GameObject:
   - component: {fileID: 1568175522}
   - component: {fileID: 1568175521}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: quizstarttext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4987,6 +4987,7 @@ MonoBehaviour:
   mQuizText: {fileID: 1568175522}
   mTimeText: {fileID: 1565847178}
   textOn: 0
+  mbStartsend: 0
 --- !u!114 &1568175522
 MonoBehaviour:
   m_ObjectHideFlags: 0

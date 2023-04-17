@@ -3831,7 +3831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62e663fd4da888a4aad92846b90f44bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mTrophy: {fileID: 0}
+  mTrophy: {fileID: 1150890336}
   mWinner: {fileID: 0}
 --- !u!136 &1150890338
 CapsuleCollider:
@@ -5150,7 +5150,7 @@ GameObject:
   - component: {fileID: 1568175522}
   - component: {fileID: 1568175521}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: quizstarttext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5193,6 +5193,7 @@ MonoBehaviour:
   mQuizText: {fileID: 1568175522}
   mTimeText: {fileID: 1470268833}
   textOn: 0
+  mbStartsend: 0
 --- !u!114 &1568175522
 MonoBehaviour:
   m_ObjectHideFlags: 0

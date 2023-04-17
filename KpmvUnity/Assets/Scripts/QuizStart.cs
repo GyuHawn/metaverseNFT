@@ -20,7 +20,7 @@ public class QuizStart : MonoBehaviour
     {
         mMainClient = LcIPT.GetThis().mMc;
     }
-    
+    public bool mbStartsend;
     private void Update()
     {
         if (!textOn)
@@ -45,10 +45,15 @@ public class QuizStart : MonoBehaviour
 
                 if (differ == TimeSpan.Zero)
                 {
-                    canvas2.gameObject.SetActive(false);
-                    canvas.gameObject.SetActive(true);
-                    mMainClient.mQuizManager.mRemainCompetitionTime = 5.0f;
-                    textOn = true;
+                    if (!mbStartsend) //한번만 보내기위해 임시로 사용
+                    {
+                        mbStartsend = true;
+                        using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(99))
+                        {
+                            pkw.wStr1("test");
+                            mMainClient.mCt.send(pkw);
+                        }
+                    }
                 }
                 else if(differ > TimeSpan.Zero)
                 {
