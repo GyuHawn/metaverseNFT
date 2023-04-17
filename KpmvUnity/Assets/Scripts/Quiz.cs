@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Quiz : MonoBehaviour
 {
+    Scene scene = SceneManager.GetActiveScene();
     public TextMeshProUGUI mQuizText;
     public Canvas mQuizCanvas;
     public MainClient mMainClient;
@@ -26,6 +27,10 @@ public class Quiz : MonoBehaviour
 
     public GameObject mOobj;
     public GameObject mXobj;
+
+    public GameObject WinParticle;
+    public GameObject OAnswerParticle;
+    public GameObject XAnswerParticle;
 
     void Awake()
     {
@@ -162,6 +167,12 @@ public class Quiz : MonoBehaviour
                             LcIPT.GetThis().go.GetComponent<PlayerMotion>().save = false;
                             mWinner.GetComponent<Winner>().mWinner = null;
                             mWinner.GetComponent<Winner>().mTrophy.transform.position = new Vector3(8, 36f, 9);
+                            if (scene.name == "Quiz1")
+                            {
+                                WinParticle.gameObject.SetActive(true);
+                                yield return new WaitForSeconds(10f);
+                                WinParticle.gameObject.SetActive(false);
+                            }
                         }
                     }else if(mMainClient.mQuizManager.getQuizType() == "four" || mMainClient.mQuizManager.getQuizType() == "it")
                     {
@@ -183,6 +194,10 @@ public class Quiz : MonoBehaviour
                             mWinner.GetComponent<Winner>().mTrophy.transform.position = new Vector3(-23, 1f, -7);
                             yield return new WaitForSeconds(5f);
                             mFailWall.SetActive(false);
+                            if (WinParticle.gameObject.activeSelf == true)
+                            {
+                                WinParticle.gameObject.SetActive(false);
+                            }
                         }
                     }
                 }
@@ -199,6 +214,13 @@ public class Quiz : MonoBehaviour
             //문제 정답이 O일 때 X 발판을 Die로 변경하고, X일 때 O 발판을 Die로 변경
             if (mMainClient.mQuizManager.checkQuizAnswer("O"))
             {
+                StartCoroutine(OParticle(6f));
+                IEnumerator OParticle(float delay)
+                {
+                    OAnswerParticle.gameObject.SetActive(true);
+                    yield return new WaitForSeconds(delay);
+                    OAnswerParticle.gameObject.SetActive(false);
+                }
                 mTerrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Quiz";
                 mTerrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Die";
                 mTerrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Die";
@@ -207,6 +229,13 @@ public class Quiz : MonoBehaviour
             }
             else if (mMainClient.mQuizManager.checkQuizAnswer("X"))
             {
+                StartCoroutine(XParticle(6f));
+                IEnumerator XParticle(float delay)
+                {
+                    XAnswerParticle.gameObject.SetActive(true);
+                    yield return new WaitForSeconds(delay);
+                    XAnswerParticle.gameObject.SetActive(false);
+                }
                 mTerrain.GetComponent<TerrainGenerator>().mOFloor.gameObject.tag = "Die";
                 mTerrain.GetComponent<TerrainGenerator>().mCenterFloor.gameObject.tag = "Die";
                 mTerrain.GetComponent<TerrainGenerator>().mXFloor.gameObject.tag = "Quiz";
