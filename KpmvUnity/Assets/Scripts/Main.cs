@@ -7,7 +7,7 @@ public class Main : MonoBehaviour
 {
     public GameObject splayer;
     public GameObject[] mPlayerPF;
-    public List<PlayerMotion> mPlayers;
+    public GameObject[] mPlayers;
     public GameObject go;
     public TMP_FontAsset m_Font;
     public GameObject Camera;
@@ -47,11 +47,11 @@ public class Main : MonoBehaviour
     public void NextScenes()
     {
     Scene scene = SceneManager.GetActiveScene();
-        LcIPT.GetThis().mPlayers = new List<PlayerMotion>();
-        for (int i = 0; i < LcIPT.maxP; i++) { mPlayers.Add(null); }
+        //LcIPT.GetThis().mPlayers = new List<PlayerMotion>();
+        //for (int i = 0; i < LcIPT.maxP; i++) { mPlayers.Add(null); }
         if (scene.name == "Quiz1")
         {
-            SceneManager.LoadScene("Scenes/Quiz2");
+            SceneManager.LoadScene("Scenes/Quiz2");   
         }
         else if (scene.name == "Quiz2")
         {
@@ -61,5 +61,7 @@ public class Main : MonoBehaviour
         {
             SceneManager.LoadScene("Scenes/Quiz1");
         }
+        LcIPT.GetThis().DisConnect();
+        LcIPT.GetThis().go =  LcIPT.GetThis().splayer;
     }
 }

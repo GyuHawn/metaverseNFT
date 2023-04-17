@@ -58,7 +58,7 @@ public class Quiz : MonoBehaviour
             {
                 if (player != null)
                 {
-                    player.Alive();
+                    player.GetComponent<PlayerMotion>().Alive();
                 }
             }
 

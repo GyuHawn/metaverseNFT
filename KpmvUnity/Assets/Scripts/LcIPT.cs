@@ -35,7 +35,7 @@ public class LcIPT/* : MonoBehaviour*/
         new Vector3(-21, -1, 6), new Vector3(-27, -1, 6), new Vector3(-14, -1, 6), new Vector3(-31, -1, 6)
     };
 
-    public List<PlayerMotion> mPlayers;
+    public GameObject[] mPlayers;
 
     private int pIndex = -1;
 
@@ -105,8 +105,8 @@ public class LcIPT/* : MonoBehaviour*/
 
     public void Start()
     {
-        mPlayers = new List<PlayerMotion>();
-        for (int i = 0; i < maxP; i++) { mPlayers.Add(null); }
+        mPlayers = new GameObject[maxP];
+        //for (int i = 0; i < maxP; i++) { mPlayers.Add(null); }
 
         if (go)
         {
@@ -186,20 +186,20 @@ public class LcIPT/* : MonoBehaviour*/
         }
         if (ipf < 0) { return; }
         myPF = playerPF[ipf];
-        PlayerMotion player = null;
+        GameObject player = null;
         if (scene.name == "Quiz1")
         {
-            player = GameObject.Instantiate(myPF, positions[i], Quaternion.identity).GetComponent<PlayerMotion>();
+            player = GameObject.Instantiate(myPF, positions[i], Quaternion.identity);
         }
         else if(scene.name == "Quiz2")
         {
-            player = GameObject.Instantiate(myPF, positions2[i], Quaternion.identity).GetComponent<PlayerMotion>();
+            player = GameObject.Instantiate(myPF, positions2[i], Quaternion.identity);
         }
         else if(scene.name == "Quiz3")
         {
-            player = GameObject.Instantiate(myPF, positions3[i], Quaternion.identity).GetComponent<PlayerMotion>();
+            player = GameObject.Instantiate(myPF, positions3[i], Quaternion.identity);
         }
-            mPlayers[i] = player;
+        mPlayers[i] = player;
 
     }
     public void moveSend(JcCtUnity1.JcCtUnity1 ct, GameObject obj, int code, float plusx, float plusy, float plusz)
