@@ -38,8 +38,8 @@ public class QuizManager //: MonoBehaviour
 
     // - 임시1 -
     public List<byte> mRdBytes = new List<byte>();
-    public int mRdCur = 0;
-    public int rdNext() { return mRdBytes[mRdCur++ % mRdBytes.Count]; }
+    public uint mRdCur = 0;
+    public int rdNext() { return mRdBytes[(int)(mRdCur++ % mRdBytes.Count)]; }
     // - 임시1 -
 
 
