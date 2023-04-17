@@ -88,12 +88,15 @@ public class MultiClient/* : MonoBehaviour*/
                             name = pkrd.rStr1def();
                             color = pkrd.rStr1def();
                         }
+                        Debug.Log("code + name + color : " + code + " " + name + " "+ color);
                         if (pidx >= 0 )
                         {
                             Debug.Log("server 수신 pidx, code: " + pidx + " , "+code);
                             if (LcIPT.GetThis().mPlayers[pidx] == null)
                             {
                                 LcIPT.GetThis().InstantiatePlayer(pidx,color);
+                                Debug.Log("서버 수신 pidx : " + pidx); 
+                                Debug.Log("LcIPT.GetThis().mPlayers[pidx] :" + (LcIPT.GetThis().mPlayers[pidx] != null).ToString());
                                 GameObject t = new GameObject("myname");
                                 t.transform.parent = LcIPT.GetThis().mPlayers[pidx].transform;
                                 t.transform.localPosition = new Vector3(0f, 8f, 0f);

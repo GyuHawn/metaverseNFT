@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Quiz : MonoBehaviour
 {
-    Scene scene = SceneManager.GetActiveScene();
+    Scene scene;
     public TextMeshProUGUI mQuizText;
     public Canvas mQuizCanvas;
     public MainClient mMainClient;
@@ -34,6 +34,7 @@ public class Quiz : MonoBehaviour
 
     void Awake()
     {
+        scene = SceneManager.GetActiveScene();
         mMainClient = LcIPT.GetThis().mMc;
         mCube = GameObject.FindObjectOfType<Cube>();
         mTerrain = GameObject.Find("Terrain");

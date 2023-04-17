@@ -89,10 +89,26 @@ public class MainClient/* : MonoBehaviour*/
         protected override void onDisconnect()
         { qv("Dbg on disconnect"); }
 
+        public bool mbQuizStartrecv;
         protected override bool onRecvTake(Jc1Dn2_0.PkReader1 pkrd)
         {
             switch (pkrd.getPkt())
             {
+                case 99:
+                    {
+                        if (!mbQuizStartrecv) //주의! 임시로 한번만 !!
+                        {
+                            mbQuizStartrecv = true;
+                            var s1 = pkrd.rStr1def();
+                            qv("게임시작 : " + s1);
+                            var qs = GameObject.Find("quizstarttext").GetComponent<QuizStart>();
+                            qs.canvas2.gameObject.SetActive(false);
+                            qs.canvas.gameObject.SetActive(true);
+                            qs.mMainClient.mQuizManager.mRemainCompetitionTime = 5.0f;
+                            qs.textOn = true;
+                        }
+                    }
+                    break;
                 case 100: 
                     {
                         var tCnt = pkrd.rInt32s(); //전체퀴즈 개수
