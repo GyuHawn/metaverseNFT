@@ -35,6 +35,14 @@ public class QuizManager //: MonoBehaviour
 
     public List<QuizData> mQuizList = new List<QuizData>();
 
+
+    // - 임시1 -
+    public List<byte> mRdBytes = new List<byte>();
+    public int mRdCur = 0;
+    public int rdNext() { return mRdBytes[mRdCur++ % mRdBytes.Count]; }
+    // - 임시1 -
+
+
     public string leftTime() //게임 시작전 남은시간 구할때사용
     {
         string quizStart = "";

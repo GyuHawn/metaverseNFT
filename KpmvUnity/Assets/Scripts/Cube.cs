@@ -9,7 +9,7 @@ public class Cube : MonoBehaviour
     private bool isCube = false;
     private Vector3[] mExArray = new Vector3[] { new Vector3(-32, -1.3f, -8), new Vector3(-14, -1.3f, -8), new Vector3(-32, -1.3f, -13), new Vector3(-14, -1.3f, -13) };
     //이동위치
-    public void MoveCubes()
+    public void MoveCubes(QuizManager qm)
     {
         if (cubes != null && !isCube)
         {
@@ -18,6 +18,7 @@ public class Cube : MonoBehaviour
             //이동위치 섞기
             for (int i = mExArray.Length - 1; i > 0; i--)
             {
+                //int j = qm.rdNext();
                 int j = Random.Range(0, i + 1);
                 Vector3 temp = mExArray[i];
                 mExArray[i] = mExArray[j];

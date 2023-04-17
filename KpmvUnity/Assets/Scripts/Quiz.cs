@@ -96,7 +96,7 @@ public class Quiz : MonoBehaviour
             }
             else if (mMainClient.mQuizManager.getQuizType() == "four" || mMainClient.mQuizManager.getQuizType() == "it") //4지선다형
             {
-                mCube.MoveCubes();
+                mCube.MoveCubes(mMainClient.mQuizManager);
                 // 문제출력
                 mQuizText.text = mMainClient.mQuizManager.getQuizContent() + System.Environment.NewLine + Mathf.Round(mMainClient.mQuizManager.getAnswerTimeOut());
                 Ex1Text.text = mMainClient.mQuizManager.getQuizEx1();
