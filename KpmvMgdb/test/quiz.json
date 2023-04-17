@@ -11,7 +11,7 @@
     "$oid": "6433815e6c411fbeb735f7ec"
   },
   "Kind": "four",
-  "content": "미국수도?",
+  "content": "미국의 수도는 어디입니까?",
   "correct": "1",
   "exp1": "워싱턴",
   "exp2": "LA",
@@ -32,8 +32,49 @@
   "_id": {
     "$oid": "6438991313d5ad9ef9b1fdde"
   },
+  "Kind": "ox",
   "content": "아라비아 숫자 1부터 100사이에는 9라는 숫자가 모두 19개 들어 있다.",
   "correct": "X",
-  "explain": "20개, 99는 두 개입니다.",
-  "Kind": "ox"
+  "explain": "20개, 99는 두 개입니다."
+},{
+  "_id": {
+    "$oid": "643cfc7908c65fca669ac692"
+  },
+  "Kind": "four",
+  "content": "gravity의 뜻은?",
+  "correct": "2",
+  "exp1": "산소",
+  "exp2": "중력",
+  "exp3": "위성",
+  "exp4": "윤리학"
+},{
+  "_id": {
+    "$oid": "643cfcbe08c65fca669ac693"
+  },
+  "Kind": "four",
+  "content": "오랜역사를 통해 우리는 고유한 한국 사상을 형성하였는데, 그 형성 배경으로 적절하지 않은 것은?",
+  "correct": "3",
+  "exp1": "단일 민족",
+  "exp2": "고유한 언어",
+  "exp3": "외부의 자극",
+  "exp4": "고유한 민족성"
+},{
+  "_id": {
+    "$oid": "643cfd3008c65fca669ac694"
+  },
+  "Kind": "ox",
+  "content": "사람의 세포는 개미의 세포보다 크다.",
+  "explain": "세포크기는 같다. 양이 다르다.",
+  "correct": "X"
+},{
+  "_id": {
+    "$oid": "643d000108c65fca669ac697"
+  },
+  "Kind": "it",
+  "content": "다음 중 컴퓨터 운영 체제(OS)가 아닌 것은 무엇인가요?",
+  "correct": "4",
+  "exp1": "리눅스(Linux)",
+  "exp2": "윈도우(Windows)",
+  "exp3": "맥OS(macOS)",
+  "exp4": "파이썬(Python)"
 }]
