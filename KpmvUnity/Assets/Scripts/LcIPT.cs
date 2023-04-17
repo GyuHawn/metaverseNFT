@@ -20,19 +20,19 @@ public class LcIPT/* : MonoBehaviour*/
     public GameObject inputField;
     public TMP_FontAsset m_Font;
 
-    public const int maxP = 3;
+    public const int maxP = 6;
 
     Vector3[] positions = {
-        new Vector3(-3, 30, -6), new Vector3(16, 30, -6), new Vector3(9, 30, -11), new Vector3(8, 32, -1)
+        new Vector3(-3, 30, -6), new Vector3(16, 30, -6), new Vector3(9, 30, -11), new Vector3(8, 32, -1), new Vector3(-3, 30, -6), new Vector3(16, 30, -6)
     };
     Vector3[] positions2 =
     {
-        new Vector3(-21, -1, 6), new Vector3(-27, -1, 6), new Vector3(-14, -1, 6), new Vector3(-31, -1, 6)
+        new Vector3(-21, -1, 6), new Vector3(-27, -1, 6), new Vector3(-14, -1, 6), new Vector3(-31, -1, 6), new Vector3(-21, -1, 6), new Vector3(-27, -1, 6)
     };
 
     Vector3[] positions3 =
     {
-        new Vector3(-21, -1, 6), new Vector3(-27, -1, 6), new Vector3(-14, -1, 6), new Vector3(-31, -1, 6)
+        new Vector3(-21, -1, 6), new Vector3(-27, -1, 6), new Vector3(-14, -1, 6), new Vector3(-31, -1, 6), new Vector3(-21, -1, 6), new Vector3(-27, -1, 6)
     };
 
     public GameObject[] mPlayers;

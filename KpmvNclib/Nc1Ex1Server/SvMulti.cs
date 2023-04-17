@@ -6,7 +6,7 @@ namespace Nc1Ex1Server
 	public class SvMulti : NccpcDll.NccpcNw1Sv
     {
 		public List<int> mCs = new List<int>();
-        public const int maxP = 3;
+        public const int maxP = 6;
         public int?[] mCtis = new int?[maxP];
 		public NccpcDll.NccpcMemmgr2Mgr mMm;
 
