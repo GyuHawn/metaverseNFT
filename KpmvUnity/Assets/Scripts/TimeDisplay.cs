@@ -13,6 +13,6 @@ public class TimeDisplay : MonoBehaviour
         DateTime currentTime = DateTime.Now;
 
         // 시간 텍스트 업데이트
-        timeText.text = currentTime.ToString("HH:mm:ss");
+        timeText.text = "현재시간 : " + currentTime.ToString("HH:mm:ss");
     }
 }

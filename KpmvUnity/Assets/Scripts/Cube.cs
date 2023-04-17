@@ -18,8 +18,8 @@ public class Cube : MonoBehaviour
             //이동위치 섞기
             for (int i = mExArray.Length - 1; i > 0; i--)
             {
-                //int j = qm.rdNext();
-                int j = Random.Range(0, i + 1);
+                int j = qm.rdNext() % (i + 1);
+                //int j = Random.Range(0, i + 1);
                 Vector3 temp = mExArray[i];
                 mExArray[i] = mExArray[j];
                 mExArray[j] = temp;
