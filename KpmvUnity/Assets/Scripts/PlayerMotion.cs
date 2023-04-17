@@ -24,8 +24,8 @@ public class PlayerMotion : MonoBehaviour
 
     public bool save = false;
 
-    public float collisonTime = 2f;
-    private bool canCollide = true;
+    //public float collisonTime = 0.01f;
+   // private bool canCollide = true;
     
     private KeyCode currentKeycode;
 
@@ -100,7 +100,6 @@ public class PlayerMotion : MonoBehaviour
         else
         {
             anim.SetBool("Run", false);
-            LcIPT.GetThis().go.GetComponent<Rigidbody>().velocity += new Vector3(0, -0.02f, 0);
         }
     }
 
@@ -182,8 +181,8 @@ public class PlayerMotion : MonoBehaviour
             }
         }
         //4Áö¼±´Ù ÄûÁî, it
-        if (canCollide)
-        {
+        /*if (canCollide)
+        {*/
             if (collision.gameObject.CompareTag("Red"))
             {
                 transform.gameObject.tag = "Red";
@@ -214,16 +213,16 @@ public class PlayerMotion : MonoBehaviour
                 transform.Find("myname").GetComponentInChildren<TMP_Text>().color = Color.black;
                 // pName.playerNameText.color = Color.black;
             }
-            canCollide = false;
-            StartCoroutine(ChangeCollide());
+          /*  canCollide = false;*/
+         /*   StartCoroutine(ChangeCollide());*/
         }
-    } 
-
+    
+/*
     private IEnumerator ChangeCollide()
     {
         yield return new WaitForSeconds(collisonTime);
         canCollide = true;
-    }
+    }*/
 
     public void Save()
     {
