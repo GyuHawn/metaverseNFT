@@ -9,7 +9,7 @@
   "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
   "CA": "",
   "wins": 0,
-  "color": "blue"
+  "color": "white"
 },{
   "_id": {
     "$oid": "64223b44ce85288e8eb5dd7b"
@@ -21,7 +21,7 @@
   "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
   "CA": "",
   "wins": 0,
-  "color": "white"
+  "color": "blue"
 },{
   "_id": {
     "$oid": "64228a192953f11b39330b75"
@@ -47,7 +47,7 @@
   "wins": {
     "$numberDouble": "NaN"
   },
-  "color": "blue"
+  "color": "white"
 },{
   "_id": {
     "$oid": "6422a45c2953f11b39330b77"
@@ -59,7 +59,7 @@
   "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
   "CA": "",
   "wins": 0,
-  "color": "red"
+  "color": "blue"
 },{
   "_id": {
     "$oid": "6423c486af6330b41cd14d80"
@@ -71,7 +71,7 @@
   "EOA": "0x2c2573ad0dF34127a702c15667273b186aCa8B0d",
   "CA": "",
   "wins": 0,
-  "color": "white"
+  "color": "red"
 },{
   "_id": {
     "$oid": "6423d2ce54d9e7944beca6d3"

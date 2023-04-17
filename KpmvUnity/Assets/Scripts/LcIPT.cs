@@ -353,7 +353,7 @@ public class LcIPT/* : MonoBehaviour*/
                     if (mbOnline)
                     {
                         float jumpForce = Mathf.Sqrt(mJumpHeight * -2 * Physics.gravity.y);
-                        jumpSend(mMulti.mCt,jumpForce);;
+                        jumpSend(mMulti.mCt,jumpForce);
                     }
                     else
                     {

@@ -9,7 +9,7 @@ public class Cube : MonoBehaviour
     private bool isCube = false;
     private Vector3[] mExArray = new Vector3[] { new Vector3(-32, -1.3f, -8), new Vector3(-14, -1.3f, -8), new Vector3(-32, -1.3f, -13), new Vector3(-14, -1.3f, -13) };
     //이동위치
-    public void MoveCubes()
+    public void MoveCubes(QuizManager qm)
     {
         if (cubes != null && !isCube)
         {
@@ -18,7 +18,8 @@ public class Cube : MonoBehaviour
             //이동위치 섞기
             for (int i = mExArray.Length - 1; i > 0; i--)
             {
-                int j = Random.Range(0, i + 1);
+                int j = qm.rdNext() % (i + 1);
+                //int j = Random.Range(0, i + 1);
                 Vector3 temp = mExArray[i];
                 mExArray[i] = mExArray[j];
                 mExArray[j] = temp;
@@ -49,19 +50,24 @@ public class Cube : MonoBehaviour
         }
     }
 
+    void RemoveCube(GameObject cubeObject, Vector3 targetPosition)
+    {
+        cubeObject.transform.position = targetPosition;
+    }
+
     public void RemoveCube1()
     {
         if (cubes != null && isCube)
         {
-            StartCoroutine(CubePosition(cubes[1], originalPos[1]));
-            StartCoroutine(CubePosition(cubes[2], originalPos[2]));
-            StartCoroutine(CubePosition(cubes[3], originalPos[3]));
+            RemoveCube(cubes[1], originalPos[1]);
+            RemoveCube(cubes[2], originalPos[2]);
+            RemoveCube(cubes[3], originalPos[3]);
             StartCoroutine(EndQuiz4AfterDelay(1f));
         }
         IEnumerator EndQuiz4AfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
-            StartCoroutine(CubePosition(cubes[0], originalPos[0]));
+            RemoveCube(cubes[0], originalPos[0]);
         }
         isCube = false;
     }
@@ -69,15 +75,15 @@ public class Cube : MonoBehaviour
     {
         if (cubes != null && isCube)
         {
-            StartCoroutine(CubePosition(cubes[0], originalPos[0]));
-            StartCoroutine(CubePosition(cubes[2], originalPos[2]));
-            StartCoroutine(CubePosition(cubes[3], originalPos[3]));
+            RemoveCube(cubes[0], originalPos[0]);
+            RemoveCube(cubes[2], originalPos[2]);
+            RemoveCube(cubes[3], originalPos[3]);
             StartCoroutine(EndQuiz4AfterDelay(1f));
         }
         IEnumerator EndQuiz4AfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
-            StartCoroutine(CubePosition(cubes[1], originalPos[1]));
+            RemoveCube(cubes[1], originalPos[1]);
         }
         isCube = false;
     }
@@ -85,15 +91,15 @@ public class Cube : MonoBehaviour
     {
         if (cubes != null && isCube)
         {
-            StartCoroutine(CubePosition(cubes[0], originalPos[0]));
-            StartCoroutine(CubePosition(cubes[1], originalPos[1]));
-            StartCoroutine(CubePosition(cubes[3], originalPos[3]));
+            RemoveCube(cubes[0], originalPos[0]);
+            RemoveCube(cubes[1], originalPos[1]);
+            RemoveCube(cubes[3], originalPos[3]);
             StartCoroutine(EndQuiz4AfterDelay(1f));
         }
         IEnumerator EndQuiz4AfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
-            StartCoroutine(CubePosition(cubes[2], originalPos[2]));
+            RemoveCube(cubes[2], originalPos[2]);
         }
         isCube = false;
     }
@@ -101,15 +107,15 @@ public class Cube : MonoBehaviour
     {
         if (cubes != null && isCube)
         {
-            StartCoroutine(CubePosition(cubes[0], originalPos[0]));
-            StartCoroutine(CubePosition(cubes[1], originalPos[1]));
-            StartCoroutine(CubePosition(cubes[2], originalPos[2]));
+            RemoveCube(cubes[0], originalPos[0]);
+            RemoveCube(cubes[1], originalPos[1]);
+            RemoveCube(cubes[2], originalPos[2]);
             StartCoroutine(EndQuiz4AfterDelay(1f));
         }
         IEnumerator EndQuiz4AfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
-            StartCoroutine(CubePosition(cubes[3], originalPos[3]));
+            RemoveCube(cubes[3], originalPos[3]);
         }
         isCube = false;
     }

@@ -6,7 +6,7 @@ public class Rocket : MonoBehaviour
 {
     public GameObject mRocket;
 
-    Vector3 startmove = new Vector3(37, 9.4f, 21);
+    Vector3 startmove = new Vector3(37, 0.8f, 21);
 
     float spd = 0.2f;
     void Update()

@@ -101,6 +101,12 @@ public class MainClient/* : MonoBehaviour*/
                             mbQuizStartrecv = true;
                             var s1 = pkrd.rStr1def();
                             qv("게임시작 : " + s1);
+
+                            mQuizManager.mRdBytes.Clear(); mQuizManager.mRdCur = 0;
+                            int rdlen = pkrd.rInt32s();
+                            for (int i = 0; i < rdlen; i++)
+                            { mQuizManager.mRdBytes.Add(pkrd.rInt8u()); }
+
                             var qs = GameObject.Find("quizstarttext").GetComponent<QuizStart>();
                             qs.canvas2.gameObject.SetActive(false);
                             qs.canvas.gameObject.SetActive(true);

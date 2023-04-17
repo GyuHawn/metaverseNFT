@@ -111,7 +111,11 @@ public class MultiClient/* : MonoBehaviour*/
                             }
                             LcIPT.GetThis().mPlayers[pidx].GetComponent<PlayerMotion>().SetKey((KeyCode)code);
                             LcIPT.GetThis().mPlayers[pidx].GetComponent<PlayerMotion>().ThisUpdate();
-                            LcIPT.GetThis().mPlayers[pidx].transform.position = new Vector3(xx, yy, zz);                          
+                            LcIPT.GetThis().mPlayers[pidx].transform.position = new Vector3(xx, yy, zz);
+                            if (LcIPT.GetThis().mPlayers[pidx].GetComponent<Rigidbody>().velocity.sqrMagnitude <= 0.001f)
+                            {
+                                LcIPT.GetThis().mPlayers[pidx].GetComponent<Rigidbody>().velocity += new Vector3(0, -0.001f, 0);
+                            }
                         }
                     }
                     break;
@@ -126,6 +130,10 @@ public class MultiClient/* : MonoBehaviour*/
                         if (pidx >= 0 && LcIPT.GetThis().mPlayers[pidx] != null)
                         {
                             LcIPT.GetThis().mPlayers[pidx].transform.position += new Vector3(xx, yy, zz);
+                            if (LcIPT.GetThis().mPlayers[pidx].GetComponent<Rigidbody>().velocity.sqrMagnitude <= 0.001f)
+                            {
+                                LcIPT.GetThis().mPlayers[pidx].GetComponent<Rigidbody>().velocity += new Vector3(0, -0.001f, 0);
+                            }
                         }
                     }
                     break;

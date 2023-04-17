@@ -51,6 +51,13 @@ public class QuizStart : MonoBehaviour
                         using (JcCtUnity1.PkWriter1Nm pkw = new JcCtUnity1.PkWriter1Nm(99))
                         {
                             pkw.wStr1("test");
+                            
+                            var rd = new System.Random();
+                            int rdlen = 20;
+                            pkw.wInt32s(rdlen);
+                            for (int i = 0; i < rdlen; i++)
+                            { pkw.wInt8u((byte)rd.Next()); }
+
                             mMainClient.mCt.send(pkw);
                         }
                     }

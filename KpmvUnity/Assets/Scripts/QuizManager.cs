@@ -27,13 +27,21 @@ public class QuizManager //: MonoBehaviour
 
     public bool ox; // 문제 정답이 맞았는지 여부
     public float mRemainCompetitionTime = 600.0f; // 퀴즈 시작까지 시간
-    public float mAnswerTimeOut = 5.0f; // 문제 시간
-    public float mNextAnswerDelayTimeOut = 3.0f; // 다음 문제 시간
+    public float mAnswerTimeOut = 10.0f; // 문제 시간
+    public float mNextAnswerDelayTimeOut = 5.0f; // 다음 문제 시간
     public bool gameStarted = false; // 게임 시작 여부
     public int mCurrentQuizIndex = 0; // 지금 퀴즈 인덱스
     public bool cleanFloor = true;
 
     public List<QuizData> mQuizList = new List<QuizData>();
+
+
+    // - 임시1 -
+    public List<byte> mRdBytes = new List<byte>();
+    public int mRdCur = 0;
+    public int rdNext() { return mRdBytes[mRdCur++ % mRdBytes.Count]; }
+    // - 임시1 -
+
 
     public string leftTime() //게임 시작전 남은시간 구할때사용
     {
@@ -180,7 +188,7 @@ public class QuizManager //: MonoBehaviour
             if (mQuizList.Count != 0)
             {
                 mCurrentQuizIndex++;
-                mAnswerTimeOut = 3.0f;
+                mAnswerTimeOut = 10.0f;
             }
         }
         return true;
